@@ -1,6 +1,6 @@
 # Eternal Game — Design Scope v0.1.1
 
-> **Working title.** This document synthesizes the Fractales framework (Cartridge/Dojo), the Realms: Adventures idle-RPG concept, and the Realms ecosystem into a unified thesis for an eternal, fully onchain MMORPG. It is a living document — intended to be challenged, refined, and expanded over many iterations.
+> **Working title.** This document synthesizes the Fractales framework (Cartridge/Dojo), the Realms: Adventures idle-RPG concept, and the Realms/Loot ecosystem into a unified thesis for an eternal, fully onchain MMORPG. It is a living document — intended to be challenged, refined, and expanded over many iterations.
 
 ---
 
@@ -19,7 +19,7 @@
 11. [Territorial Sovereignty](#11-territorial-sovereignty)
 12. [The Energy Economy](#12-the-energy-economy)
 13. [Permadeath & Legacy](#13-permadeath--legacy)
-14. [Realms Ecosystem Integration](#14-realms-ecosystem-integration)
+14. [Realms/Loot Ecosystem Integration](#14-realmsloot-ecosystem-integration)
 15. [Modular Game Layers](#15-modular-game-layers)
 16. [Social Systems & Governance](#16-social-systems--governance)
 17. [Agent & Autonomous Play](#17-agent--autonomous-play)
@@ -137,14 +137,16 @@ Over time, as exploration radiates outward, **special areas** can be discovered 
 
 ### Hex Contents
 
-Each hex has:
+Each hex can have:
 - A **biome** (deterministic from noise)
-- An **area count** (deterministic from seed, **3–9**, with rarity weighting)
+- An **area count** (deterministic from seed, **3–9**, with rarity weighting) that defines the total **potential areas** in the hex
 - A **control area** (area_index 0) — ownership of this = control of the hex
 - **Materials areas** (fertile, mining, forestry) — each with deterministic resource profiles
 - **Bare (buildable) areas** — primarily for construction
-- **Underworld areas** (1 per hex)
-- **Special areas** (1 per hex)
+- **Underworld areas** — **rare** and not present in most hexes
+- **Special areas** — **rare** and not present in most hexes
+
+Materials, Bare, Underworld, and Special areas are all **potential area types** within the area count; underworld and special areas are drawn infrequently.
 
 ### Area Rarity & Building Slots
 
@@ -171,11 +173,11 @@ The adventurer is the player's avatar in the world. It is an NFT-like entity (mo
 
 | Metadata | Role |
 |---|---|
-| **Energy** | Fuel for all actions. Regenerates per-tick up to cap. |
+| **Energy** | Fuel for all actions. Regenerates **per tick** based on modifiers, up to cap. |
 | **Position** | Current hex coordinate. Movement is adjacent-only. |
-| **Backpack** | Weight-limited inventory. Carry capacity varies by stats/gear. |
-| **Activity Lock** | Time-locked commitment to current action (harvesting, mining, building). |
 | **Equipment** | Equipped gear (armor, weapons, trinkets). |
+| **Inventory** | Weight-limited storage. Carry capacity varies by stats/gear. |
+| **Activity Lock** | Time-locked commitment to current action (harvesting, mining, building). |
 | **Alive** | Boolean. Once false, forever false. |
 
 ### Attributes
@@ -213,7 +215,7 @@ This is a placeholder for a **large trait list** to be authored later.
 
 - Adventurers have an **energy bar** that decreases after action attempts.
 - Longer/harder actions drain more energy.
-- Energy replenishes over time when adventurers are **idle** (not in a time-locked action).
+- Energy replenishes **per tick** when adventurers are idle (not in a time‑locked action), modified by buffs/debuffs and environmental effects.
 - Energy **gates actions**: an action cannot be performed if the adventurer doesn’t have enough energy to start it.
 - **Maximum energy** is determined by Endurance and any buffs/debuffs (well-fed increases max energy, starving decreases it, etc.).
 
@@ -342,9 +344,9 @@ new_properties = f(input_properties, XOR_seed)
 - Legendary rolls occur when property products cross defined thresholds.
 - Higher craftsmanship + intelligence traits improve mutation outcomes.
 
-### 9.3 Tiered Crafting (from Adventures)
+### 9.3 Tiered Crafting
 
-Three crafting facility types (map to construction buildings):
+The following crafting facilities are **examples only**. A much larger list is expected as the building catalog expands:
 
 | Facility | Produces | Key Inputs |
 |---|---|---|
@@ -364,7 +366,7 @@ Three crafting facility types (map to construction buildings):
 
 ### 10.1 Building System
 
-From the Fractales construction module, the building list will expand dramatically as area slots increase. Representative early buildings include:
+The building list will expand dramatically as area slots increase. Representative early buildings include:
 
 | Building | Function |
 |---|---|
@@ -494,9 +496,9 @@ After death, the player mints a new adventurer (paying the spawn cost again). Th
 
 ---
 
-## 14. Realms Ecosystem Integration
+## 14. Realms/Loot Ecosystem Integration
 
-This is where Eternal Game becomes uniquely powerful. The Realms ecosystem provides a rich asset layer that transforms from speculative collectibles into **functional world components**.
+This is where Eternal Game becomes uniquely powerful. The Realms/Loot ecosystem provides a rich asset layer that transforms from speculative collectibles into **functional world components**.
 
 ### 14.1 $LORDS — The Sovereign Currency
 
@@ -520,19 +522,34 @@ This is where Eternal Game becomes uniquely powerful. The Realms ecosystem provi
 - **Named beasts** (captured in LS2 and owned by players) appear in **underworld areas**.
 - A staking/dungeon‑delving/risk‑to‑earn game involves LS2 beasts, C&C, and adventurers (scope TBD).
 
-### 14.4 Crypts & Caverns — Dungeon Delving
+### 14.4 Loot — Persistent Relics
+
+- **Loot items are persistent**: they can degrade without maintenance but can never be fully destroyed or lost.
+- If a Loot item reaches 0 durability, it becomes **inert** until repaired, but it remains bound to its owner.
+- The **Greatness system** becomes the base rating for all equippable items in Eternal Game:
+  - **Greatness 1** is the lowest, **Greatness 20** is the highest.
+  - Crafting, refinement, and upgrades can shift greatness within defined bounds, but 20 remains legendary.
+
+### 14.5 Genesis Adventurers (GA) — Timeless Travelers
+
+- Genesis Adventurers are **timeless** figures implied by the original Loot contract.
+- GAs **spawn like any other adventurer** (paying $LORDS at a Spawn Node) but arrive with their Loot items **already equipped**.
+- They can die and are bound by the same energy rules, but **their Loot items never drop** and can be **respawned** with them at a Spawn Node.
+- Their existence is a mystery; over time they become the **familiar, legendary characters** of the world — immortal in story, persistent on‑chain.
+
+### 14.6 Crypts & Caverns — Dungeon Delving
 
 - C&C can be placed by players on **underworld areas** of hexes they own.
 - Keep existing points (2, 3, 4) from v0.1; remove the former point 5.
 - Dungeon owners can **fill their dungeons with beasts** as part of the risk‑to‑earn loop.
 
-### 14.5 $SURVIVOR — The Adventurer’s Token
+### 14.7 $SURVIVOR — The Adventurer’s Token
 
 - Earned through: **successfully delving player dungeons** and **completing player bounties**.
 - Nearby player‑owned underworld areas with established C&C + beast populations apply a **malus** to surrounding player‑owned infrastructure.
 - Players can put up **bounties** for adventurers to clear these dungeons to reduce penalties.
 
-### 14.6 Cross‑Game Economy
+### 14.8 Cross‑Game Economy
 
 | Gameplay Level | Resources Needed |
 |---|---|
@@ -732,7 +749,7 @@ Third‑party modules and programmable hooks mean the game’s content grows thr
 - Equipment slots, durability, repair
 - Crafting facilities (Cookhouse, Blacksmith, Jeweler)
 - Settlement formation + trade markets
-- **Realms ecosystem integration**: $LORDS minting, Realm settlements, beast materials
+- **Realms/Loot ecosystem integration**: $LORDS minting, Realm settlements, beast materials, Loot/Genesis Adventurers
 
 **Playable state**: Full economic loop. Specialization matters. Trade routes emerge.
 
