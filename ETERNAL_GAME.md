@@ -70,20 +70,25 @@ This is the "physics engine" — the contracts that, once deployed, **never chan
 
 ### 3.1 Time
 
-Block time alone is fragile — chain throughput and block cadence can change. We need a hybrid that remains anchored to the chain while following real-world time.
+Block time alone is fragile — chain throughput and block cadence can change. We need time that feels real‑world **but never advances without blocks**.
 
-**Simple hybrid mechanism (low compute):**
+**Chosen model (low compute, chain‑safe):**
 
-- Define a **target tick length** `T` (e.g., 6 seconds).
+- **Tick length** `T = 10s`.
 - On any state update, read `block_number` and `block_timestamp`.
 - Compute:
+  - `current_tick = floor(block_timestamp / T)`
+  - `wall_delta = current_tick - last_tick`
   - `block_delta = block_number - last_block_number`
-  - `wall_seconds = block_timestamp - last_block_timestamp`
-  - `wall_ticks = floor(wall_seconds / T)`
-- Use a **clamped tick delta** to avoid acceleration or extreme timestamp drift:
-  - `tick_delta = clamp(wall_ticks, min = 1, max = block_delta + 2)`
+- **Hybrid guard (hard clamp):**
+  - `tick_delta = min(wall_delta, block_delta)`
 
-This keeps time aligned to real seconds (avoids deceleration) while still bounded by the chain’s progression (prevents timestamp manipulation or runaway acceleration). The constants can be conservative and fixed in the immutable layer.
+**Result:**
+- If the chain **halts**, `block_delta = 0` → **game time stops**.
+- If timestamps jump forward, ticks **won’t skip ahead** without matching blocks.
+- If blocks run fast, wall‑clock still governs the tick pace (≈3–4 blocks per tick at ~2.5s blocks).
+
+This is intentionally conservative — Starknet has had periods of halted block production and reorgs (e.g., Sept 2, 2025; Jan 5, 2026). The Eternal Game should **pause** rather than fast‑forward in those events.
 
 ### 3.2 Space
 
@@ -809,7 +814,6 @@ These are unresolved design decisions that need iteration:
 
 | Question | Context |
 |---|---|
-| **Hybrid time constants** | What is the ideal target tick length and clamp bounds? |
 | **Optimal adventurer mint price** | Too cheap = spam; too expensive = barrier. Adventures suggests $5–10. Needs testing. |
 | **Energy regen rate vs travel cost** | Determines how far players can explore per session. |
 | **Area rarity percentages** | Exact % distribution per rarity tier for 3–9 areas. |
