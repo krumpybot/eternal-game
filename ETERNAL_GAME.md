@@ -1,4 +1,4 @@
-# Eternal Game — Design Scope v0.1.1
+# Eternal Game — Design Scope v0.1.2
 
 > **Working title.** This document synthesizes the Fractales framework (Cartridge/Dojo), the Realms: Adventures idle-RPG concept, and the Realms/Loot ecosystem into a unified thesis for an eternal, fully onchain MMORPG. It is a living document — intended to be challenged, refined, and expanded over many iterations.
 
@@ -190,19 +190,32 @@ Drawing from the Adventures idle-RPG design, adventurers have **core attributes*
 | **Mental** | Intelligence, Wisdom, Charisma |
 | **Specialized** | Survival, Craftsmanship, Leadership |
 
-- Attributes are randomized at mint (within bounds).
+- **All adventurers are created equal at mint**: a fixed attribute budget of **20 points** across 9 attributes.
+- Points are distributed deterministically from the mint seed (20 rolls → +1 to a random attribute each roll). **No caps** — 0–6+ is possible.
 - Attributes improve through use — **learning by doing**.
 - Attribute values gate certain activities: heavy armor requires minimum strength; advanced crafting requires minimum craftsmanship + intelligence.
 
+**Gas note:** distribution can be computed lazily from the stored seed (20 iterations total). No large arrays need to be stored at mint; only the seed and adventurer core metadata are persisted.
+
 #### Traits (Personality & Life Scars)
 
-Each adventurer has **2–3 personality traits at mint** (studious, brave, determined, dumb, etc.). Traits can give positive or negative bonuses and may be gained or lost through life events.
+Each adventurer has **exactly 2 personality traits at mint** (studious, brave, determined, dumb, etc.), derived deterministically from the mint seed. Traits can give positive or negative bonuses and may be gained or lost through life events.
 
 Examples:
 - **One‑Eyed** → −Dexterity, +Charisma
 - **Craven** → −Leadership, −Survival
 
+**Trait conflicts:** traits are organized into **exclusivity groups** (e.g., *Brave* vs *Craven*). A new trait cannot coexist with a conflicting one — it should **replace** the conflicting trait or be rejected.
+
+**Trait cap:** adventurers maintain a short trait list (e.g., max 6) to keep storage small.
+
 This is a placeholder for a **large trait list** to be authored later.
+
+#### Minting & Seed Fairness
+
+- Use a **salt commitment** for fairness: user commits `hash(salt)` at mint request, then reveals the salt when finalizing.
+- Final seed example: `hash(globalSeed, tokenId, mintBlock, userSalt)`.
+- Prevents front‑running and keeps trait/attribute rolls unbiased.
 
 ### Equipment
 
@@ -819,6 +832,7 @@ These are unresolved design decisions that need iteration:
 These are **design‑detail lists** that require deep authoring and will evolve rapidly:
 
 - **Trait list** (hundreds of personality and life‑scar traits)
+- **Trait exclusivity groups** (e.g., Brave vs Craven) and replacement rules
 - **Plant species & crop list** (per biome + growth properties)
 - **Special resource list** (full medieval/fantasy supply chain)
 - **Beast list** (hazards, underworld, named LS2 beasts)
@@ -891,6 +905,6 @@ The ecosystem provides **assets with meaning**:
 
 ---
 
-*v0.1.1 — March 2026*
+*v0.1.2 — March 2026*
 *Authors: Krumpy (design direction), Squire (synthesis & drafting)*
 *Sources: Fractales (cartridge-gg/fractales), Realms: Adventures (design doc), Realms Ecosystem*
