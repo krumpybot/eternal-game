@@ -100,9 +100,10 @@ This is intentionally conservative — Starknet has had periods of halted block 
 
 ### 3.3 Matter (World Generation)
 
-- The entire world is **deterministically generated** from a single global seed using Cubit noise functions.
-- `hash(global_seed, coordinate)` → biome, area count, area types, resource profiles, plant species, ore veins.
-- Domain-separated seed derivation prevents cross-stage leakage (`HEX_V1`, `AREA_V1`, `PLANT_V1`).
+- The world is **partially deterministic** from a single global seed using Cubit noise functions.
+- `hash(global_seed, coordinate)` → **biome only**.
+- **Area count, area types, and slot counts** are **finalized on discovery** using a per‑hex discovery seed (commit‑reveal salt + global seed + coordinate).
+- Domain‑separated seed derivation prevents cross‑stage leakage (`HEX_V1`, `AREA_V1`, `PLANT_V1`).
 - Once a hex/area/plant is materialized (discovered), its properties are immutable — no balance patches, no retroactive nerfs.
 - **Expanded biome set** (examples): Plains, Forest, Mountain, Desert, Swamp, Tundra, Taiga, Jungle, Savanna, Grassland, Canyon, Badlands, Volcanic, Glacier, Wetlands, Steppe, Oasis, Mire, Highlands, Coast, **Lake**, **Beach**, **Coastal Waters**, **Ocean**, **Deep Ocean**.
 - Biome clustering is coherent (simplex noise produces natural terrain transitions), but contents within hexes are seed-derived and unique.
@@ -144,7 +145,7 @@ Over time, as exploration radiates outward, **special areas** can be discovered 
 
 Each hex can have:
 - A **biome** (deterministic from noise)
-- An **area count** (deterministic from seed, **3–9**, with rarity weighting) that defines the total **potential areas** in the hex
+- An **area count** (**3–9**, rarity weighted) **finalized on discovery**; defines the total **potential areas** in the hex
 - A **control area** (area_index 0) — ownership of this = control of the hex
 - **Materials areas** (fertile, mining, forestry) — each with deterministic resource profiles
 - **Bare (buildable) areas** — primarily for construction
@@ -152,6 +153,8 @@ Each hex can have:
 - **Special areas** — **rare** and not present in most hexes
 
 Materials, Bare, Underworld, and Special areas are all **potential area types** within the area count; underworld and special areas are drawn infrequently.
+
+**Discovery finalization:** area count, area types, and slot counts are finalized on discovery using a commit‑reveal discovery seed (global seed + coordinate + discoverer salt).
 
 ### Area Rarity & Building Slots
 
@@ -262,12 +265,13 @@ SPAWN → EXPLORE → DISCOVER → GATHER → REFINE → MAINTAIN → EXPAND →
 
 ## 7. Exploration & The Fog
 
-The world starts as an infinite fog. Only The Nexus is known. Everything else must be discovered by adventurers walking into the unknown.
+The world begins unknown, but **onchain data is public**. There is **no enforced fog‑of‑war at launch** — discovery is still meaningful for ownership and progression, but map data can be read by third parties.
 
-### Fog of War
+### Visibility (No Fog at Launch)
 
-- Undiscovered hexes show nothing — not even biome type (in the full version; MVP reveals biome from noise).
-- Future enhancement: **commit-reveal** scheme where players commit to exploring a hex, then reveal it — preventing map-scraping by third parties.
+- Discovery is public and globally readable.
+- UI can still highlight explored vs unexplored for player experience, but it is not privacy‑secure.
+- **Future upgrade (pre‑launch if possible):** if Starknet privacy primitives mature (e.g., encrypted mempool or private execution), we can introduce **per‑wallet fog** and delayed reveals.
 
 ### Discovery Rights
 
@@ -822,7 +826,6 @@ These are unresolved design decisions that need iteration:
 | **Fee caps or pure free market** | Should territory owners have unlimited pricing power? |
 | **Map Shard utility** | Beyond bragging rights — exploration bonuses? navigation? lore? |
 | **PvP safe zones** | Should areas near Spawn Nodes be combat‑free? How large? |
-| **Commit‑reveal timing** | When does exploration shift from direct discovery to commit‑reveal? |
 | **Spawn Node requirements** | What qualifies a special area to become a Spawn Node? |
 | **Realm NFT power level** | Balance between value and fairness to non‑holders. |
 | **Adventurer supply** | Uncapped (Adventures approach) or bounded? Economic implications of each. |
