@@ -500,7 +500,7 @@ If any energy‑exchange mechanisms are introduced later, they should be **dynam
 
 When an adventurer dies (0 HP, starvation, hazard):
 - The adventurer NFT is **burned**. Gone forever.
-- **Persistent inventory is dropped**, not destroyed.
+- **Inventory is destroyed** in the initial module (no PvP yet, no persistent items). This may change in future modules.
 - Active reservations/escrows are settled and released.
 - No resurrection. No appeals.
 
@@ -518,9 +518,9 @@ Surviving hazards may grant resources (mine collapse reveals a new vein, wolf at
 ### 13.3 Legacy
 
 Death is not the end of impact:
-- **Map Shards**: On death, a **Map Shard NFT** is minted, recording the adventurer's explored path.
+- **Map Shards (conditional):** Only if privacy/fog‑of‑war becomes feasible, a **Map Shard NFT** may be minted on death to record the adventurer's explored path.
 - **Discovered territory persists**: Everything the adventurer discovered, built, and developed remains in the world — but ownership must be maintained by someone else or it decays.
-- **Reputation/history**: The adventurer's deeds are recorded on-chain forever. Discoverer tags on hexes persist. Legacy is the real endgame.
+- **Reputation/history**: The adventurer's deeds are recorded on-chain forever. Discoverer tags on hexes persist. No legacy stat buffs.
 
 ### 13.4 Respawn
 
@@ -558,6 +558,7 @@ This is where Eternal Game becomes uniquely powerful. The Realms/Loot ecosystem 
 
 - **Loot items are persistent**: they can degrade without maintenance but can never be fully destroyed or lost.
 - If a Loot item reaches 0 durability, it becomes **inert** until repaired, but it remains bound to its owner.
+- **Loot Vaults (future module):** once a settlement is developed, players can build a **Loot Vault** and mint Loot items from their persistent Loot NFT. When a Loot item is minted and equipped, it **cannot be minted again** until it is destroyed in the world. If an adventurer dies with Loot equipped, the Loot item is destroyed but becomes mintable again from the Vault.
 - The **Greatness system** becomes the base rating for all equippable items in Eternal Game:
   - **Greatness 1** is the lowest, **Greatness 20** is the highest.
   - Crafting, refinement, and upgrades can shift greatness within defined bounds, but 20 remains legendary.
@@ -834,7 +835,6 @@ These are unresolved design decisions that need iteration:
 | **Building slot distributions** | Exact distributions for control/bare/materials areas. |
 | **Vein collapse probability curve** | Too harsh = mining is impossible; too lenient = no coordination pressure. |
 | **Fee caps or pure free market** | Should territory owners have unlimited pricing power? |
-| **Map Shard utility** | Beyond bragging rights — exploration bonuses? navigation? lore? |
 | **PvP safe zones** | Should areas near Spawn Nodes be combat‑free? How large? |
 | **Spawn Node requirements** | What qualifies a special area to become a Spawn Node? |
 | **Realm NFT power level** | Balance between value and fairness to non‑holders. |
