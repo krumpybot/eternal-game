@@ -235,10 +235,14 @@ This is a placeholder for a **large trait list** to be authored later.
 ### Energy (Simplified)
 
 - Adventurers have an **energy bar** that decreases after action attempts.
+- Actions require **up‑front reservation** of energy and a time‑lock commitment; energy cannot drop below 0.
 - Longer/harder actions drain more energy.
-- Energy replenishes **per tick** when adventurers are idle (not in a time‑locked action), modified by buffs/debuffs and environmental effects.
-- Energy **gates actions**: an action cannot be performed if the adventurer doesn’t have enough energy to start it.
-- **Maximum energy** is determined by Endurance and any buffs/debuffs (well-fed increases max energy, starving decreases it, etc.).
+- Energy replenishes **per tick** when adventurers are idle (not in a time‑locked action).
+- **Base regen**: **0.1 energy per tick** (≈36 energy/hour).
+- **Base max energy**: **200** (≈5.5–6 hours of storage at base regen).
+- **Maximum energy** is determined by Endurance and any buffs/debuffs.
+- No separate **rest action** — an idle adventurer is resting.
+- **Future module:** food quality buffs regen rate and max energy. Neglecting food applies regen debuffs that can turn regen negative; if energy is negative on any tick, the adventurer dies.
 
 ---
 
@@ -253,7 +257,7 @@ SPAWN → EXPLORE → DISCOVER → GATHER → REFINE → MAINTAIN → EXPAND →
 ```
 
 1. **Spawn**: Pay to mint an adventurer at a Spawn Node (Nexus or unlocked secondary).
-2. **Explore**: Move through adjacent hexes, revealing biomes and discovering areas. Each **travel action** costs energy.
+2. **Explore**: Entering an **unexplored** hex is an **explore action** (higher energy/time cost). Moving through already known hexes is a **travel action** (lower cost).
 3. **Discover**: First visitor to a hex/area materializes its deterministic contents. Discovery creates ownership rights.
 4. **Gather**: Harvest plants, mine ores, hunt creatures. Time-locked activities with energy costs.
 5. **Refine**: Process raw materials into usable resources. Craft gear and consumables.
@@ -272,6 +276,12 @@ The world begins unknown, but **onchain data is public**. There is **no enforced
 - Discovery is public and globally readable.
 - UI can still highlight explored vs unexplored for player experience, but it is not privacy‑secure.
 - **Future upgrade (pre‑launch if possible):** if Starknet privacy primitives mature (e.g., encrypted mempool or private execution), we can introduce **per‑wallet fog** and delayed reveals.
+
+### Travel Cost Modifiers
+
+- **Explore actions** (first entry to unknown hex) cost more energy/time.
+- **Travel actions** cost less in hexes that are fully surveyed.
+- Infrastructure development can further reduce travel energy and time.
 
 ### Discovery Rights
 
@@ -464,7 +474,7 @@ This creates **natural territorial limits** — players can only hold as much te
 
 ### 12.1 Sources
 
-- Per‑tick lazy regeneration (base income).
+- Per‑tick lazy regeneration (base income). **Base rate:** 0.1 energy/tick (~36/hour).
 - Limited additional sources from crafted items, special areas, and future mechanics (**TBD**).
 - Trade with other players.
 - Revenue from owned territory (fees from other players' activities).
