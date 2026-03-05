@@ -265,6 +265,36 @@ SPAWN → EXPLORE → DISCOVER → GATHER → REFINE → MAINTAIN → EXPAND →
 7. **Expand**: Build settlements. Develop infrastructure. Establish trade routes. Form societies.
 8. **Die**: Permadeath. Adventurer is gone. Legacy remains.
 
+### 6.1 Core Actions & Costs
+
+**Universal model:** every action has an **energy cost (reserved upfront)**, a **time‑lock (ticks)**, a **risk profile** (hazard chance), and a **clear outcome**.
+
+**Early‑phase action list**
+
+**Movement / Discovery**
+- **Explore** (enter unknown hex): higher energy/time
+- **Travel** (known hex): lower energy/time
+- **Survey** (reveal one area): medium energy/time
+
+**Resource**
+- **Harvest** (fertile area)
+- **Mine** (mining area)
+- **Log** (forestry area)
+
+**Territory & Development**
+- **Construct** (build on an area slot)
+- **Claim** (take control of decayed hex)
+- **Maintain** (upkeep payment)
+- **Settle** (establish or expand a settlement cluster)
+
+**Underworld**
+- **Delve** (explore underworld areas; high energy/time/risk for rare resources)
+
+**Cost drivers (scalable)**
+- **Biome modifier** (dangerous biomes cost more)
+- **Development modifier** (infrastructure reduces cost/time)
+- **Survey completeness** (fully surveyed → cheaper travel)
+
 ---
 
 ## 7. Exploration & The Fog
@@ -421,7 +451,21 @@ The building list will expand dramatically as area slots increase. Representativ
 - Settlements can evolve into **Cities, Kingdoms, and Empires** following the Realms upgrade system.
 - Empires are expected to take **months or years** of focused development. Benefits are **TBD**, likely introduced as modules over time.
 
-### 10.3 Land Claiming & Development
+### 10.3 Settlement Formation (Deed System)
+
+- Settlements consist of **two or more sufficiently developed hexes** owned by the same player.
+- The **control area** (with a central admin building such as a *Town Hall*, TBD) can mint a **Deed of Settlement**.
+- An adventurer can carry the Deed to the Town Hall of an **adjacent owned hex** and spend energy to **apply the deed**:
+  - If no settlement exists, the deed **creates** a settlement.
+  - If a settlement already exists, the deed **adds the hex** to it.
+- Settlements can expand indefinitely, but **large settlements incur higher admin maintenance** (soft cap via upkeep penalties).
+- **Settlement benefits** (initial):
+  - Reduced **donkey/transport** requirements between settlement hexes
+  - **Shared population** across settlement hexes
+  - **Cheaper travel** for the owner between settlement hexes (infrastructure‑dependent)
+- Individual hexes can **degrade and be taken over**; if a hex is captured, it **leaves the settlement**. The new owner must perform the deed process to add it to their own settlement.
+
+### 10.4 Land Claiming & Development
 
 - Development progression: **Unexplored hex → Explored hex → Developed hex → Settlement → City → Kingdom → Empire**.
 - Each tier requires more investment but provides more benefits (trade access, crafting efficiency, defensive bonuses, revenue from other players).
