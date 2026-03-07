@@ -453,14 +453,15 @@ The building list will expand dramatically as area slots increase. Representativ
 
 ### 10.3 Settlement Formation (Deed System)
 
-- Settlements consist of **two or more sufficiently developed hexes** owned by the same player.
+- Settlements consist of **two or more sufficiently developed hexes** owned by the same player (**threshold TBD** after initial building list).
 - The **control area** (with a central admin building such as a *Town Hall*, TBD) can mint a **Deed of Settlement**.
-- An adventurer can carry the Deed to the Town Hall of an **adjacent owned hex** and spend energy to **apply the deed**:
+- **Deed constraints:** deeds do **not** expire and are **non‑transferable**. They are **bound to the adventurer** that mints them and are **destroyed on that adventurer’s death**.
+- An adventurer can carry the Deed to the Town Hall of an **adjacent owned hex** and spend energy to **apply the deed** (**costs TBD**):
   - If no settlement exists, the deed **creates** a settlement.
   - If a settlement already exists, the deed **adds the hex** to it.
-- Settlements can expand indefinitely, but **large settlements incur higher admin maintenance** (soft cap via upkeep penalties).
+- Settlements can expand indefinitely, but **large settlements incur higher admin maintenance**. Beyond **7 hexes**, maintenance costs scale **exponentially**.
 - **Settlement benefits** (initial):
-  - Reduced **donkey/transport** requirements between settlement hexes
+  - **25% fewer donkeys** required for transport between settlement hexes
   - **Shared population** across settlement hexes
   - **Cheaper travel** for the owner between settlement hexes (infrastructure‑dependent)
 - Individual hexes can **degrade and be taken over**; if a hex is captured, it **leaves the settlement**. The new owner must perform the deed process to add it to their own settlement.
