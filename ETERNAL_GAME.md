@@ -12,7 +12,7 @@
 4. [World Topology & Hex Grid](#4-world-topology--hex-grid)
 5. [The Adventurer](#5-the-adventurer)
 6. [Core Gameplay Loop](#6-core-gameplay-loop)
-7. [Exploration & The Fog](#7-exploration--the-fog)
+7. [Exploration & Discovery](#7-exploration--discovery)
 8. [Resource Systems](#8-resource-systems)
 9. [Refining & Crafting](#9-refining--crafting)
 10. [Settlement & Construction](#10-settlement--construction)
@@ -297,7 +297,7 @@ SPAWN → EXPLORE → DISCOVER → GATHER → REFINE → MAINTAIN → EXPAND →
 
 ---
 
-## 7. Exploration & The Fog
+## 7. Exploration & Discovery
 
 The world begins unknown, but **onchain data is public**. There is **no enforced fog‑of‑war at launch** — discovery is still meaningful for ownership and progression, but map data can be read by third parties.
 
@@ -336,7 +336,7 @@ The explored world grows organically:
 Materials areas yield **raw materials**. This list will evolve, but current buckets are:
 
 - **Food** (plants, crops, animals): wild berries, roots, mushrooms, boar, venison, fish, game fowl, honey.
-- **Core Resources** (the 22 Eternum resources).
+- **Core Resources** (the familiar "Eternum 22" resource set, used here as a **canonical taxonomy** — but **not bridged/ported** from Eternum).
 - **Special Resources** (non‑core raw materials that extend the supply chain):
   - Examples: **leather, bone, tallow, salt, clay, sand (glass), pitch, sulfur, saltpeter, dyes, herbs, charcoal, flax, wool, furs, pearls, amber, obsidian shards, alchemical reagents**.
 - **Essence** (singular magical material with broad utility).
@@ -551,7 +551,7 @@ When an adventurer dies (0 HP, starvation, hazard):
 
 ### 13.2 Death Causes & Hazards
 
-Hazards can be biome‑ or task‑specific events. Hazards occur **by chance per block**. The outcome (avoid, lose energy, gain a trait like one‑handed/one‑legged/crippled/blinded, or death) is determined by an equation that includes:
+Hazards can be biome‑ or task‑specific events. Hazards occur **by chance per tick** (or per action-resolution step). The outcome (avoid, lose energy, gain a trait like one‑handed/one‑legged/crippled/blinded, or death) is determined by an equation that includes:
 
 - Hazard lethality
 - Time of day
@@ -635,7 +635,7 @@ This is where Eternal Game becomes uniquely powerful. The Realms/Loot ecosystem 
 | **Moderate** | In‑game + $LORDS spend/burn (premium crafting, settlement perks) |
 | **Advanced** | In‑game + Realm bonuses + beast materials + $LORDS |
 
-Eternum resources are **not** ported into Eternal Game. This game is fully self‑contained.
+Eternal Game is fully self‑contained: Core Resources are **not bridged** from Eternum contracts (no shared balances), even if we reuse the same named resource list for familiarity.
 
 ---
 
