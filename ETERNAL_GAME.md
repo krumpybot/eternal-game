@@ -878,6 +878,8 @@ These are unresolved design decisions that need iteration:
 | **Energy regen rate vs travel cost** | Determines how far players can explore per session. |
 | **Area rarity percentages** | Exact % distribution per rarity tier for 3–9 areas. |
 | **Building slot distributions** | Exact distributions for control/bare/materials areas. |
+| **"Sufficiently developed hex" threshold (settlements)** | The minimum development needed for a hex to qualify for settlement formation/expansion via deed. |
+| **Deed mint/apply costs + timelocks** | Energy costs and cooldowns for minting/applying settlement deeds (and whether there’s a timelock window). |
 | **Vein collapse probability curve** | Too harsh = mining is impossible; too lenient = no coordination pressure. |
 | **Fee caps or pure free market** | Should territory owners have unlimited pricing power? |
 | **PvP safe zones** | Should areas near Spawn Nodes be combat‑free? How large? |
