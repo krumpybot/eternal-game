@@ -1,4 +1,4 @@
-# Eternal Game — Design Scope v0.1.2
+# Eternal Game — Design Scope v0.1.4
 
 > **Working title.** This document synthesizes the Fractales framework (Cartridge/Dojo), the Realms: Adventures idle-RPG concept, and the Realms/Loot ecosystem into a unified thesis for an eternal, fully onchain MMORPG. It is a living document — intended to be challenged, refined, and expanded over many iterations.
 
@@ -225,6 +225,28 @@ This is a placeholder for a **large trait list** to be authored later.
 - Final seed example: `hash(globalSeed, tokenId, mintBlock, userSalt)`.
 - Prevents front‑running and keeps trait/attribute rolls unbiased.
 
+### Followers (Adventurer Party)
+
+Adventurers can accumulate **Followers** — NPCs that travel with the adventurer as their party.
+
+- Followers are **not** settlement population and do **not** count toward any hex/settlement staffing.
+- Followers represent the adventurer’s personal logistics and support: **laborers**, **donkeys/mounts**, and (future module) **bodyguards**.
+- The maximum party size is gated by the adventurer’s **Leadership** attribute.
+
+#### Party composition (examples)
+- **Laborers**: improve harvest/build task throughput for the adventurer’s personal actions.
+- **Donkeys / mounts**: increase carry capacity and/or travel efficiency (already referenced elsewhere in logistics).
+- **Bodyguards (future module)**: reduce hazard lethality or improve combat odds.
+
+#### Followers vs settlement workforce
+- Settlement population = people living/working in the settlement.
+- Adventurer followers = people/animals attached to an adventurer and moving with them.
+- Followers can be hired/earned in settlements, but once attached they are tracked at the **adventurer level**.
+
+#### Open design details
+- Followers consume food as the adventurer does (shared food resource type). Exact quantities per follower type are TBD.
+- Whether followers can die / desert on hazards and starvation events (likely yes; this creates meaningful risk).
+
 ### Equipment
 
 - Equipment slots: **head, body, waist, hands, feet**, plus **one neck slot** and **one ring slot**.
@@ -242,7 +264,7 @@ This is a placeholder for a **large trait list** to be authored later.
 - **Base max energy**: **200** (≈5.5–6 hours of storage at base regen).
 - **Maximum energy** is determined by Endurance and any buffs/debuffs.
 - No separate **rest action** — an idle adventurer is resting.
-- **Future module:** food quality buffs regen rate and max energy. Neglecting food applies regen debuffs that can turn regen negative; if energy is negative on any tick, the adventurer dies.
+- **Future module (shared food resource):** food quality buffs regen rate and max energy. Adventurers can eat basic/raw food (no bonus) or cooked/crafted food (bonuses). Neglecting food applies regen debuffs that can turn regen negative; if energy is negative on any tick, the adventurer dies.
 
 ---
 
@@ -466,7 +488,86 @@ The building list will expand dramatically as area slots increase. Representativ
   - **Cheaper travel** for the owner between settlement hexes (infrastructure‑dependent)
 - Individual hexes can **degrade and be taken over**; if a hex is captured, it **leaves the settlement**. The new owner must perform the deed process to add it to their own settlement.
 
-### 10.4 Land Claiming & Development
+### 10.4 Population, Housing & Food (Settlement Maintenance)
+
+Settlements are not just buildings — they are **people**.
+
+Each settlement tracks a **Population** value, which is constrained by (1) **housing capacity** and (2) **food reserves**.
+
+#### Time cadence
+- **1 in-game day = 4 real-world hours**.
+- Therefore: **6 in-game days per real-world day**.
+
+Population growth/decline is evaluated on the **in-game day** boundary.
+
+#### Housing capacity
+- Each settlement has a **Base Max Population** from housing structures:
+  - `base_max_pop = Σ(housing_building_count × housing_capacity_value)`
+  - `housing_capacity_value` is **TBD** until the building list is fully authored.
+- **Realm metadata bonus (cities):** Realm NFTs have **5–21 “cities”** metadata.
+  - Each city provides **+1% max population per housing building**.
+  - If a housing building normally provides `H` capacity, and the Realm has `C` cities:
+    - `effective_capacity_per_housing = H × (1 + 0.01 × C)`
+  - Settlement Effective Max Population is:
+    - `effective_max_pop = floor( Σ(housing_building_count × effective_capacity_per_housing) )`
+
+**Important nuance (food cost):**
+- **Only base population capacity requires food upkeep.**
+- The Realm “cities” bonus adds **extra headroom** (higher effective max) **without increasing food requirement** for upkeep.
+  - i.e., the settlement can temporarily operate at population above `base_max_pop` (up to `effective_max_pop`) without consuming additional food beyond the base requirement.
+
+This creates a meaningful utility for Realm city metadata without creating runaway compounding costs.
+
+#### Food reserves (new upkeep requirement)
+Settlements maintain a **Food Reserves** bar (similar to upkeep/maintenance):
+
+- The bar is **capped at 100%**.
+- It is **deposit-only**: there is **no automatic routing** from storage → reserves.
+- The bar is filled by moving food items from settlement storage into **Food Reserves**.
+- **Filling Food Reserves is an action** that costs adventurer energy.
+- Food is a **shared resource type** used by both:
+  - settlement population consumption, and
+  - adventurer consumption (basic/raw food vs cooked/crafted food with bonuses).
+- Settlement population is not picky: any food deposited into Food Reserves is valid.
+
+**Drain rate:**
+- Food Reserves drains at **2.5% per in-game day**.
+- At this rate, a full bar empties in **40 in-game days**, i.e. **~160 real-world hours (~6.7 days)** without intervention.
+
+**Scaling:**
+- The amount of food required to fill the Food Reserves bar scales **proportionally with Base Max Population** (not the Realm bonus headroom).
+  - Bigger settlements need more food to “top up” the bar.
+  - Realm bonus population is “free” in upkeep terms (no extra food requirement), but still obeys housing headroom.
+
+#### Population growth/decline
+- For every in-game day the Food Reserves bar is **at zero** → **Population −1**.
+- For every in-game day the Food Reserves bar is **greater than zero** → **Population +1**, up to **Effective Max Population**.
+
+This creates a slow, readable demographic drift that is sensitive to sustained neglect.
+
+#### What staffing does (and does not do)
+- Population, food, and upkeep determine whether buildings remain **functional / open for use** (cleaning, preparation, utilities, basic repair).
+- Adventurers still must spend **energy** to actually perform work using buildings (crafting, refining, construction actions).
+
+#### Buildings require population to operate
+- Each building has a **Required Population** (a staffing expectation).
+- A settlement’s **Total Required Population** is the sum across all active buildings.
+
+If **Total Required Population > Current Population**, the settlement is understaffed:
+
+- Define `staffing_ratio = clamp(CurrentPop / RequiredPop, 0, 1)`.
+- Apply penalties based on `staffing_ratio`:
+  - **Production efficiency** (the building staying operational/usable) scales **linearly** with `staffing_ratio`.
+  - **Upkeep costs** increase inversely with a hard cap:
+    - `upkeep_multiplier = clamp(1 / staffing_ratio, 1, 3)`
+
+This yields the desired anchors:
+- At `staffing_ratio = 0.5` → `upkeep_multiplier = 2×` (100% extra upkeep)
+- At `staffing_ratio <= 0.25` → capped at `3×` (200% extra upkeep)
+
+**Interpretation:** when understaffed, settlements spend proportionally more time/energy maintaining instead of producing.
+
+### 10.5 Land Claiming & Development
 
 - Development progression: **Unexplored hex → Explored hex → Developed hex → Settlement → City → Kingdom → Empire**.
 - Each tier requires more investment but provides more benefits (trade access, crafting efficiency, defensive bonuses, revenue from other players).
@@ -880,6 +981,10 @@ These are unresolved design decisions that need iteration:
 | **Building slot distributions** | Exact distributions for control/bare/materials areas. |
 | **"Sufficiently developed hex" threshold (settlements)** | The minimum development needed for a hex to qualify for settlement formation/expansion via deed. |
 | **Deed mint/apply costs + timelocks** | Energy costs and cooldowns for minting/applying settlement deeds (and whether there’s a timelock window). |
+| **Settlement housing capacity values** | How much max population each Housing building provides (depends on the full building list + staffing requirements). |
+| **Food reserves parameters** | Exact food-items list; storage cap; energy cost per “deposit food to reserves” action; UI/UX for topping up; how farms/trade contribute. |
+| **Understaffing penalty caps** | Linear ratio is chosen; still need to pick caps/ε for inverse-upkeep scaling to prevent pathological costs at very low staffing. |
+| **Followers (adventurer party) details** | Followers consume food as the adventurer does (shared food resource). Can they die/desert on hazards/starvation? How are mounts/donkeys counted vs humanoid followers? |
 | **Vein collapse probability curve** | Too harsh = mining is impossible; too lenient = no coordination pressure. |
 | **Fee caps or pure free market** | Should territory owners have unlimited pricing power? |
 | **PvP safe zones** | Should areas near Spawn Nodes be combat‑free? How large? |
@@ -969,6 +1074,6 @@ The ecosystem provides **assets with meaning**:
 
 ---
 
-*v0.1.2 — March 2026*
+*v0.1.4 — March 2026*
 *Authors: Krumpy (design direction), Squire (synthesis & drafting)*
 *Sources: Fractales (cartridge-gg/fractales), Realms: Adventures (design doc), Realms Ecosystem*
