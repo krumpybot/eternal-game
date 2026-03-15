@@ -1,4 +1,4 @@
-# Eternal Game — Design Scope v0.1.4
+# Eternal Game — Design Scope v0.1.5
 
 > **Working title.** This document synthesizes the Fractales framework (Cartridge/Dojo), the Realms: Adventures idle-RPG concept, and the Realms/Loot ecosystem into a unified thesis for an eternal, fully onchain MMORPG. It is a living document — intended to be challenged, refined, and expanded over many iterations.
 
@@ -302,6 +302,8 @@ SPAWN → EXPLORE → DISCOVER → GATHER → REFINE → MAINTAIN → EXPAND →
 - **Harvest** (fertile area)
 - **Mine** (mining area)
 - **Log** (forestry area)
+- **Hunt** (forestry area — fauna)
+- **Raise Livestock** (cleared fertile area)
 
 **Territory & Development**
 - **Construct** (build on an area slot)
@@ -357,18 +359,18 @@ The explored world grows organically:
 
 Materials areas yield **raw materials**. This list will evolve, but current buckets are:
 
-- **Food** (plants, crops, animals): wild berries, roots, mushrooms, boar, venison, fish, game fowl, honey.
+- **Food** (plants, crops, animals): wild berries, roots, mushrooms, boar, venison, fish, game fowl, honey, milk, eggs.
 - **Core Resources** (the familiar "Eternum 22" resource set, used here as a **canonical taxonomy** — but **not bridged/ported** from Eternum).
 - **Special Resources** (non‑core raw materials that extend the supply chain):
-  - Examples: **leather, bone, tallow, salt, clay, sand (glass), pitch, sulfur, saltpeter, dyes, herbs, charcoal, flax, wool, furs, pearls, amber, obsidian shards, alchemical reagents**.
-- **Essence** (singular magical material with broad utility).
+  - Examples: **leather, bone, tallow, salt, clay, sand (glass), pitch, sulfur, saltpeter, dyes, herbs, charcoal, flax, wool, furs, pearls, amber, obsidian shards, alchemical reagents**. Wool and some leather/tallow come primarily from livestock (§8.5); furs and bone from hunting (§8.4).
+- **Essence** (singular magical material — see §15, Modular Game Layers). Essence exists as a resource ID in the base module but its generation, uses, and alchemy recipes are scoped as a future module.
 
 ### 8.1 Fertile Areas (Plants)
 
 - **Plant nodes** are now **fertile areas**.
 - On discovery, fertile areas contain **native plants** with deterministic fertility, species, yield multiplier, and regrowth rate.
 - Native plants can yield **Food** and **Special Resources** depending on species.
-- There is **no permanent extinction of the area**, but **native species** can be driven extinct (e.g., to sow crops).
+- There is **no permanent extinction of the area**, but **native species** can be driven extinct (e.g., to sow crops or raise livestock — see §8.5).
 - Each harvest reduces fertility (lower yield). Players can **fertilize** to restore fertility, or **salt the earth** to push fertility negative and render it barren. Negative fertility trends back to 0 over time.
 - Different biomes produce different native species; crop yields vary by biome affinity.
 
@@ -392,14 +394,39 @@ Materials areas yield **raw materials**. This list will evolve, but current buck
   - **Food** and **Special Resources** from native flora and fauna.
 - Forestry is **ecosystem management**:
   - As logging increases, lumber yield rises slightly, while flora/fauna yield drops sharply.
-  - Heavy logging can make native flora/fauna extinct (0% yield) while improving lumber yield.
-  - Players may choose to preserve rare flora/fauna instead of maximizing wood.
+  - Heavy logging can make native flora/fauna extinct (0% yield) while improving lumber yield — and **eliminates hunting** in the area (see §8.4).
+  - Players may choose to preserve rare flora/fauna instead of maximizing wood (and maintain hunting yields).
   - Native flora/fauna can return over time if logging ceases entirely.
 
-### 8.4 Hunting & Creatures (Future Module)
+### 8.4 Hunting (Forestry Areas)
 
-- Biome‑specific **beast attacks** and wildlife encounters.
-- Loot Survivor beasts integrate via hazards and underworld encounters (see §14).
+Hunting is an active action performed in **forestry areas**, targeting the area's native fauna.
+
+- **Hunt action**: adventurer commits energy + time‑lock in a forestry area.
+- **Chance‑based outcome**: success is a roll influenced by:
+  - Adventurer **Survival** and **Dexterity** attributes
+  - Equipment bonuses (bows, traps, hunting gear)
+  - Fauna density of the area (see ecosystem dynamics in §8.3)
+- **Logging trade‑off**: hunting success chance (fauna yield) **drops sharply** as cumulative logging increases in the area. Heavy logging drives fauna extinct, eliminating hunting entirely.
+- **Yields on success**: Food (game fowl, venison, boar, fish where applicable) and Special Resources (leather, bone, tallow, furs).
+- **Yields on failure**: nothing (energy + time still consumed).
+- Fauna can recover over time if logging ceases (same regrowth mechanic as §8.3).
+
+### 8.5 Livestock (Fertile Areas)
+
+Livestock raising is an alternative land use for **fertile areas** that have been cleared of native species (same precondition as sowing crops in §8.1).
+
+- Once native species are driven extinct on a fertile area, the player can choose to either **sow crops** or **raise livestock**.
+- **Raise livestock action**: establishes a herd on the area. Requires initial stock (animals acquired from hunting yields or trade) + construction of a pen/enclosure (uses a building slot or is area‑intrinsic, TBD).
+- **Livestock yields**: Food (meat, milk, eggs) and Special Resources (wool, leather, bone, tallow).
+- **Upkeep**: livestock consume food (grazing reduces area fertility over time, similar to crops). Neglecting livestock leads to herd decline.
+- **Biome affinity**: livestock types and yields vary by biome. Grassland and Highlands favour wool‑bearing animals; Plains and Savanna favour cattle.
+- Livestock and crops are **mutually exclusive** on a given fertile area (choose one land use).
+
+### 8.6 Beasts & Hazards
+
+- Biome‑specific **beast attacks** and wildlife encounters function as hazards during exploration, travel, and production actions (see §13 for ecosystem integration with Loot Survivor beasts).
+- Hunting fauna in forestry areas is a deliberate activity (§8.4); beast hazards are involuntary encounters.
 
 ---
 
@@ -1074,6 +1101,6 @@ The ecosystem provides **assets with meaning**:
 
 ---
 
-*v0.1.4 — March 2026*
+*v0.1.5 — March 2026*
 *Authors: Krumpy (design direction), Squire (synthesis & drafting)*
 *Sources: Fractales (cartridge-gg/fractales), Realms: Adventures (design doc), Realms Ecosystem*

@@ -1,4 +1,4 @@
-# Eternal Game — Base Module Scope v0.1
+# Eternal Game — Base Module Scope v0.1.1
 
 > **The base module defines the physics of the world.** Once deployed, these contracts never change. Every future module — combat, trade, governance, lore — must build on top of this layer without modifying it. This document specifies exactly what ships in the base module, what is explicitly deferred, and the interfaces future modules will use.
 
@@ -20,19 +20,22 @@
 12. [Resource Definitions](#12-resource-definitions)
 13. [Production: Mining](#13-production-mining)
 14. [Production: Forestry](#14-production-forestry)
-15. [Production: Foraging & Harvesting](#15-production-foraging--harvesting)
-16. [Crafting & Refining](#16-crafting--refining)
-17. [Equipment & Items](#17-equipment--items)
-18. [Construction & Buildings](#18-construction--buildings)
-19. [Settlement](#19-settlement)
-20. [Population, Housing & Food](#20-population-housing--food)
-21. [Territorial Sovereignty](#21-territorial-sovereignty)
-22. [Beasts & Hazards](#22-beasts--hazards)
-23. [Permadeath & Legacy](#23-permadeath--legacy)
-24. [Autoregulation](#24-autoregulation)
-25. [Extension Interfaces](#25-extension-interfaces)
-26. [What Is Explicitly Deferred](#26-what-is-explicitly-deferred)
-27. [Playable State](#27-playable-state)
+15. [Production: Hunting](#15-production-hunting)
+16. [Production: Foraging & Harvesting](#16-production-foraging--harvesting)
+17. [Production: Livestock](#17-production-livestock)
+18. [Crafting & Refining](#18-crafting--refining)
+19. [Equipment & Items](#19-equipment--items)
+20. [Construction & Buildings](#20-construction--buildings)
+21. [Settlement](#21-settlement)
+22. [Population, Housing & Food](#22-population-housing--food)
+23. [Territorial Sovereignty](#23-territorial-sovereignty)
+24. [Beasts & Hazards](#24-beasts--hazards)
+25. [Permadeath & Legacy](#25-permadeath--legacy)
+26. [Autoregulation](#26-autoregulation)
+27. [Extension Interfaces](#27-extension-interfaces)
+28. [Future Module Placeholders](#28-future-module-placeholders)
+29. [What Is Explicitly Deferred](#29-what-is-explicitly-deferred)
+30. [Playable State](#30-playable-state)
 
 ---
 
@@ -86,7 +89,7 @@ What *can* change:
 | Energy | Pool, regen, reservation, spend |
 | Movement | Explore (unknown hex), travel (known hex) |
 | Surveying | Area reveal within a hex |
-| Production | Mining, forestry, foraging/harvesting |
+| Production | Mining, forestry, hunting, foraging/harvesting, livestock |
 | Crafting | Refining (raw → core → quality), mutation-based crafting |
 | Items | Equipment, durability, repair, weight |
 | Construction | Building placement, material costs, building upkeep |
@@ -363,7 +366,8 @@ This is the core starvation mechanic. It is base-module because it ties energy (
 | Explore (unknown hex) | High (biome-modified) |
 | Travel (known hex) | Low-medium (biome-modified, survey-reduced) |
 | Survey (reveal area) | Medium |
-| Harvest/Mine/Log | Per-action (skill-modified) |
+| Harvest/Mine/Log/Hunt | Per-action (skill-modified) |
+| Establish livestock | Per-area (initial setup cost) |
 | Craft/Refine | Per-recipe |
 | Construct | Per-building (material-dependent) |
 | Territorial upkeep | Per-tick (biome + productivity modified) |
@@ -434,7 +438,12 @@ Raw food items gathered from fertile areas, forestry, or (future) hunting:
 | Wild Berries | Forest, Jungle, Taiga | Common, low nutrition |
 | Roots | Plains, Grassland, Highlands | Common |
 | Mushrooms | Forest, Swamp, Mire | Uncommon, some poisonous |
-| Game Fowl | Plains, Savanna, Grassland | Requires future hunting module for active yield; passive forage only in base |
+| Game Fowl | Plains, Savanna, Grassland | Hunting yield (§15) |
+| Venison | Forest, Taiga, Highlands | Hunting yield (§15) |
+| Boar | Forest, Swamp, Jungle | Hunting yield (§15) |
+| Milk | Plains, Grassland, Highlands | Livestock yield (§17) |
+| Eggs | Plains, Forest, any temperate | Livestock yield (§17) |
+| Meat (generic) | Any with livestock or hunting | Butchered product |
 | Honey | Forest, Jungle | Rare fertile node |
 | Fish | Coast, Lake, Beach, Coastal Waters | Requires adjacent water hex or fishing area |
 | Herbs | Multiple biomes | Dual-use: food ingredient + alchemical |
@@ -474,17 +483,18 @@ Non-core materials that extend the crafting supply chain:
 | Dyes | Jungle, Swamp, Mire | Crafting modifier |
 | Charcoal | Forest, Taiga | Fuel, smelting catalyst |
 | Flax | Plains, Grassland | Textile |
-| Wool | Grassland, Highlands | Textile (requires future livestock?) |
+| Wool | Grassland, Highlands | Textile; primary source is livestock (§17) |
 | Furs | Taiga, Tundra, Forest | Gear crafting (cold protection) |
 | Pearls | Coast, Deep Ocean | Rare, jewelry |
 | Amber | Forest, Taiga | Rare, jewelry/alchemy |
 | Obsidian Shards | Volcanic, Mining | Weapon crafting |
-| Alchemical Reagents | Multiple (rare nodes) | Catch-all for future alchemy module |
+| Alchemical Reagents | Multiple (rare nodes) | Reserved for future Alchemy & Essence module |
 
 #### Essence
 
-- Singular magical material. Broad utility. Rare drop from any materials area.
-- Exact mechanics are deliberately minimal in base module: it exists, it drops, it can be stored and traded. Future modules define its uses.
+- Singular magical material. **Resource ID is registered** in the base module, but Essence does **not** drop from any base-module source.
+- Essence generation, uses, and alchemy recipes are entirely scoped as a **future module** (Alchemy & Essence).
+- The ID exists at deployment so future modules can reference it without requiring base module changes.
 
 ### Resource ID registry
 
@@ -550,8 +560,8 @@ This ensures future modules can add new resources without colliding with base ID
 This is a core base-module mechanic because it creates player-driven scarcity:
 
 - **Logging vs. ecosystem trade-off**: as logging increases, lumber yield rises slightly, but flora/fauna yield drops sharply.
-- **Heavy logging** can make native flora/fauna **extinct** (0% yield) while improving lumber yield.
-- **Conservation choice**: players may preserve rare flora/fauna instead of maximizing wood.
+- **Heavy logging** can make native flora/fauna **extinct** (0% yield) while improving lumber yield — and **eliminates hunting** in the area (see §15).
+- **Conservation choice**: players may preserve rare flora/fauna instead of maximizing wood (and maintain hunting yields).
 - Native species can return over time if logging ceases entirely (slow regrowth).
 
 ### Yields
@@ -562,7 +572,35 @@ This is a core base-module mechanic because it creates player-driven scarcity:
 
 ---
 
-## 15. Production: Foraging & Harvesting
+## 15. Production: Hunting
+
+Hunting is an active action performed in **forestry areas**, targeting the area's native fauna.
+
+### Hunt action
+
+1. Adventurer commits energy + time-lock in a forestry area that has living fauna.
+2. **Chance-based resolution**: success is a single roll influenced by:
+   - Adventurer **Survival** and **Dexterity** attributes
+   - Equipment bonuses (bows, traps, hunting gear)
+   - Current **fauna density** of the area (higher = better odds)
+3. On **success**: yield food (game fowl, venison, boar) and special resources (leather, bone, tallow, furs).
+4. On **failure**: nothing — energy and time are still consumed.
+
+### Interaction with logging
+
+- Fauna density drops sharply as cumulative logging increases (same ecosystem dynamics as §14).
+- Heavy logging drives fauna **extinct** → hunting becomes impossible.
+- If logging ceases, fauna can recover over time (slow regrowth).
+
+This creates a direct strategic tension: logging and hunting compete for the same ecosystem. Players (or settlements) must choose their balance.
+
+### Hazard note
+
+Hunting is a **deliberate action** with chance-based yields. Beast **hazard encounters** (§24) are involuntary and can occur during any action — they are separate systems. A hunter might successfully bag a deer *and* get ambushed by a wolf on the same trip.
+
+---
+
+## 16. Production: Foraging & Harvesting
 
 ### Fertile areas
 
@@ -589,7 +627,49 @@ This is a core base-module mechanic because it creates player-driven scarcity:
 
 ---
 
-## 16. Crafting & Refining
+## 17. Production: Livestock
+
+Livestock raising is an alternative land use for **fertile areas** where native species have been driven extinct (same precondition as sowing crops in §16).
+
+### Establishing livestock
+
+1. Clear a fertile area of native species (through heavy harvesting or salt-the-earth).
+2. Choose land use: **sow crops** OR **raise livestock** (mutually exclusive per area).
+3. Raise livestock requires:
+   - Initial stock (animals acquired from hunting yields, trade, or settlement sources)
+   - Energy + time-lock to establish the herd
+
+### Livestock state
+
+```
+livestock_type: u8           // species (cattle, sheep, goats, poultry, etc.)
+herd_size: u16
+area_fertility: i16          // grazing depletes fertility over time
+```
+
+### Yields
+
+| Livestock type | Food yields | Special resource yields | Biome affinity |
+|---|---|---|---|
+| Cattle | Meat, milk | Leather, bone, tallow | Plains, Savanna, Grassland |
+| Sheep | Meat, milk | Wool, leather | Grassland, Highlands |
+| Goats | Meat, milk | Leather, bone | Highlands, Steppe, Canyon |
+| Poultry | Meat, eggs | Bone, feathers | Plains, Forest, any temperate |
+
+### Upkeep
+
+- Livestock graze, reducing area **fertility** over time (same fertility mechanic as crops).
+- If fertility drops too low, herd size declines (animals starve/leave).
+- Players must **fertilize** or rotate grazing to sustain herds long-term.
+- Neglected livestock decline to 0 — the area reverts to barren (can be re-seeded with native species, crops, or new livestock).
+
+### Why livestock is in the base module
+
+Animal products (wool, leather, tallow, meat, milk, eggs) are **core crafting inputs** and **food sources** that feed into the base crafting and settlement food systems. Without livestock, wool has no reliable source, and the food/special resource supply chain has a gap that would require a base module change to fill later — which is forbidden.
+
+---
+
+## 18. Crafting & Refining
 
 ### Refining (raw → usable)
 
@@ -655,7 +735,7 @@ The recipe registry includes **reserved ID ranges** for future modules (same pat
 
 ---
 
-## 17. Equipment & Items
+## 19. Equipment & Items
 
 ### Item model
 
@@ -691,7 +771,7 @@ greatness: u8             // 1–20 rating scale (Loot-compatible)
 
 ---
 
-## 18. Construction & Buildings
+## 20. Construction & Buildings
 
 ### Building system
 
@@ -744,7 +824,7 @@ Same pattern as resources: permanent IDs at deployment with reserved ranges for 
 
 ---
 
-## 19. Settlement
+## 21. Settlement
 
 ### Formation (Deed system)
 
@@ -781,7 +861,7 @@ last_food_tick: felt252
 
 ---
 
-## 20. Population, Housing & Food
+## 22. Population, Housing & Food
 
 ### Population
 
@@ -829,7 +909,7 @@ Per in-game day boundary:
 
 ---
 
-## 21. Territorial Sovereignty
+## 23. Territorial Sovereignty
 
 ### Ownership
 
@@ -870,7 +950,7 @@ This creates organic territorial limits: you can only hold what you can maintain
 
 ---
 
-## 22. Beasts & Hazards
+## 24. Beasts & Hazards
 
 ### Why beasts are in the base module
 
@@ -911,7 +991,7 @@ The base module does not include turn-based or real-time combat. Encounters are 
 
 ---
 
-## 23. Permadeath & Legacy
+## 25. Permadeath & Legacy
 
 ### Death triggers
 
@@ -936,7 +1016,7 @@ Player mints a new adventurer (paying $LORDS again). Starts fresh at The Nexus. 
 
 ---
 
-## 24. Autoregulation
+## 26. Autoregulation
 
 ### Purpose
 
@@ -965,7 +1045,7 @@ Prevent runaway inflation, stagnation, or exploitation without human interventio
 
 ---
 
-## 25. Extension Interfaces
+## 27. Extension Interfaces
 
 The base module exposes these interfaces for future modules to hook into:
 
@@ -1034,7 +1114,61 @@ Read-only access to adventurer state for any module.
 
 ---
 
-## 26. What Is Explicitly Deferred
+## 28. Future Module Placeholders
+
+The base module includes reserved **hooks, IDs, and world-generation slots** that exist solely to support future modules without requiring base module changes. These are "empty sockets" in the physics.
+
+### Reserved resource IDs
+
+```
+0x0300–0x03FF: Essence & magical materials (no base-module source; future Alchemy module)
+0x0400–0x0FFF: Unallocated (future modules register new resources here)
+```
+
+Essence (ID `0x0300`) is registered but has no drop table, recipe, or use in the base module.
+
+### Reserved building type IDs
+
+```
+0x0100–0x01FF: Base module buildings
+0x0200–0x0FFF: Future module buildings (Jeweler, Alchemist, Barracks, Market Stall, etc.)
+```
+
+Future buildings use the same slot/area/construction system — they just don't exist yet.
+
+### Reserved area types
+
+The base module defines 5 area types: `Control, Materials, Bare, Underworld, Special`.
+
+- **Underworld areas**: generated by world gen but have **no base-module actions** beyond surveying. They exist as hooks for the future Dungeon (C&C) module. Adventurers can survey them (revealing that an underworld area exists) but cannot delve or interact further.
+- **Special areas**: generated rarely. No base-module actions beyond surveying. Reserved for future modules (Spawn Nodes, shrines, portals, lore sites, etc.).
+
+### Reserved trait slots
+
+The trait system supports up to 6 slots per adventurer. The base module ships with a starter trait list. Future modules can add new traits to the enumeration — the trait storage is generic (`TraitId` is a `u16`).
+
+### Reserved recipe IDs
+
+```
+0x0000–0x00FF: Base module recipes (food, smelting, basic gear, building materials)
+0x0100–0x0FFF: Future module recipes (alchemy, advanced crafting, enchanting, etc.)
+```
+
+### Event hooks as placeholders
+
+All 16+ event hooks (§27) fire regardless of whether any module is listening. Future modules subscribe to the events they need. The base module doesn't need to know what modules exist — it just emits events.
+
+### Permission hook interface
+
+The `IPermissionHook` trait (§27) is deployed per-hex by territory controllers. The base module enforces the interface but doesn't care what logic is inside. This is the primary extensibility mechanism for future social/economic/governance modules.
+
+### Biome-specific reserved data
+
+Each biome's hazard table includes **weight slots for T4 and T5 beasts** even though these encounters are exceptionally rare in the base module. Future combat/dungeon modules can adjust encounter weights (via the autoregulator) to make high-tier beasts more common in specific contexts without changing the base hazard resolution logic.
+
+---
+
+## 29. What Is Explicitly Deferred
 
 To maintain clarity on the module boundary, here is what the base module **does not include** and why:
 
@@ -1054,14 +1188,13 @@ To maintain clarity on the module boundary, here is what the base module **does 
 | **Secondary Spawn Nodes** | Can be added as module reading base hex state |
 | **Fog of war** | Requires Starknet privacy primitives |
 | **Agent/AI autonomous play hooks** | Separate autonomy module |
-| **Hunting as active action** | Base has passive fauna from forestry + beast encounters; active hunting is a module |
-| **Livestock / animal husbandry** | Future food/resource module |
+
 | **Boats / water traversal buildings** | Water biomes exist; traversal rules are base but specific vehicle buildings are deferred |
-| **Alchemy** | Alchemical reagents exist as resources; recipes are a future module |
+| **Essence & Alchemy** | Essence resource ID exists; generation mechanics, alchemy recipes, and magical crafting are a future module |
 
 ---
 
-## 27. Playable State
+## 30. Playable State
 
 When the base module ships, a player can:
 
@@ -1071,17 +1204,18 @@ When the base module ships, a player can:
 4. **Harvest** food and plants from fertile areas; manage fertility.
 5. **Mine** ores from mining areas; manage collapse risk.
 6. **Log** trees from forestry areas; balance lumber vs ecosystem.
-7. **Forage** for special resources across biome types.
-8. **Refine** raw materials into usable resources (smelt ore, cut gems, tan leather).
-9. **Craft** weapons, armor, tools, and food at appropriate facilities.
-10. **Build** structures on surveyed area slots (smelters, workshops, forges, housing, etc.).
-11. **Settle** — form a settlement across multiple developed hexes using the deed system.
-12. **Feed** the settlement population by depositing food into reserves.
-13. **Manage** staffing across buildings; deal with understaffing penalties.
-14. **Maintain** territory by paying upkeep; watch it decay if neglected.
-15. **Claim** decayed territory from inactive players.
-16. **Die** permanently from starvation or beast encounters.
-17. **Respawn** as a new adventurer in a world shaped by predecessors.
+7. **Hunt** fauna in forestry areas for food and special resources (leather, bone, furs).
+8. **Raise livestock** on cleared fertile areas for wool, meat, milk, eggs.
+9. **Refine** raw materials into usable resources (smelt ore, cut gems, tan leather).
+10. **Craft** weapons, armor, tools, and food at appropriate facilities.
+11. **Build** structures on surveyed area slots (smelters, workshops, forges, housing, etc.).
+12. **Settle** — form a settlement across multiple developed hexes using the deed system.
+13. **Feed** the settlement population by depositing food into reserves.
+14. **Manage** staffing across buildings; deal with understaffing penalties.
+15. **Maintain** territory by paying upkeep; watch it decay if neglected.
+16. **Claim** decayed territory from inactive players.
+17. **Die** permanently from starvation or beast encounters.
+18. **Respawn** as a new adventurer in a world shaped by predecessors.
 
 This is a complete, playable survival-settlement game. It is sparse but not shallow — the interaction between energy, resources, territory, population, food, beasts, and permadeath creates genuine strategic depth and meaningful decisions.
 
@@ -1089,6 +1223,6 @@ Future modules add richness (combat, trade, governance, lore, ecosystem assets) 
 
 ---
 
-*v0.1 — March 2026*
+*v0.1.1 — March 2026*
 *Authors: Krumpy (design direction), Squire (synthesis & drafting)*
-*Scope derived from: Eternal Game Design Scope v0.1.4*
+*Scope derived from: Eternal Game Design Scope v0.1.5*
