@@ -84,7 +84,7 @@ What *can* change:
 | Time | Tick system, hybrid guard, in-game day cadence |
 | Space | Hex grid, cube coordinates, codec, adjacency |
 | World generation | Biomes, area generation, resource node seeding |
-| Adventurer | Creation, attributes, traits, equipment slots, inventory, death |
+| Adventurer | Creation, attributes, traits, health, equipment slots, inventory, death |
 | Followers | Party system, leadership gating, food consumption |
 | Energy | Pool, regen, reservation, spend |
 | Movement | Explore (unknown hex), travel (known hex) |
@@ -104,7 +104,7 @@ What *can* change:
 | System | Why deferred |
 |---|---|
 | City/Kingdom/Empire upgrades | Requires proven settlement meta first |
-| PvP combat | Separate combat module; base provides health/death primitives |
+| PvP combat | Separate combat module; base provides health/energy/death primitives |
 | Trade markets & local economy | Requires settlements + population density |
 | Guilds & governance | Social layer; base provides ownership primitives |
 | Quests & narrative | Content layer |
@@ -254,13 +254,18 @@ alive: bool
 position: (x, y, z)
 energy: u32
 max_energy: u32
+health: u32
+max_health: u32
 activity_lock_until: felt252   // tick when current action completes
-inventory: Map<ItemId, u32>    // weight-limited
+inventory_resources: Map<ResourceId, u32>  // fungible tokens, unlimited stacking, weight-limited
+inventory_items: Map<SlotIndex, ItemId>    // non-fungible crafted items (weapons, armor, etc.), one per slot
 equipment: Map<Slot, ItemId>   // head, body, waist, hands, feet, neck, ring
-attributes: [u8; 9]           // STR, END, DEX, VIT, INT, WIS, CHA, SUR, CRA, LEA
-trait_slots: [TraitId; 6]     // max 6 traits
+attributes: [u8; 10]          // STR, END, DEX, VIT, INT, WIS, CHA, SUR, CRA, LEA
+trait_slots: [TraitId; 10]    // max 10 traits (personality, physical, skill, injury, disability)
 seed: felt252
 ```
+
+> **Inventory note:** Resources are fungible tokens with unlimited stacking; inventory is weight-limited (total weight of all carried resources and items cannot exceed carry capacity). Crafted items (weapons, armor, tools, etc.) are non-fungible due to the mutation-based crafting system and each occupies one inventory slot. Inventory may additionally be slot-limited depending on blockchain storage constraints.
 
 ### Attributes
 
@@ -273,14 +278,57 @@ seed: felt252
 - **10 attributes**, budget of **20 points** at mint (20 rolls → +1 to random attribute each).
 - Computed lazily from seed (no stored array at mint).
 - Attributes improve through use (learning by doing). Gain rates are autoregulator-tunable.
+- Attributes serve primarily as **performance gates** for encounters and events (e.g., a beast hunt might have a STR gate where success scales with Strength).
+
+#### Attribute effects
+
+| Attribute | Primary Effect | Formula |
+|---|---|---|
+| **Strength (STR)** | Carry capacity | `carry_cap = 50 + STR × 5 kg` |
+| **Endurance (END)** | Max energy, energy regen | `max_energy = 100 + END × 10`; energy regen rate `+2%` per point |
+| **Dexterity (DEX)** | Hazard avoidance | `avoid_bonus = DEX × 5%` |
+| **Vitality (VIT)** | Max health | `max_health = 100 + VIT × 10` |
+| **Intelligence (INT)** | Resource yield | `yield = base × (1 + INT × 0.025)` — applies to harvest, gather, mine, refine |
+| **Wisdom (WIS)** | Explore & survey energy efficiency | Energy cost = `base × (1 − WIS × 0.04)` (no minimum clamp) |
+| **Charisma (CHA)** | Upkeep energy efficiency | Energy cost = `base × (1 − CHA × 0.03)` (no minimum clamp); fee discount `CHA × 5%`; increases days until follower desertion |
+| **Survival (SUR)** | Hunting, foraging, beast encounters | `hunt_success += SUR × 5%`; `forage_success += SUR × 5%`; `beast_encounter_success += SUR × 2.5%` |
+| **Craftsmanship (CRA)** | Craft quality, repair cost, mutation | `craft_quality += CRA × 5%`; repair cost `−4%` per point; widens favorable mutation range |
+| **Leadership (LEA)** | Follower count | `max_followers = 1 + floor(LEA / 2)` |
+
+### Health
+
+Adventurers have a **health pool** separate from energy:
+
+- **Base max health**: 100 (modified by Vitality: `max_health = 100 + VIT × 10`).
+- **Base health regen**: 0.01 per tick (~3.6/hour, ~86.4/in-game day) — significantly slower than energy regen.
+- Health regen is **lazy** (computed on next interaction), same as energy.
+- Food and special items may increase health regen rate.
+- Health is lost through **encounter or activity outcomes** (e.g., a logging accident might cost 25 health, a beast attack might cost 50 health).
+- Players must weigh the risks of taking actions while health is low — there is always a **low probability of instant death** from any hazardous action when health is critically low.
+- **If health reaches 0: the adventurer dies** (permadeath).
+- Health and energy are independent systems: an adventurer can have full energy but low health, or vice versa.
 
 ### Traits
 
-- **2 traits at mint**, derived from seed.
-- Traits are organized into **exclusivity groups** (e.g., Brave vs Craven).
-- Max **6 trait slots**. New traits replace conflicting ones.
-- Traits grant positive/negative attribute modifiers and can unlock/block certain actions.
-- Trait list is a large enumeration defined at deployment (see §25 for extensibility).
+Traits are organized into **5 types**:
+
+| Type | Description | Gained | Lost |
+|---|---|---|---|
+| **Personality** | Core character disposition (Brave, Craven, Studious, etc.) | At mint; rarely gained/lost through major life events | Can be replaced by opposite trait through events |
+| **Physical** | Bodily characteristics (Strong-backed, Nimble, Eagle-eyed, etc.) | At mint; rarely gained/lost | Can be replaced by opposite trait through events |
+| **Skill** | Aptitudes earned through experience (Green Thumb, Born Hunter, etc.) | Gained by performing actions — positive from success, negative from failure | **Cannot be lost once gained** |
+| **Injury** | Temporary wounds (Lacerated, Fractured, Bruised, etc.) | Gained from encounter/activity damage outcomes | Lost when adventurer returns to >100 health and completes any action; may convert to a disability trait (probability scales with damage that caused the injury) |
+| **Disability** | Permanent scars from severe injuries (One-eyed, Lame, etc.) | Converted from severe injury traits on resolution | **Cannot be lost** |
+
+- **At mint**: 2 personality traits + 1 physical trait, derived from seed.
+- **Max 10 trait slots**. Traits become **increasingly difficult to gain** as the total trait count rises (every trait gain chance calculation uses current trait count as a variable).
+- **Exclusivity groups**: grouped traits are fully exclusive (e.g., Brave vs Craven — impossible to have both). Almost all personality and physical traits should have an opposite.
+- Traits grant **attribute modifiers** with the following constraints:
+  - Maximum modifier per trait: **+2 or −2** to any single attribute.
+  - Possible modifier shapes: `[+1]`, `[−1]`, `[+2]`, `[−2]`, `[+1, +1]`, `[+1, −1]`, `[−1, −1]`.
+  - **No doubling**: a trait's attribute modifier must not stack with its special effect on the same stat (e.g., a trait granting +10 kg carry capacity should modify Endurance, not Strength, since STR already governs carry capacity).
+- Skill traits define an adventurer's aptitude from their adventures. Positive skill traits are potential outcomes of **successful** actions; negative skill traits are potential outcomes of **failures and defeats**. Skill traits become harder to acquire as the adventurer accumulates more skills.
+- Trait list is a large enumeration defined at deployment (see §28 for extensibility).
 
 ### Equipment slots
 
@@ -288,8 +336,12 @@ seed: felt252
 
 ### Inventory
 
-- Weight-limited. Base carry capacity from Strength + gear bonuses.
-- Items have weight. Exceeding capacity prevents movement (not item pickup — you can drop to move).
+- **Weight-limited**. Base carry capacity = 50 kg + STR × 5 kg + gear bonuses.
+- All items and resources have weight in **kg** (consistent with Eternum and Blitz).
+- Resources are **fungible tokens** with **unlimited stacking** — inventory tracks total weight, not individual units.
+- Crafted items (weapons, armor, tools) are **non-fungible** due to mutation-based crafting; each occupies one inventory slot.
+- Inventory may be additionally **slot-limited** depending on blockchain storage constraints.
+- Exceeding carry capacity prevents movement (not item pickup — you can drop to move).
 
 ---
 
@@ -301,20 +353,22 @@ Followers are non-adventurer NPCs attached to an adventurer's party. They are th
 
 ```
 follower_count: u8           // current party size
-max_followers: u8            // derived from Leadership attribute
-follower_types: Map<FollowerType, u8>  // laborers, mounts
+max_followers: u8            // derived from Leadership: 1 + floor(LEA / 2)
+follower_types: Map<FollowerType, u8>  // laborers, donkeys, mounts
 ```
 
 ### Types (base module)
 
-| Type | Effect |
-|---|---|
-| **Laborer** | Improves harvest/build task throughput for adventurer actions |
-| **Donkey/Mount** | Increases carry capacity and/or reduces travel energy cost |
+| Type | Effect | Notes |
+|---|---|---|
+| **Laborer** | Improves harvest/build task throughput for adventurer actions | — |
+| **Donkey** | +50 kg carry capacity | Pack animal, no travel bonus |
+| **Mount** | −20% travel energy cost, −20% travel time, +20 kg carry capacity | Maximum 1 mount per adventurer at any time |
 
 ### Gating
 
-- Maximum party size = `f(Leadership)`. Exact curve is autoregulator-tunable within bounds.
+- Base followers: **1** (even a lone adventurer can have a mount or donkey).
+- Maximum party size: `max_followers = 1 + floor(LEA / 2)`. Autoregulator-tunable within bounds.
 
 ### Food consumption
 
@@ -334,9 +388,9 @@ follower_types: Map<FollowerType, u8>  // laborers, mounts
 
 ### Pool
 
-- **Base max energy**: 200 (modified by Endurance + gear).
-- **Base regen**: 0.1 energy per tick (~36/hour, ~864/in-game day).
-- Regen is **lazy**: computed on next interaction as `min(max_energy, stored_energy + regen_rate × tick_delta)`.
+- **Base max energy**: 100 (modified by Endurance: `max_energy = 100 + END × 10`, plus gear bonuses). ~2.8 hours of storage at base regen — aligned with in-game day length.
+- **Base regen**: 0.1 energy per tick (~36/hour, ~864/in-game day). Endurance increases regen rate by **+2% per point**.
+- Regen is **lazy**: computed on next interaction as `min(max_energy, stored_energy + effective_regen_rate × tick_delta)`.
 - Regen occurs only when **not** in a time-locked action (idle = resting).
 
 ### Reservation model
@@ -522,7 +576,7 @@ This ensures future modules can add new resources without colliding with base ID
 ### Mining action
 
 1. Adventurer commits energy + time-lock to mine a specific area.
-2. On resolution: yield = `f(vein_depth, yield_multiplier, Craftsmanship, tool_bonus)`.
+2. On resolution: yield = `f(vein_depth, yield_multiplier, Intelligence, tool_bonus)` — INT governs resource yield.
 3. **Vein depletion**: each extraction reduces remaining depth. When a vein is exhausted, it yields nothing (but the area is not destroyed).
 
 ### Collapse mechanic
@@ -552,7 +606,7 @@ This ensures future modules can add new resources without colliding with base ID
 ### Logging action
 
 1. Adventurer commits energy + time-lock.
-2. Yield = `f(tree_density, yield_multiplier, Strength, tool_bonus)`.
+2. Yield = `f(tree_density, yield_multiplier, Intelligence, tool_bonus)` — INT governs resource yield.
 3. Logging depletes tree density. Trees regrow over time (regrowth rate).
 
 ### Ecosystem dynamics
@@ -580,11 +634,11 @@ Hunting is an active action performed in **forestry areas**, targeting the area'
 
 1. Adventurer commits energy + time-lock in a forestry area that has living fauna.
 2. **Chance-based resolution**: success is a single roll influenced by:
-   - Adventurer **Survival** and **Dexterity** attributes
+   - Adventurer **Survival** attribute (`hunt_success += SUR × 5%`)
    - Equipment bonuses (bows, traps, hunting gear)
    - Current **fauna density** of the area (higher = better odds)
 3. On **success**: yield food (game fowl, venison, boar) and special resources (leather, bone, tallow, furs).
-4. On **failure**: nothing — energy and time are still consumed.
+4. On **failure**: nothing — energy and time are still consumed. Negative skill traits may be acquired from repeated failures.
 
 ### Interaction with logging
 
@@ -610,7 +664,7 @@ Hunting is a **deliberate action** with chance-based yields. Beast **hazard enco
 ### Harvest action
 
 1. Adventurer commits energy + time-lock.
-2. Yield = `f(fertility, species_yield, Survival, tool_bonus)`.
+2. Yield = `f(fertility, species_yield, Intelligence, tool_bonus)` — INT governs resource yield (`yield = base × (1 + INT × 0.025)`). Survival affects **forage success chance** (`forage_success += SUR × 5%`).
 3. Each harvest **reduces fertility**. Lower fertility → lower future yields.
 
 ### Fertility management
@@ -682,7 +736,7 @@ Most extracted materials require processing before use:
 | Tanning | Raw hide → Leather | Workshop |
 | Charcoal burning | Wood → Charcoal | None (campfire-level) |
 
-- Refinery yield depends on **building tier** (higher tier = less waste) and **adventurer Craftsmanship** (higher skill = bonus yield).
+- Refinery yield depends on **building tier** (higher tier = less waste) and **adventurer Intelligence** (higher INT = bonus yield via `yield = base × (1 + INT × 0.025)`).
 - Quality tiers: dirty / clean / pure. Higher-tier facilities + higher skill produce cleaner output.
 
 ### Mutation-based crafting
@@ -695,7 +749,7 @@ new_properties = f(input_properties, craft_seed)
 - Any compatible resources can be combined. Outputs inherit blended properties from inputs.
 - A **mutation function** (XOR-seeded) introduces controlled randomness — crafted items are unique.
 - **Legendary rolls** occur when property products cross defined thresholds.
-- Higher Craftsmanship + Intelligence improve mutation outcomes (wider favorable distribution).
+- Higher **Craftsmanship** improves mutation outcomes (wider favorable distribution via `craft_quality += CRA × 5%` and expanded mutation range).
 
 ### Crafting facilities (base module)
 
@@ -977,8 +1031,10 @@ Hazards trigger as a **chance per action** (explore, travel, mine, log, harvest,
 1. `encounter_chance = base_chance × biome_modifier × action_risk_modifier`
 2. If triggered: `beast_type` drawn from biome hazard table.
 3. **Resolution equation** (single roll, not a combat system):
-   - Inputs: beast lethality, adventurer energy, attributes (Survival, Endurance, Dexterity), equipment defense, time of day
-   - Outcomes: **avoid** (no effect), **injury** (lose energy, possibly gain a negative trait), **resource gain** (pelt, bone, meat), **positive trait** (Perceptive, Quick-Witted), or **death**.
+   - Inputs: beast lethality, adventurer health, adventurer energy, attributes (Survival `+2.5%` success per point, Dexterity `+5%` avoidance per point), equipment defense, time of day
+   - Outcomes: **avoid** (no effect), **injury** (lose health, possibly gain an injury trait), **resource gain** (pelt, bone, meat), **positive skill trait** (Perceptive, Quick-Witted), or **death**.
+   - Health loss from encounters varies by beast tier and outcome severity.
+   - Injury traits (Lacerated, Fractured, Bruised, etc.) are gained from damage outcomes and impose penalties until resolved.
 4. Higher-tier beasts have higher lethality → more likely to injure/kill.
 
 ### This is NOT a combat system
@@ -996,8 +1052,9 @@ The base module does not include turn-based or real-time combat. Encounters are 
 ### Death triggers
 
 An adventurer dies when:
-- Energy reaches 0 from **negative regen** (starvation).
-- A **hazard encounter** resolves as death.
+- **Health reaches 0** from encounter damage, activity injuries, or accumulated wounds.
+- **Energy reaches 0** from **negative regen** (starvation).
+- A **hazard encounter** resolves as instant death (low-probability, higher when health is critical).
 - (Future module) PvP combat kills them.
 
 ### On death
@@ -1028,11 +1085,14 @@ Prevent runaway inflation, stagnation, or exploitation without human interventio
 |---|---|---|
 | Adventurer mint cost ($LORDS) | [min, max] | Spawn rate |
 | Energy regen rate | [0.05, 0.2] per tick | Economic velocity |
-| Hazard lethality multiplier | [0.5, 2.0] | Death rate |
+| Health regen rate | [0.005, 0.02] per tick | Recovery speed |
+| Hazard lethality multiplier | [0.5, 2.0] | Death rate / health damage severity |
 | Collapse chance multiplier | [0.5, 2.0] | Mining coordination pressure |
 | Decay rate multiplier | [0.5, 2.0] | Territorial holding cost |
 | Fertility regrowth rate | [0.5, 2.0] | Food scarcity |
 | Attribute gain rate | [0.5, 2.0] | Progression speed |
+| Trait gain rate | [0.5, 2.0] | Trait acquisition frequency |
+| Injury→disability conversion rate | [0.5, 2.0] | Permanent scar frequency |
 | Follower desertion rate | [0.5, 2.0] | Party maintenance pressure |
 
 ### Mechanism
@@ -1214,7 +1274,7 @@ When the base module ships, a player can:
 14. **Manage** staffing across buildings; deal with understaffing penalties.
 15. **Maintain** territory by paying upkeep; watch it decay if neglected.
 16. **Claim** decayed territory from inactive players.
-17. **Die** permanently from starvation or beast encounters.
+17. **Die** permanently from starvation, health depletion, or beast encounters.
 18. **Respawn** as a new adventurer in a world shaped by predecessors.
 
 This is a complete, playable survival-settlement game. It is sparse but not shallow — the interaction between energy, resources, territory, population, food, beasts, and permadeath creates genuine strategic depth and meaningful decisions.
