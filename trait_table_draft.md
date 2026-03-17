@@ -79,14 +79,14 @@ Personality traits define an adventurer's disposition. Almost all come in exclus
 | P02 | **Craven** | Brave | courage | −1 STR | −10% success in beast encounters |
 | P03 | **Studious** | Dull-witted | intellect | +1 INT | +25% chance of attribute gain from crafting/refining actions |
 | P04 | **Dull-witted** | Studious | intellect | −1 INT | −25% chance of attribute gain from crafting/refining actions |
-| P05 | **Diligent** | Lazy | drive | +1 END | +25% chance of attribute gain from all actions |
-| P06 | **Lazy** | Diligent | drive | −1 END | −25% chance of attribute gain from all actions |
+| P05 | **Diligent** | Idle | drive | +1 END | +25% chance of attribute gain from all actions |
+| P06 | **Idle** | Diligent | drive | −1 END | −25% chance of attribute gain from all actions |
 | P07 | **Cautious** | Reckless | risk | +1 WIS | +5% hazard avoidance (stacks with DEX) |
 | P08 | **Reckless** | Cautious | risk | +1 DEX, −1 WIS | +10% rare loot chance from encounters |
-| P09 | **Gregarious** | Solitary | social | +1 CHA | +1 max follower |
-| P10 | **Solitary** | Gregarious | social | −1 CHA | +10% explore/survey energy efficiency (lone wolf bonus) |
-| P11 | **Generous** | Greedy | wealth | +1 CHA | −10% territorial upkeep cost (loyalty of populace) |
-| P12 | **Greedy** | Generous | wealth | −1 CHA | +10% resource pickup from all production sources |
+| P09 | **Sociable** | Solitary | social | +1 CHA | +1 max follower |
+| P10 | **Solitary** | Sociable | social | −1 CHA | +10% explore/survey energy efficiency (lone wolf bonus) |
+| P11 | **Magnanimous** | Miserly | wealth | +1 CHA | −10% territorial upkeep cost (loyalty of populace) |
+| P12 | **Miserly** | Magnanimous | wealth | −1 CHA | +10% resource pickup from all production sources |
 | P13 | **Patient** | Impulsive | tempo | +1 CRA | −10% crafting time-lock duration |
 | P14 | **Impulsive** | Patient | tempo | −1 CRA | −10% travel time (rush movement) |
 | P15 | **Curious** | Incurious | wonder | +1 WIS | +10% chance to discover special/underworld areas on survey |
@@ -101,18 +101,19 @@ Personality traits define an adventurer's disposition. Almost all come in exclus
 | P24 | **Pessimistic** | Optimistic | outlook | −1 VIT | +5% decay detection (notice hex decay earlier) |
 | P25 | **Methodical** | Scatterbrained | focus | +1 CRA | −5% repair resource cost |
 | P26 | **Scatterbrained** | Methodical | focus | −1 CRA | −5% explore time-lock (quick scanning) |
-| P27 | **Wrathful** | Calm | temper | +1 STR, −1 WIS | +15% damage dealt in beast encounters |
-| P28 | **Calm** | Wrathful | temper | +1 WIS | −10% damage taken from encounters |
-| P29 | **Honest** | Deceitful | honesty | +1 SUR | +25% chance of positive skill trait gain from successful actions |
-| P30 | **Deceitful** | Honest | honesty | −1 SUR | −25% chance of negative skill trait gain from failures |
-| P31 | **Compassionate** | Callous | empathy | +1 VIT | Followers desert 25% slower; +25% chance of trait gain from helping/healing events |
-| P32 | **Callous** | Cruel | empathy | −1 VIT | +15% butchering/processing yield from hunting |
+| P27 | **Fierce** | Composed | temper | +1 STR, −1 WIS | +15% damage dealt in beast encounters |
+| P28 | **Composed** | Fierce | temper | +1 WIS | −10% damage taken from encounters |
+| P29 | **Forthright** | Sly | honesty | +1 SUR | +25% chance of positive skill trait gain from successful actions |
+| P30 | **Sly** | Forthright | honesty | −1 SUR | −25% chance of negative skill trait gain from failures |
+| P31 | **Merciful** | Ruthless | empathy | +1 VIT | Followers desert 25% slower; +25% chance of trait gain from helping/healing events |
+| P32 | **Ruthless** | Merciful | empathy | −1 VIT | +15% butchering/processing yield from hunting |
 
 > **Notes:**
 > - P08 Reckless uses the `[+1, −1]` shape (DEX/WIS trade-off).
-> - P27 Wrathful uses the `[+1, −1]` shape (STR/WIS trade-off).
-> - P05/P06 renamed from Ambitious/Idle to **Diligent/Lazy** (CK3 naming, clearer meaning).
-> - P29–P32 are CK3-inspired additions (Honest/Deceitful, Compassionate/Callous).
+> - P27 Fierce uses the `[+1, −1]` shape (STR/WIS trade-off).
+> - P05/P06: Diligent/Idle (drive pair).
+> - P29–P32 are CK3-inspired additions (Forthright/Sly, Merciful/Ruthless).
+> - Several traits renamed from CK3 originals to differentiate: Gregarious→Sociable, Generous→Magnanimous, Greedy→Miserly, Wrathful→Fierce, Calm→Composed, Honest→Forthright, Deceitful→Sly, Compassionate→Merciful, Callous→Ruthless.
 
 ---
 
@@ -128,8 +129,8 @@ Physical traits describe an adventurer's bodily characteristics. Most come in ex
 | H04 | **Clumsy** | Nimble | agility | −1 SUR | −5% hazard avoidance; +10% mining yield (brute force) |
 | H05 | **Eagle-eyed** | Dim-sighted | vision | +1 DEX | +10% survey quality (better area rolls) |
 | H06 | **Dim-sighted** | Eagle-eyed | vision | −1 DEX | +10% crafting quality (heightened feel/touch) |
-| H07 | **Hardy** | Sickly | constitution | +1 STR | +10% health regen rate |
-| H08 | **Sickly** | Hardy | constitution | −1 STR, +1 INT | — (no special effect; dual modifier compensates) |
+| H07 | **Hardy** | Ailing | constitution | +1 STR | +10% health regen rate |
+| H08 | **Ailing** | Hardy | constitution | −1 STR, +1 INT | — (no special effect; dual modifier compensates) |
 | H09 | **Tall** | Short | stature | +1 END | +5% logging yield |
 | H10 | **Short** | Tall | stature | −1 END | +5% mining yield (low clearance advantage) |
 | H11 | **Fleet-footed** | Heavy-footed | movement | +1 DEX | −10% travel energy cost |
@@ -140,17 +141,18 @@ Physical traits describe an adventurer's bodily characteristics. Most come in ex
 | H16 | **Weak-stomached** | Iron-stomached | digestion | −1 VIT | Food buffs +20% effectiveness |
 | H17 | **Thick-skinned** | Thin-skinned | resilience | +1 END | −10% health loss from encounters |
 | H18 | **Thin-skinned** | Thick-skinned | resilience | −1 END | +10% energy regen rate |
-| H19 | **Giant** | Dwarf | size | +1 STR, +1 END | +15 kg carry capacity |
-| H20 | **Dwarf** | Giant | size | +1 DEX, −1 STR | +10% mining yield; −5% logging yield |
-| H21 | **Beautiful** | Plain | appearance | +1 CHA | Followers recruited 25% faster |
-| H22 | **Plain** | Beautiful | appearance | −1 CHA | +50% chance of positive skill trait gain (determined focus) |
+| H19 | **Towering** | Stunted | size | +1 STR, +1 END | +15 kg carry capacity |
+| H20 | **Stunted** | Towering | size | +1 DEX, −1 STR | +10% mining yield; −5% logging yield |
+| H21 | **Comely** | Plain | appearance | +1 CHA | Followers recruited 25% faster |
+| H22 | **Plain** | Comely | appearance | −1 CHA | +50% chance of positive skill trait gain (determined focus) |
 | H23 | **Ambidextrous** | — | handedness | +1 DEX, +1 CRA | — (no special effect; rare mint-only trait with no opposite) |
 
 > **Notes:**
-> - H08 Sickly uses `[−1, +1]` shape (CK3-inspired: frail body sharpens the mind).
-> - H19/H20 Giant/Dwarf are CK3-inspired congenital traits with `[+1, +1]` and `[+1, −1]` shapes.
-> - H21/H22 Beautiful/Plain are CK3-inspired. Plain has no special effect beyond boosted skill gain.
+> - H08 Ailing uses `[−1, +1]` shape (frail body sharpens the mind).
+> - H19/H20 Towering/Stunted are CK3-inspired congenital traits (renamed from Giant/Dwarf) with `[+1, +1]` and `[+1, −1]` shapes.
+> - H21/H22 Comely/Plain are CK3-inspired (renamed from Beautiful/Plain). Plain has no special effect beyond boosted skill gain.
 > - H23 Ambidextrous remains the sole trait with no opposite.
+> - Renamed from CK3 originals: Giant→Towering, Dwarf→Stunted, Beautiful→Comely, Sickly→Ailing.
 
 ---
 
@@ -171,7 +173,7 @@ Each action type has a small base chance to grant the relevant skill trait. More
 | S07 | **Forgeborn** | +1 END | +10% weapon/armor crafting quality | Successful forging |
 | S08 | **Alchemist's Touch** | +1 INT | +10% refining yield | Successful refining |
 | S09 | **Beast Slayer** | +1 STR | +15% beast encounter success | Surviving T2+ beast encounters |
-| S10 | **Architect** | +1 INT | −10% building construction time | Constructing buildings |
+| S10 | **Master Builder** | +1 INT | −10% building construction time | Constructing buildings |
 | S11 | **Herdsman** | +1 CHA | +10% livestock yield | Sustained livestock management |
 | S12 | **Shepherd** | +1 SUR | Follower food consumption −15% | Maintaining followers over time |
 | S13 | **Cartographer** | — | +10% survey energy efficiency; +25% chance of WIS gain from surveying | Surveying many areas |
@@ -309,7 +311,7 @@ Disability traits are permanent. They are converted from severe injury traits wh
 
 5. **Future module extensibility**: Skill, injury, and disability traits can be introduced by future modules. Only personality and physical traits are fully scoped at base module deployment. The trait registry uses `u16` IDs with reserved ranges for future modules.
 
-6. **CK3 inspiration**: Trait system draws from Crusader Kings 3's categories — personality pairs (Brave/Craven, Diligent/Lazy, Wrathful/Calm), congenital physical traits (Giant/Dwarf, Beautiful/Plain), lifestyle skills earned through actions, and tiered injury/disability progression. Adapted for onchain constraints (chance-based, no complex state tracking).
+6. **CK3 inspiration**: Trait system draws from Crusader Kings 3's categories — personality pairs, congenital physical traits, lifestyle skills earned through actions, and tiered injury/disability progression. Adapted for onchain constraints (chance-based, no complex state tracking). Traits sharing CK3 names have been renamed where natural synonyms exist (e.g., Gregarious→Sociable, Wrathful→Fierce, Giant→Towering, Compassionate→Merciful) to differentiate. Names kept where no comfortable alternative exists (e.g., Brave/Craven, Scarred, Herbalist).
 
 ---
 
