@@ -277,8 +277,20 @@ seed: felt252
 
 - **10 attributes**, budget of **20 points** at mint (20 rolls → +1 to random attribute each).
 - Computed lazily from seed (no stored array at mint).
-- Attributes improve through use (learning by doing). Gain rates are autoregulator-tunable.
 - Attributes serve primarily as **performance gates** for encounters and events (e.g., a beast hunt might have a STR gate where success scales with Strength).
+
+#### Attribute progression (chance-based)
+
+Attributes improve through use — **learning by doing** — but via a **chance-based system** rather than XP accumulation. No experience points or historical data need to be tracked on-chain.
+
+- Every action has a **small base chance** to increase a relevant attribute (e.g., successfully mining has a ~1–2% chance to increase STR or INT).
+- The chance decreases **exponentially** with the current attribute level:
+  - `gain_chance = base_chance × (1 − (level / 20))²`
+  - Level 0 → 100% of base chance; Level 10 → 25%; Level 15 → 6.25%; Level 19 → 0.25%; Level 20 → **0%** (hard cap).
+  - Progressing from 19 → 20 is dramatically harder than 18 → 19.
+- **Attributes can never be lost.** They can only be **suppressed** by trait modifiers (e.g., a −1 STR trait reduces effective STR but does not remove the underlying point).
+- Multiple attributes may roll for a gain from a single action (e.g., travel may roll for both END and WIS).
+- Base chance values per action type are autoregulator-tunable.
 
 #### Attribute effects
 
@@ -321,13 +333,20 @@ Traits are organized into **5 types**:
 | **Disability** | Permanent scars from severe injuries (One-eyed, Lame, etc.) | Converted from severe injury traits on resolution | **Cannot be lost** |
 
 - **At mint**: 2 personality traits + 1 physical trait, derived from seed.
-- **Max 10 trait slots**. Traits become **increasingly difficult to gain** as the total trait count rises (every trait gain chance calculation uses current trait count as a variable).
-- **Exclusivity groups**: grouped traits are fully exclusive (e.g., Brave vs Craven — impossible to have both). Almost all personality and physical traits should have an opposite.
-- Traits grant **attribute modifiers** with the following constraints:
+- **Max 10 trait slots**. Trait gain uses a **chance-based system** (no XP tracking):
+  - Every action/event has a small base chance to grant a trait.
+  - The **criticality of the event outcome** determines the base chance (routine success ~0.5%, critical event ~8–15%).
+  - `gain_chance = base_chance × (1 − trait_count / 10)` — at 10 traits, gain chance is **0%**.
+- **Exclusivity groups**: grouped traits are fully exclusive (e.g., Brave vs Craven — impossible to have both). Almost all personality and physical traits have an opposite.
+- Traits may grant **attribute modifiers**, **special effects**, or both:
   - Maximum modifier per trait: **+2 or −2** to any single attribute.
-  - Possible modifier shapes: `[+1]`, `[−1]`, `[+2]`, `[−2]`, `[+1, +1]`, `[+1, −1]`, `[−1, −1]`.
-  - **No doubling**: a trait's attribute modifier must not stack with its special effect on the same stat (e.g., a trait granting +10 kg carry capacity should modify Endurance, not Strength, since STR already governs carry capacity).
+  - Possible modifier shapes: `[+1]`, `[−1]`, `[+2]`, `[−2]`, `[+1, +1]`, `[+1, −1]`, `[−1, −1]`. Dual-modifier shapes are rarer.
+  - **No doubling**: a trait's attribute modifier must not amplify the same stat as its special effect.
+  - Some traits have **only a modifier** or **only a special effect** — not every trait needs both.
+  - Trait modifiers **suppress** attributes (reduce effective value) but do not remove underlying points.
+- Some trait special effects modify **attribute or trait gain chances** rather than direct mechanics (e.g., "Diligent: +25% chance of attribute gain from all actions" means a 1% base chance becomes 1.25%).
 - Skill traits define an adventurer's aptitude from their adventures. Positive skill traits are potential outcomes of **successful** actions; negative skill traits are potential outcomes of **failures and defeats**. Skill traits become harder to acquire as the adventurer accumulates more skills.
+- Personality traits can be gained/replaced through **major life events** (very rare — surviving near-death encounters, first settlement, etc.).
 - Trait list is a large enumeration defined at deployment (see §28 for extensibility).
 
 ### Equipment slots
@@ -1090,8 +1109,8 @@ Prevent runaway inflation, stagnation, or exploitation without human interventio
 | Collapse chance multiplier | [0.5, 2.0] | Mining coordination pressure |
 | Decay rate multiplier | [0.5, 2.0] | Territorial holding cost |
 | Fertility regrowth rate | [0.5, 2.0] | Food scarcity |
-| Attribute gain rate | [0.5, 2.0] | Progression speed |
-| Trait gain rate | [0.5, 2.0] | Trait acquisition frequency |
+| Attribute gain base chance | [0.5, 2.0] multiplier | Progression speed (applied to per-action base chances) |
+| Trait gain base chance | [0.5, 2.0] multiplier | Trait acquisition frequency (applied to per-event base chances) |
 | Injury→disability conversion rate | [0.5, 2.0] | Permanent scar frequency |
 | Follower desertion rate | [0.5, 2.0] | Party maintenance pressure |
 

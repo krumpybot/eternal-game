@@ -201,10 +201,19 @@ Drawing from the Adventures idle-RPG design, adventurers have **core attributes*
 
 - **All adventurers are created equal at mint**: a fixed attribute budget of **20 points** across 10 attributes.
 - Points are distributed deterministically from the mint seed (20 rolls → +1 to a random attribute each roll). **No caps** - 0-6+ is possible.
-- Attributes improve through use - **learning by doing**.
 - Attributes serve primarily as **performance gates** for encounters and events (e.g., a beast hunt has a STR gate where success scales with Strength).
 
 **Gas note:** distribution can be computed lazily from the stored seed (20 iterations total). No large arrays need to be stored at mint; only the seed and adventurer core metadata are persisted.
+
+#### Attribute Progression (Chance-Based)
+
+Attributes improve through use - **learning by doing** - via a **chance-based system**. No experience points or historical data are tracked on-chain; each action resolution includes a simple probability roll.
+
+- Every action has a **small base chance** to increase a relevant attribute (e.g., mining rolls for STR/INT, travel rolls for END/WIS).
+- The chance decreases **exponentially** with current level: `gain_chance = base_chance × (1 - (level / 20))²`
+  - Level 10 → 25% of base | Level 15 → 6.25% | Level 19 → 0.25% | Level 20 → **0%**
+- **Attributes can never be lost** - only **suppressed** by trait modifiers. Underlying points persist even when traits reduce effective value.
+- Base chances per action type are autoregulator-tunable.
 
 #### Attribute Effects
 
@@ -245,11 +254,16 @@ Traits are organized into **5 types**:
 | **Disability** | Permanent scars (One-eyed, Lame, etc.) | Converted from severe injury traits | **Cannot be lost** |
 
 - **At mint**: 2 personality traits + 1 physical trait.
-- **Max 10 trait slots**. Traits become **increasingly difficult to gain** as total count rises (trait gain chance calculation uses current trait count as a variable).
-- **Exclusivity groups**: grouped traits are fully exclusive (Brave vs Craven - impossible to have both). Almost all personality and physical traits have an opposite.
-- Trait attribute modifiers: max **±2** per trait. Possible shapes: `[+1]`, `[-1]`, `[+2]`, `[-2]`, `[+1, +1]`, `[+1, -1]`, `[-1, -1]`.
-- **No doubling rule**: a trait's attribute modifier must not stack with its special effect on the same stat.
-- Skill traits become harder to acquire as the adventurer accumulates more skills.
+- **Max 10 trait slots**. Trait gain uses a **chance-based system** (no XP/history tracking):
+  - Every action/event has a small base chance to grant a trait; event criticality scales the chance.
+  - `gain_chance = base_chance × (1 − trait_count / 10)` — at 10 traits, gain chance is **0%**.
+- **Exclusivity groups**: grouped traits are fully exclusive (Brave vs Craven — impossible to have both). Almost all personality and physical traits have an opposite.
+- Traits may grant **attribute modifiers**, **special effects**, or both (not every trait needs both).
+  - Max **±2** per trait. Shapes: `[+1]`, `[−1]`, `[+2]`, `[−2]`, `[+1, +1]`, `[+1, −1]`, `[−1, −1]`. Dual shapes are rarer.
+  - **No doubling rule**: modifier must not amplify same stat as special effect.
+  - Trait modifiers **suppress** attributes (reduce effective value) but underlying points persist.
+- Some traits boost or penalize **attribute/trait gain chances** as their special effect (e.g., "Diligent: +25% attribute gain chance" — applied on top of the small base chance per action).
+- Personality traits can be gained/replaced through **major life events** (very rare). Skill traits from repeated actions (success → positive, failure → negative). Skill traits become harder to acquire as count rises.
 
 #### Minting & Seed Fairness
 
@@ -438,7 +452,7 @@ Materials areas yield **raw materials**. This list will evolve, but current buck
 Hunting is an active action performed in **forestry areas**, targeting the area's native fauna.
 
 - **Hunt action**: adventurer commits energy + time-lock in a forestry area.
-- **Chance‑based outcome**: success is a roll influenced by:
+- **Chance-based outcome**: success is a roll influenced by:
   - Adventurer **Survival** attribute (`hunt_success += SUR × 5%`)
   - Equipment bonuses (bows, traps, hunting gear)
   - Fauna density of the area (see ecosystem dynamics in §8.3)

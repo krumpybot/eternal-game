@@ -28,7 +28,7 @@ Dependencies: none — these are leaf primitives.
 
 ### 1b. Attribute Formulas ✅
 
-10 attributes, 20-point budget at mint. Attributes serve as **performance gates** for encounters and events.
+10 attributes, 20-point budget at mint. Attributes serve as **performance gates** for encounters and events. Progression is **chance-based** (no XP tracking).
 
 | Attribute | Primary Effect | Formula |
 |---|---|---|
@@ -50,12 +50,19 @@ Dependencies: none — these are leaf primitives.
 5 trait types: **personality**, **physical**, **skill**, **injury**, **disability**.
 
 - Spawn: 2 personality + 1 physical
-- Max 10 traits, increasingly difficult to gain
+- Max 10 traits; gain uses **chance-based system** (no XP tracking):
+  - `gain_chance = base_chance × (1 − trait_count / 10)` — 0% at 10 traits
+  - Event criticality determines base chance (routine ~0.5%, critical ~8–15%)
+- **Attribute progression** also chance-based:
+  - `gain_chance = base_chance × (1 − (level / 20))²` — exponential decrease, 0% at level 20
+  - Attributes can never be lost, only suppressed by trait modifiers
 - Modifier shapes: `[+1]`, `[−1]`, `[+2]`, `[−2]`, `[+1, +1]`, `[+1, −1]`, `[−1, −1]`
+- Some traits have only modifier or only special effect
 - No-doubling rule (modifier ≠ same stat as special effect)
 - Exclusive pairs enforced for personality/physical
 - **Personality and physical traits**: fully scoped in base module (see `trait_table_draft.md`)
 - **Skill, injury, disability traits**: base set defined; new traits can be introduced by future modules
+- CK3-inspired: 16 personality pairs (32 traits), 11 physical groups (23 traits), 103 total base traits
 
 Full catalog: `trait_table_draft.md`
 
