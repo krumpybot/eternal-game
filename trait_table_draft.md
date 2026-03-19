@@ -1,4 +1,4 @@
-# Eternal Game — Trait Table (Draft v0.3)
+# Eternal Game — Trait Table (Draft v0.4)
 
 > **Review draft.** All traits listed with name, type, group (exclusivity), attribute modifier, and special effect.
 > Inspired by CK3's trait system — personality pairs, congenital physical traits, lifestyle skills, and injury/disability progression.
@@ -83,8 +83,8 @@ Personality traits can affect **all attributes**, but are slightly more heavily 
 | P02 | **Craven** | Brave | courage | −1 STR | −10% success in beast encounters |
 | P03 | **Studious** | Dull-witted | intellect | +1 INT | +25% chance of attribute gain from crafting/refining actions |
 | P04 | **Dull-witted** | Studious | intellect | −1 INT | −25% chance of attribute gain from crafting/refining actions |
-| P05 | **Diligent** | Idle | drive | +1 END | +25% chance of attribute gain from all actions |
-| P06 | **Idle** | Diligent | drive | −1 END | −25% chance of attribute gain from all actions |
+| P05 | **Diligent** | Idle | drive | +1 INT | +25% chance of attribute gain from all actions |
+| P06 | **Idle** | Diligent | drive | −1 END, −1 INT | −25% chance of attribute gain from all actions |
 | P07 | **Cautious** | Reckless | risk | +1 WIS | +5% hazard avoidance (stacks with DEX) |
 | P08 | **Reckless** | Cautious | risk | +1 DEX, −1 WIS | +10% rare loot chance from encounters |
 | P09 | **Sociable** | Solitary | social | +1 CHA | +1 max follower |
@@ -95,8 +95,8 @@ Personality traits can affect **all attributes**, but are slightly more heavily 
 | P14 | **Impulsive** | Patient | tempo | −1 CRA | −10% travel time (rush movement) |
 | P15 | **Curious** | Incurious | wonder | +1 WIS | +10% chance to discover special/underworld areas on survey |
 | P16 | **Incurious** | Curious | wonder | −1 WIS | +5% yield from already-surveyed production areas |
-| P17 | **Tenacious** | Faint-hearted | resolve | +1 END | Survive one lethal hit per in-game day with 1 health |
-| P18 | **Faint-hearted** | Tenacious | resolve | −1 END | −10% max health; +10% energy regen while health is full |
+| P17 | **Tenacious** | Faint-hearted | resolve | +1 END, +1 CRA | Survive one lethal hit per in-game day with 1 health |
+| P18 | **Faint-hearted** | Tenacious | resolve | −1 END, −1 CRA | −10% max health; +10% energy regen while health is full |
 | P19 | **Devout** | Skeptical | faith | +1 VIT | +5% health regen rate |
 | P20 | **Skeptical** | Devout | faith | −1 VIT | +5% crafting quality (mutation bonus) |
 | P21 | **Commanding** | Meek | authority | +1 LEA | Followers gain +10% task throughput |
@@ -117,9 +117,12 @@ Personality traits can affect **all attributes**, but are slightly more heavily 
 | P36 | **Content** | Ambitious | aspiration | −1 LEA | +10% energy regen while at settlement (comfort of home) |
 
 > **Notes:**
+> - P05 Diligent uses `[+1]` (INT — diligent application sharpens the mind through study and practice).
+> - P06 Idle uses `[−1, −1]` (END/INT — idleness atrophies both body and mind).
 > - P08 Reckless uses the `[+1, −1]` shape (DEX/WIS trade-off).
+> - P17 Tenacious uses `[+1, +1]` (END/CRA — tenacity sustains both stamina and perseverance in craft).
+> - P18 Faint-hearted uses `[−1, −1]` (END/CRA — faint heart saps both stamina and patience for careful work).
 > - P27 Fierce uses the `[+1, −1]` shape (STR/WIS trade-off).
-> - P05/P06: Diligent/Idle (drive pair).
 > - P29–P32 are CK3-inspired additions (Forthright/Sly, Merciful/Ruthless).
 > - P33–P36 are new pairs added for attribute balance (Shrewd/Naive, Ambitious/Content).
 > - Some traits share CK3 names where no comfortable alternative exists (Brave/Craven, Generous/Greedy, Diligent, Patient/Impulsive).
@@ -143,8 +146,8 @@ Physical traits **never affect INT or WIS** — they represent bodily characteri
 | H06 | **Dim-sighted** | Eagle-eyed | vision | −1 DEX | +10% crafting quality (heightened feel/touch) |
 | H07 | **Hardy** | Ailing | constitution | +1 STR | +10% health regen rate |
 | H08 | **Ailing** | Hardy | constitution | −1 STR | +5% disease/poison resistance (built immunity from chronic illness) |
-| H09 | **Tall** | Short | stature | +1 END | +5% logging yield |
-| H10 | **Short** | Tall | stature | −1 END | +5% mining yield (low clearance advantage) |
+| H09 | **Tall** | Short | stature | +1 LEA | +5% logging yield |
+| H10 | **Short** | Tall | stature | −1 DEX, −1 LEA | +5% mining yield (low clearance advantage) |
 | H11 | **Fleet-footed** | Heavy-footed | movement | +1 DEX | −10% travel energy cost |
 | H12 | **Heavy-footed** | Fleet-footed | movement | −1 DEX | +10% territorial defense bonus |
 | H13 | **Keen-nosed** | Dull-nosed | senses | +1 SUR | +10% foraging success |
@@ -161,6 +164,8 @@ Physical traits **never affect INT or WIS** — they represent bodily characteri
 
 > **Notes:**
 > - H08 Ailing has a single `[−1]` modifier with a compensating special effect (disease resistance from a lifetime of illness).
+> - H09 Tall uses `[+1]` (LEA — tall stature commands natural authority in a medieval world).
+> - H10 Short uses `[−1, −1]` (DEX/LEA — short stature means less reach and less imposing presence).
 > - H19/H20 Towering/Stunted are CK3-inspired congenital traits (renamed from Giant/Dwarf) with `[+1, +1]` and `[+1, −1]` shapes.
 > - H21/H22 Comely/Plain are CK3-inspired (renamed from Beautiful). Plain's special effect (boosted skill gain) represents the focus of someone unburdened by vanity.
 > - H23 Ambidextrous remains the sole trait with no opposite.
@@ -310,51 +315,51 @@ The following tables show the distribution of attribute modifiers across all per
 | Attribute | Positive (+) | Negative (−) | Net | Count |
 |---|---|---|---|---|
 | STR | 2 (P01, P27) | 1 (P02) | +1 | 3 |
-| END | 2 (P05, P17) | 2 (P06, P18) | 0 | 4 |
+| END | 1 (P17) | 2 (P06, P18) | −1 | 3 |
 | DEX | 1 (P08) | 0 | +1 | 1 |
 | VIT | 3 (P19, P23, P31) | 3 (P20, P24, P32) | 0 | 6 |
-| INT | 2 (P03, P33) | 2 (P04, P34) | 0 | 4 |
+| INT | 3 (P03, P05, P33) | 3 (P04, P06, P34) | 0 | 6 |
 | WIS | 3 (P07, P15, P28) | 3 (P08, P16, P27) | 0 | 6 |
 | CHA | 2 (P09, P11) | 2 (P10, P12) | 0 | 4 |
 | SUR | 1 (P29) | 1 (P30) | 0 | 2 |
-| CRA | 2 (P13, P25) | 2 (P14, P26) | 0 | 4 |
+| CRA | 3 (P13, P17, P25) | 3 (P14, P18, P26) | 0 | 6 |
 | LEA | 2 (P21, P35) | 2 (P22, P36) | 0 | 4 |
 
-> Personality traits are weighted toward INT, WIS, CHA, CRA, LEA (4–6 instances each) vs STR, END, DEX, VIT, SUR (1–6 instances). Minor imbalances: STR net +1 (acceptable — Fierce's dual modifier), DEX +1 only (single source, compensated by heavy physical coverage).
+> Personality traits are weighted toward INT, WIS, CHA, CRA, LEA (4–6 instances each). P05 Diligent (+1 INT) and P06 Idle (−1 END, −1 INT) use dual/shifted modifiers to represent how diligence sharpens the mind while idleness atrophies both body and mind. P17 Tenacious (+1 END, +1 CRA) and P18 Faint-hearted (−1 END, −1 CRA) use dual shapes to link physical endurance with persistence in craft.
 
 ### Physical Trait Modifier Tally (23 traits, 11 pairs + 1 solo)
 
 | Attribute | Positive (+) | Negative (−) | Net | Count |
 |---|---|---|---|---|
 | STR | 2 (H07, H19) | 2 (H08, H20) | 0 | 4 |
-| END | 4 (H01, H09, H17, H19) | 3 (H02, H10, H18) | +1 | 7 |
-| DEX | 3 (H05, H11, H23) | 2 (H06, H12) | +1 | 5 |
+| END | 3 (H01, H17, H19) | 2 (H02, H18) | +1 | 5 |
+| DEX | 3 (H05, H11, H23) | 3 (H06, H10, H12) | 0 | 6 |
 | VIT | 1 (H15) | 1 (H16) | 0 | 2 |
 | INT | 0 | 0 | 0 | 0 |
 | WIS | 0 | 0 | 0 | 0 |
 | CHA | 1 (H21) | 1 (H22) | 0 | 2 |
 | SUR | 3 (H03, H13, H20) | 2 (H04, H14) | +1 | 5 |
 | CRA | 1 (H23) | 0 | +1 | 1 |
-| LEA | 0 | 0 | 0 | 0 |
+| LEA | 1 (H09) | 1 (H10) | 0 | 2 |
 
-> Physical traits are weighted toward STR, END, DEX, SUR (4–7 instances). INT and WIS are intentionally excluded. Minor imbalances: END, DEX, SUR, CRA each +1 net — within tolerance.
+> Physical traits are weighted toward STR, END, DEX, SUR (4–6 instances). INT and WIS are intentionally excluded. H09 Tall (+1 LEA) represents commanding stature; H10 Short (−1 DEX, −1 LEA) represents reduced reach and less imposing presence. Minor imbalances: END, SUR, CRA each +1 net — within tolerance.
 
 ### Combined (Personality + Physical)
 
 | Attribute | Total + | Total − | Net | Total instances |
 |---|---|---|---|---|
 | STR | 4 | 3 | +1 | 7 |
-| END | 6 | 5 | +1 | 11 |
-| DEX | 4 | 2 | +2 | 6 |
+| END | 4 | 4 | 0 | 8 |
+| DEX | 4 | 3 | +1 | 7 |
 | VIT | 4 | 4 | 0 | 8 |
-| INT | 2 | 2 | 0 | 4 |
+| INT | 3 | 3 | 0 | 6 |
 | WIS | 3 | 3 | 0 | 6 |
 | CHA | 3 | 3 | 0 | 6 |
 | SUR | 4 | 3 | +1 | 7 |
-| CRA | 3 | 2 | +1 | 5 |
-| LEA | 2 | 2 | 0 | 4 |
+| CRA | 4 | 3 | +1 | 7 |
+| LEA | 3 | 3 | 0 | 6 |
 
-> All attributes within 0–2 of net parity. DEX at +2 is the widest gap (compensated by DEX's lighter role in personality; physical DEX coverage is thematically essential for traits like Fleet-footed and Ambidextrous). No attribute is dramatically over- or under-served.
+> All attributes within 6–8 total instances. Maximum net deviation is +1 (STR, DEX, SUR, CRA — all have one more positive than negative, reflecting an adventurer-positive world where physical and practical traits skew slightly toward capability). No attribute exceeds ±1 net. END reduced from 11→8 instances; INT, LEA each raised from 4→6; CRA from 5→7; DEX gap closed from +2 to +1.
 
 ---
 
@@ -374,13 +379,13 @@ The following tables show the distribution of attribute modifiers across all per
 
 | Shape | Count | Notes |
 |---|---|---|
-| `[+1]` | ~50 | Most common |
-| `[−1]` | ~40 | Most common (negative) |
+| `[+1]` | ~47 | Most common |
+| `[−1]` | ~36 | Most common (negative) |
 | `[+2]` | 0 | — |
 | `[−2]` | 1 | I10 Blinded (temporary) has −2 DEX |
-| `[+1, +1]` | 3 | H19 Towering, H23 Ambidextrous |
-| `[+1, −1]` | 4 | P08 Reckless, P27 Fierce, H20 Stunted |
-| `[−1, −1]` | 2 | I03 Fractured, D09 Missing Fingers |
+| `[+1, +1]` | 4 | P17 Tenacious, H19 Towering, H23 Ambidextrous |
+| `[+1, −1]` | 3 | P08 Reckless, P27 Fierce, H20 Stunted |
+| `[−1, −1]` | 6 | P06 Idle, P18 Faint-hearted, H10 Short, I03 Fractured, D09 Missing Fingers |
 | No modifier | 9 | S03, S05, S13, S22, S27, S32, D04, and others — special effect only |
 
 ---
@@ -401,7 +406,7 @@ The following tables show the distribution of attribute modifiers across all per
    - **61+ damage (Critical)**: 75% convert to disability.
    Conversion probabilities are autoregulator-tunable.
 
-4. **Attribute modifier balance**: Personality and physical traits are designed for rough parity across all 10 attributes. Physical traits never affect INT or WIS. Personality traits are weighted toward INT, WIS, CHA, CRA, LEA. Combined, no attribute deviates by more than ±2 from net zero. See Attribute Modifier Balance section for full tally.
+4. **Attribute modifier balance**: Personality and physical traits are designed for rough parity across all 10 attributes. Physical traits never affect INT or WIS. Personality traits are weighted toward INT, WIS, CHA, CRA, LEA. Combined, all attributes fall within 6–8 total instances and no attribute deviates by more than ±1 from net zero. Dual modifier shapes (`[+1, +1]`, `[−1, −1]`) are used on select traits (Diligent/Idle, Tenacious/Faint-hearted, Tall/Short) to improve cross-attribute coverage without inflating trait count. See Attribute Modifier Balance section for full tally.
 
 5. **Skill trait permanency and exclusivity**: Skill traits can never be lost. Once a positive skill trait is learned, its corresponding negative skill trait (if one exists) can never be gained, and vice versa. This creates meaningful divergence between adventurers as they specialize.
 
@@ -413,5 +418,5 @@ The following tables show the distribution of attribute modifiers across all per
 
 ---
 
-*Draft v0.3 — March 2026*
+*Draft v0.4 — March 2026*
 *For review by Lord Krump*
