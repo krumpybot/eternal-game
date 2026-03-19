@@ -1,4 +1,4 @@
-# Eternal Game — Trait Table (Draft v0.2)
+# Eternal Game — Trait Table (Draft v0.3)
 
 > **Review draft.** All traits listed with name, type, group (exclusivity), attribute modifier, and special effect.
 > Inspired by CK3's trait system — personality pairs, congenital physical traits, lifestyle skills, and injury/disability progression.
@@ -37,11 +37,13 @@ All attribute and trait progression uses **per-action chance rolls** — no expe
   - Notable success (e.g., rare vein discovery): ~3% chance
   - Critical event (e.g., surviving a T3+ beast): ~8–15% chance
   - Severe failure (e.g., near-death): ~10–20% chance for negative traits
-- Trait gain chance is **reduced by current trait count**:
-  - `gain_chance = base_chance × (1 − trait_count / 10)`
+- Trait gain chance decreases **exponentially** with current trait count (matching the attribute gain curve):
+  - `gain_chance = base_chance × (1 − (trait_count / 10))²`
   - At 0 traits: 100% of base chance
-  - At 5 traits: 50%
-  - At 9 traits: 10%
+  - At 3 traits: 49% of base chance
+  - At 5 traits: 25%
+  - At 7 traits: 9%
+  - At 9 traits: 1%
   - At 10 traits: **0%** (hard cap)
 - Personality traits can be gained or replaced through **major life events** (very rare — surviving permadeath-level encounters, first settlement, etc.).
 - Skill traits are gained through repeated actions — each success/failure has a small chance.
@@ -61,17 +63,19 @@ Some traits modify the **chance of attribute or trait gain** rather than (or in 
 |---|---|---|---|
 | Personality | 2 | Replaced by opposite through major events | Almost all have an opposite |
 | Physical | 1 | Replaced by opposite through major events | Almost all have an opposite |
-| Skill | 0 | **Never** (permanent once gained) | Positive from success, negative from failure; harder to gain as count rises |
-| Injury | 0 | Yes — return to >100 health + complete any action | May convert to disability trait |
+| Skill | 0 | **Never** (permanent once gained) | Positive from success, negative from failure; harder to gain as count rises. **Once a skill trait is learned, its opposite (if any) can never be gained** — skill traits are permanent, so learning one locks out the other. |
+| Injury | 0 | Yes — return to >75% of maximum health + complete any action | May convert to disability trait |
 | Disability | 0 | **Never** (permanent) | Converted from severe injuries |
 
-**Max traits**: 10. Gain chance decreases linearly to 0 at max.
+**Max traits**: 10. Gain chance decreases exponentially to 0 at max.
 
 ---
 
 ## 1. Personality Traits
 
 Personality traits define an adventurer's disposition. Almost all come in exclusive pairs. Gained at mint (2 traits); very rarely gained/replaced through major life events (chance-based — e.g., surviving a near-death encounter may have a small chance to grant Brave or replace Craven).
+
+Personality traits can affect **all attributes**, but are slightly more heavily weighted toward INT, WIS, CHA, CRA, and LEA. Physical attributes (STR, END, DEX, VIT, SUR) appear in personality modifiers less frequently. This weighting applies equally to positive and negative modifiers.
 
 | # | Trait | Opposite | Group | Modifier | Special Effect |
 |---|---|---|---|---|---|
@@ -85,8 +89,8 @@ Personality traits define an adventurer's disposition. Almost all come in exclus
 | P08 | **Reckless** | Cautious | risk | +1 DEX, −1 WIS | +10% rare loot chance from encounters |
 | P09 | **Sociable** | Solitary | social | +1 CHA | +1 max follower |
 | P10 | **Solitary** | Sociable | social | −1 CHA | +10% explore/survey energy efficiency (lone wolf bonus) |
-| P11 | **Magnanimous** | Miserly | wealth | +1 CHA | −10% territorial upkeep cost (loyalty of populace) |
-| P12 | **Miserly** | Magnanimous | wealth | −1 CHA | +10% resource pickup from all production sources |
+| P11 | **Generous** | Greedy | wealth | +1 CHA | −10% territorial upkeep cost (loyalty of populace) |
+| P12 | **Greedy** | Generous | wealth | −1 CHA | +10% resource pickup from all production sources |
 | P13 | **Patient** | Impulsive | tempo | +1 CRA | −10% crafting time-lock duration |
 | P14 | **Impulsive** | Patient | tempo | −1 CRA | −10% travel time (rush movement) |
 | P15 | **Curious** | Incurious | wonder | +1 WIS | +10% chance to discover special/underworld areas on survey |
@@ -107,19 +111,27 @@ Personality traits define an adventurer's disposition. Almost all come in exclus
 | P30 | **Sly** | Forthright | honesty | −1 SUR | −25% chance of negative skill trait gain from failures |
 | P31 | **Merciful** | Ruthless | empathy | +1 VIT | Followers desert 25% slower; +25% chance of trait gain from helping/healing events |
 | P32 | **Ruthless** | Merciful | empathy | −1 VIT | +15% butchering/processing yield from hunting |
+| P33 | **Shrewd** | Naive | cunning | +1 INT | +10% trade/barter profit |
+| P34 | **Naive** | Shrewd | cunning | −1 INT | +10% chance of unexpected discoveries during routine actions (beginner's luck) |
+| P35 | **Ambitious** | Content | aspiration | +1 LEA | +25% chance of trait gain from notable and critical events |
+| P36 | **Content** | Ambitious | aspiration | −1 LEA | +10% energy regen while at settlement (comfort of home) |
 
 > **Notes:**
 > - P08 Reckless uses the `[+1, −1]` shape (DEX/WIS trade-off).
 > - P27 Fierce uses the `[+1, −1]` shape (STR/WIS trade-off).
 > - P05/P06: Diligent/Idle (drive pair).
 > - P29–P32 are CK3-inspired additions (Forthright/Sly, Merciful/Ruthless).
-> - Several traits renamed from CK3 originals to differentiate: Gregarious→Sociable, Generous→Magnanimous, Greedy→Miserly, Wrathful→Fierce, Calm→Composed, Honest→Forthright, Deceitful→Sly, Compassionate→Merciful, Callous→Ruthless.
+> - P33–P36 are new pairs added for attribute balance (Shrewd/Naive, Ambitious/Content).
+> - Some traits share CK3 names where no comfortable alternative exists (Brave/Craven, Generous/Greedy, Diligent, Patient/Impulsive).
+> - Renamed from CK3 originals: Gregarious→Sociable, Wrathful→Fierce, Calm→Composed, Honest→Forthright, Deceitful→Sly, Compassionate→Merciful, Callous→Ruthless.
 
 ---
 
 ## 2. Physical Traits
 
 Physical traits describe an adventurer's bodily characteristics. Most come in exclusive pairs. Gained at mint (1 trait); very rarely gained/replaced through major physical events.
+
+Physical traits **never affect INT or WIS** — they represent bodily characteristics, not mental ones. Physical modifiers are slightly more weighted toward STR, END, DEX, VIT, and SUR, with only occasional CHA, CRA, or LEA effects where thematically justified.
 
 | # | Trait | Opposite | Group | Modifier | Special Effect |
 |---|---|---|---|---|---|
@@ -130,7 +142,7 @@ Physical traits describe an adventurer's bodily characteristics. Most come in ex
 | H05 | **Eagle-eyed** | Dim-sighted | vision | +1 DEX | +10% survey quality (better area rolls) |
 | H06 | **Dim-sighted** | Eagle-eyed | vision | −1 DEX | +10% crafting quality (heightened feel/touch) |
 | H07 | **Hardy** | Ailing | constitution | +1 STR | +10% health regen rate |
-| H08 | **Ailing** | Hardy | constitution | −1 STR, +1 INT | — (no special effect; dual modifier compensates) |
+| H08 | **Ailing** | Hardy | constitution | −1 STR | +5% disease/poison resistance (built immunity from chronic illness) |
 | H09 | **Tall** | Short | stature | +1 END | +5% logging yield |
 | H10 | **Short** | Tall | stature | −1 END | +5% mining yield (low clearance advantage) |
 | H11 | **Fleet-footed** | Heavy-footed | movement | +1 DEX | −10% travel energy cost |
@@ -142,23 +154,24 @@ Physical traits describe an adventurer's bodily characteristics. Most come in ex
 | H17 | **Thick-skinned** | Thin-skinned | resilience | +1 END | −10% health loss from encounters |
 | H18 | **Thin-skinned** | Thick-skinned | resilience | −1 END | +10% energy regen rate |
 | H19 | **Towering** | Stunted | size | +1 STR, +1 END | +15 kg carry capacity |
-| H20 | **Stunted** | Towering | size | +1 DEX, −1 STR | +10% mining yield; −5% logging yield |
+| H20 | **Stunted** | Towering | size | +1 SUR, −1 STR | +10% mining yield (low clearance advantage) |
 | H21 | **Comely** | Plain | appearance | +1 CHA | Followers recruited 25% faster |
 | H22 | **Plain** | Comely | appearance | −1 CHA | +50% chance of positive skill trait gain (determined focus) |
 | H23 | **Ambidextrous** | — | handedness | +1 DEX, +1 CRA | — (no special effect; rare mint-only trait with no opposite) |
 
 > **Notes:**
-> - H08 Ailing uses `[−1, +1]` shape (frail body sharpens the mind).
+> - H08 Ailing has a single `[−1]` modifier with a compensating special effect (disease resistance from a lifetime of illness).
 > - H19/H20 Towering/Stunted are CK3-inspired congenital traits (renamed from Giant/Dwarf) with `[+1, +1]` and `[+1, −1]` shapes.
-> - H21/H22 Comely/Plain are CK3-inspired (renamed from Beautiful/Plain). Plain has no special effect beyond boosted skill gain.
+> - H21/H22 Comely/Plain are CK3-inspired (renamed from Beautiful). Plain's special effect (boosted skill gain) represents the focus of someone unburdened by vanity.
 > - H23 Ambidextrous remains the sole trait with no opposite.
+> - **Physical traits never modify INT or WIS.** Mental attributes are exclusively the domain of personality traits.
 > - Renamed from CK3 originals: Giant→Towering, Dwarf→Stunted, Beautiful→Comely, Sickly→Ailing.
 
 ---
 
 ## 3. Skill Traits (Positive)
 
-Positive skill traits are gained through **successful actions** (chance-based per action resolution). Once gained, they cannot be lost. They become harder to acquire as total trait count rises (same `1 − count/10` formula).
+Positive skill traits are gained through **successful actions** (chance-based per action resolution). Once gained, they cannot be lost. They become harder to acquire as total trait count rises (same exponential `(1 − count/10)²` formula).
 
 Each action type has a small base chance to grant the relevant skill trait. More critical successes (rare finds, high-tier beast survival) have higher base chances.
 
@@ -191,6 +204,8 @@ Each action type has a small base chance to grant the relevant skill trait. More
 
 Negative skill traits are gained from **failures and defeats** (chance-based — more severe failures have higher trigger chance). Once gained, they cannot be lost. They represent lasting psychological impacts.
 
+**Once a skill trait is learned, its opposite (if any) can never be gained** — learning a negative skill trait permanently locks out the corresponding positive trait, and vice versa.
+
 | # | Trait | Modifier | Special Effect | Gained from (chance trigger) |
 |---|---|---|---|---|
 | S21 | **Skittish** | −1 SUR | −10% hunting success | Repeated hunting failures |
@@ -201,14 +216,36 @@ Negative skill traits are gained from **failures and defeats** (chance-based —
 | S26 | **Wasteful** | −1 INT | −5% refining yield | Failed refining attempts |
 | S27 | **Timber-cursed** | — | −10% logging yield; +5% logging injury chance | Logging injuries |
 | S28 | **Shaky Hands** | −1 DEX | −5% ranged equipment effectiveness | Accumulated combat trauma |
+| S29 | **Barren Touch** | −1 WIS | −10% harvest/foraging yield | Repeated harvesting/foraging failures |
+| S30 | **Shoddy Builder** | −1 INT | +10% building construction time | Building failures/collapses |
+| S31 | **Scorched Palate** | −1 VIT | −15% food buff effectiveness | Repeated cooking failures |
+| S32 | **Disoriented** | — | −10% survey quality; +10% survey energy cost | Getting lost during surveys |
+| S33 | **Unruly** | −1 LEA | Followers desert 25% faster | Repeated follower desertions |
 
-> **Note:** S22 and S27 have **no attribute modifier** — their special effects (including reduced attribute gain chances) are penalty enough. Additional negative skill traits can be introduced by future modules.
+> **Notes:**
+> - S22, S27, S32 have **no attribute modifier** — their special effects (including reduced attribute gain chances or increased failure risk) are penalty enough.
+> - **Skill trait opposites** (positive ↔ negative for the same activity):
+>   - S01 Green Thumb ↔ S29 Barren Touch (harvesting)
+>   - S02 Born Hunter ↔ S21 Skittish (hunting)
+>   - S03 Prospector ↔ S22 Jinxed Miner (mining)
+>   - S04 Master Feller ↔ S27 Timber-cursed (logging)
+>   - S05 Trailblazer ↔ S24 Lost (exploring)
+>   - S08 Alchemist's Touch ↔ S26 Wasteful (refining)
+>   - S09 Beast Slayer ↔ S25 Beast-shy (combat)
+>   - S10 Master Builder ↔ S30 Shoddy Builder (building)
+>   - S13 Cartographer ↔ S32 Disoriented (survey)
+>   - S14 Cook ↔ S31 Scorched Palate (cooking)
+>   - S15 Tamer ↔ S33 Unruly (followers)
+>   - S07 Forgeborn ↔ S23 Fumble-fingers (crafting/forging)
+>   - S17 Quarrier ↔ S22 Jinxed Miner (mining — shared negative)
+>   - S02 Born Hunter ↔ S28 Shaky Hands (hunting/ranged — partial overlap)
+> - S06 Pathfinder, S11 Herdsman, S12 Shepherd, S16 Survivor, S18 Herbalist currently have no negative counterpart. Future modules may add these.
 
 ---
 
 ## 5. Injury Traits
 
-Injury traits are temporary debuffs gained from encounter damage or activity mishaps. They persist until the adventurer **returns to >100 health and completes any action**, at which point the injury either:
+Injury traits are temporary debuffs gained from encounter damage or activity mishaps. They persist until the adventurer **returns to >75% of maximum health and completes any action**, at which point the injury either:
 - **Heals completely** (trait removed), or
 - **Converts to a disability trait** (probability scales with severity).
 
@@ -264,30 +301,87 @@ Disability traits are permanent. They are converted from severe injury traits wh
 
 ---
 
+## Attribute Modifier Balance
+
+The following tables show the distribution of attribute modifiers across all personality and physical traits. The goal is **rough parity** — no attribute should be dramatically over- or under-represented.
+
+### Personality Trait Modifier Tally (36 traits, 18 pairs)
+
+| Attribute | Positive (+) | Negative (−) | Net | Count |
+|---|---|---|---|---|
+| STR | 2 (P01, P27) | 1 (P02) | +1 | 3 |
+| END | 2 (P05, P17) | 2 (P06, P18) | 0 | 4 |
+| DEX | 1 (P08) | 0 | +1 | 1 |
+| VIT | 3 (P19, P23, P31) | 3 (P20, P24, P32) | 0 | 6 |
+| INT | 2 (P03, P33) | 2 (P04, P34) | 0 | 4 |
+| WIS | 3 (P07, P15, P28) | 3 (P08, P16, P27) | 0 | 6 |
+| CHA | 2 (P09, P11) | 2 (P10, P12) | 0 | 4 |
+| SUR | 1 (P29) | 1 (P30) | 0 | 2 |
+| CRA | 2 (P13, P25) | 2 (P14, P26) | 0 | 4 |
+| LEA | 2 (P21, P35) | 2 (P22, P36) | 0 | 4 |
+
+> Personality traits are weighted toward INT, WIS, CHA, CRA, LEA (4–6 instances each) vs STR, END, DEX, VIT, SUR (1–6 instances). Minor imbalances: STR net +1 (acceptable — Fierce's dual modifier), DEX +1 only (single source, compensated by heavy physical coverage).
+
+### Physical Trait Modifier Tally (23 traits, 11 pairs + 1 solo)
+
+| Attribute | Positive (+) | Negative (−) | Net | Count |
+|---|---|---|---|---|
+| STR | 2 (H07, H19) | 2 (H08, H20) | 0 | 4 |
+| END | 4 (H01, H09, H17, H19) | 3 (H02, H10, H18) | +1 | 7 |
+| DEX | 3 (H05, H11, H23) | 2 (H06, H12) | +1 | 5 |
+| VIT | 1 (H15) | 1 (H16) | 0 | 2 |
+| INT | 0 | 0 | 0 | 0 |
+| WIS | 0 | 0 | 0 | 0 |
+| CHA | 1 (H21) | 1 (H22) | 0 | 2 |
+| SUR | 3 (H03, H13, H20) | 2 (H04, H14) | +1 | 5 |
+| CRA | 1 (H23) | 0 | +1 | 1 |
+| LEA | 0 | 0 | 0 | 0 |
+
+> Physical traits are weighted toward STR, END, DEX, SUR (4–7 instances). INT and WIS are intentionally excluded. Minor imbalances: END, DEX, SUR, CRA each +1 net — within tolerance.
+
+### Combined (Personality + Physical)
+
+| Attribute | Total + | Total − | Net | Total instances |
+|---|---|---|---|---|
+| STR | 4 | 3 | +1 | 7 |
+| END | 6 | 5 | +1 | 11 |
+| DEX | 4 | 2 | +2 | 6 |
+| VIT | 4 | 4 | 0 | 8 |
+| INT | 2 | 2 | 0 | 4 |
+| WIS | 3 | 3 | 0 | 6 |
+| CHA | 3 | 3 | 0 | 6 |
+| SUR | 4 | 3 | +1 | 7 |
+| CRA | 3 | 2 | +1 | 5 |
+| LEA | 2 | 2 | 0 | 4 |
+
+> All attributes within 0–2 of net parity. DEX at +2 is the widest gap (compensated by DEX's lighter role in personality; physical DEX coverage is thematically essential for traits like Fleet-footed and Ambidextrous). No attribute is dramatically over- or under-served.
+
+---
+
 ## Summary Statistics
 
 | Type | Count | Exclusive pairs | Mint allocation | Extensible? |
 |---|---|---|---|---|
-| Personality | 32 (16 pairs) | 16 groups | 2 at mint | Base module only |
+| Personality | 36 (18 pairs) | 18 groups | 2 at mint | Base module only |
 | Physical | 23 (11 pairs + 1 solo) | 11 groups | 1 at mint | Base module only |
-| Skill (positive) | 18 | None | 0 at mint | Future modules can add more |
-| Skill (negative) | 8 | None | 0 at mint | Future modules can add more |
+| Skill (positive) | 18 | None (but see opposites) | 0 at mint | Future modules can add more |
+| Skill (negative) | 13 | None (but see opposites) | 0 at mint | Future modules can add more |
 | Injury | 12 | None | 0 at mint | Future modules can add more |
 | Disability | 10 | None | 0 at mint | Future modules can add more |
-| **Total (base)** | **103** | **27 groups** | **3 at mint** | — |
+| **Total (base)** | **112** | **29 groups** | **3 at mint** | — |
 
 **Modifier shape distribution:**
 
 | Shape | Count | Notes |
 |---|---|---|
-| `[+1]` | ~45 | Most common |
-| `[−1]` | ~35 | Most common (negative) |
-| `[+2]` | 1 | I10 Blinded (temporary) has −2 DEX |
-| `[−2]` | 1 | I10 Blinded |
-| `[+1, +1]` | 4 | H19 Giant, H23 Ambidextrous, and select others |
-| `[+1, −1]` | 4 | P08 Reckless, P27 Wrathful, H08 Sickly, H20 Dwarf |
+| `[+1]` | ~50 | Most common |
+| `[−1]` | ~40 | Most common (negative) |
+| `[+2]` | 0 | — |
+| `[−2]` | 1 | I10 Blinded (temporary) has −2 DEX |
+| `[+1, +1]` | 3 | H19 Towering, H23 Ambidextrous |
+| `[+1, −1]` | 4 | P08 Reckless, P27 Fierce, H20 Stunted |
 | `[−1, −1]` | 2 | I03 Fractured, D09 Missing Fingers |
-| No modifier | 6 | S03, S05, S13, S22, S27, D04 — special effect only |
+| No modifier | 9 | S03, S05, S13, S22, S27, S32, D04, and others — special effect only |
 
 ---
 
@@ -297,7 +391,7 @@ Disability traits are permanent. They are converted from severe injury traits wh
 
 2. **Chance-based progression** (no XP tracking):
    - **Attribute gain**: `gain_chance = base_chance × (1 − (level / 20))²` — exponential decrease, 0% at level 20. Attributes can never be lost, only suppressed by trait modifiers.
-   - **Trait gain**: `gain_chance = base_chance × (1 − count / 10)` — linear decrease, 0% at 10 traits. Event criticality determines base chance.
+   - **Trait gain**: `gain_chance = base_chance × (1 − (trait_count / 10))²` — **exponential** decrease (matching attribute gain curve), 0% at 10 traits. Event criticality determines base chance.
    - Some traits **boost or penalize these chances** as their special effect (e.g., Diligent: +25% attribute gain chance; Broken Spirit: −25% trait gain chance).
 
 3. **Injury → Disability conversion**: Severity scales with **damage dealt** (not fixed per injury type):
@@ -307,13 +401,17 @@ Disability traits are permanent. They are converted from severe injury traits wh
    - **61+ damage (Critical)**: 75% convert to disability.
    Conversion probabilities are autoregulator-tunable.
 
-4. **Encounters and events** need detailed definition tables (event name, description, outcome calculation, attribute gain chances, trait gain chances, potential outcomes). This is tracked in the quantification plan (Phase 11c).
+4. **Attribute modifier balance**: Personality and physical traits are designed for rough parity across all 10 attributes. Physical traits never affect INT or WIS. Personality traits are weighted toward INT, WIS, CHA, CRA, LEA. Combined, no attribute deviates by more than ±2 from net zero. See Attribute Modifier Balance section for full tally.
 
-5. **Future module extensibility**: Skill, injury, and disability traits can be introduced by future modules. Only personality and physical traits are fully scoped at base module deployment. The trait registry uses `u16` IDs with reserved ranges for future modules.
+5. **Skill trait permanency and exclusivity**: Skill traits can never be lost. Once a positive skill trait is learned, its corresponding negative skill trait (if one exists) can never be gained, and vice versa. This creates meaningful divergence between adventurers as they specialize.
 
-6. **CK3 inspiration**: Trait system draws from Crusader Kings 3's categories — personality pairs, congenital physical traits, lifestyle skills earned through actions, and tiered injury/disability progression. Adapted for onchain constraints (chance-based, no complex state tracking). Traits sharing CK3 names have been renamed where natural synonyms exist (e.g., Gregarious→Sociable, Wrathful→Fierce, Giant→Towering, Compassionate→Merciful) to differentiate. Names kept where no comfortable alternative exists (e.g., Brave/Craven, Scarred, Herbalist).
+6. **Encounters and events** need detailed definition tables (event name, description, outcome calculation, attribute gain chances, trait gain chances, potential outcomes). This is tracked in the quantification plan (Phase 11c).
+
+7. **Future module extensibility**: Skill, injury, and disability traits can be introduced by future modules. Only personality and physical traits are fully scoped at base module deployment. The trait registry uses `u16` IDs with reserved ranges for future modules.
+
+8. **CK3 inspiration**: Trait system draws from Crusader Kings 3's categories — personality pairs, congenital physical traits, lifestyle skills earned through actions, and tiered injury/disability progression. Adapted for onchain constraints (chance-based, no complex state tracking). Traits sharing CK3 names have been renamed where natural synonyms exist (e.g., Gregarious→Sociable, Wrathful→Fierce, Giant→Towering, Compassionate→Merciful) to differentiate. Some names kept where no comfortable alternative exists or the common term is preferred (e.g., Brave/Craven, Generous/Greedy, Scarred, Herbalist).
 
 ---
 
-*Draft v0.2 — March 2026*
+*Draft v0.3 — March 2026*
 *For review by Lord Krump*
