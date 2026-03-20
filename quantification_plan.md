@@ -4,7 +4,7 @@
 
 ---
 
-## PHASE 1 — Units, Constants & Attribute Mechanics ✅ COMPLETE
+## PHASE 1 — Units, Constants & Attribute Mechanics ⏳ PENDING FINAL REVIEW
 
 The atomic layer. Everything else references these.
 Dependencies: none — these are leaf primitives.
@@ -62,7 +62,7 @@ Dependencies: none — these are leaf primitives.
 - Exclusive pairs enforced for personality/physical
 - **Personality and physical traits**: fully scoped in base module (see `trait_table_draft.md`)
 - **Skill, injury, disability traits**: base set defined; new traits can be introduced by future modules
-- CK3-inspired: 16 personality pairs (32 traits), 11 physical groups (23 traits), 103 total base traits
+- CK3-inspired: 19 personality pairs (38 traits), 11 physical groups (23 traits), 18 skill pairs (36 traits), 120 total base traits
 
 Full catalog: `trait_table_draft.md`
 

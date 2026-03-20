@@ -248,7 +248,7 @@ Traits are organized into **5 types**:
 | Type | Description | Gained | Lost |
 |---|---|---|---|
 | **Personality** | Core character disposition (Brave, Craven, Studious, etc.) | At mint (2 traits); rarely through major life events | Can be replaced by opposite trait through events |
-| **Physical** | Bodily characteristics (Strong-backed, Nimble, Eagle-eyed, etc.) | At mint (1 trait); rarely through events | Can be replaced by opposite trait through events |
+| **Physical** | Bodily characteristics (Sturdy, Nimble, Perceptive, etc.) | At mint (1 trait); rarely through events | Can be replaced by opposite trait through events |
 | **Skill** | Aptitudes from experience (Green Thumb, Born Hunter, etc.) | Gained by performing actions - positive from success, negative from failure | **Cannot be lost once gained** |
 | **Injury** | Temporary wounds (Lacerated, Fractured, Bruised, etc.) | From encounter/activity damage | Lost when health returns to >100 and any action is completed; may convert to disability (probability scales with damage dealt) |
 | **Disability** | Permanent scars (One-eyed, Lame, etc.) | Converted from severe injury traits | **Cannot be lost** |
@@ -262,8 +262,8 @@ Traits are organized into **5 types**:
   - Max **±2** per trait. Shapes: `[+1]`, `[−1]`, `[+2]`, `[−2]`, `[+1, +1]`, `[+1, −1]`, `[−1, −1]`. Dual shapes are rarer.
   - **No doubling rule**: modifier must not amplify same stat as special effect.
   - Trait modifiers **suppress** attributes (reduce effective value) but underlying points persist.
-- Some traits boost or penalize **attribute/trait gain chances** as their special effect (e.g., "Diligent: +25% attribute gain chance" — applied on top of the small base chance per action).
-- Personality traits can be gained/replaced through **major life events** (very rare). Skill traits from repeated actions (success → positive, failure → negative). Skill traits become harder to acquire as count rises.
+- Some traits boost or penalize **attribute/trait gain chances** as their special effect (e.g., "Diligent: +10% attribute gain chance" — applied on top of the small base chance per action).
+- Personality traits can be gained/replaced through **major life events** (very rare). Skill traits from actions (success → positive, failure → negative). Skill traits become harder to acquire as count rises.
 
 #### Minting & Seed Fairness
 
