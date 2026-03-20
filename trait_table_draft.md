@@ -192,44 +192,61 @@ Skill traits become harder to acquire as total trait count rises (same exponenti
 
 All skill traits are organized in exclusive pairs grouped by activity domain. Each pair shares a domain and the lock-out rule: gaining one permanently prevents the other.
 
-| # | Positive Trait | Mod | Special Effect | Gained from | # | Negative Trait | Mod | Special Effect | Gained from |
-|---|---|---|---|---|---|---|---|---|---|
-| S01 | **Green Thumb** | +1 WIS | +10% harvest yield from fertile areas | Successful harvesting/foraging | S02 | **Barren Touch** | −1 WIS | −10% harvest/foraging yield | Repeated harvesting/foraging failures |
-| S03 | **Born Hunter** | +1 DEX | +10% hunting success | Successful hunts | S04 | **Skittish** | −1 DEX | −10% hunting success | Repeated hunting failures |
-| S05 | **Prospector** | — | +10% chance to find rare veins on survey; +25% chance of INT gain from mining | Successful mining (rare vein discovery) | S06 | **Jinxed Miner** | — | +10% mine collapse chance; −25% chance of attribute gain from mining | Mine collapses |
-| S07 | **Master Feller** | +1 END | +10% logging yield | Successful logging | S08 | **Timber-cursed** | −1 END | −10% logging yield; +5% logging injury chance | Logging injuries |
-| S09 | **Trailblazer** | — | −15% explore energy cost; +25% chance of WIS gain from exploring | Exploring new hexes | S10 | **Lost** | — | +15% explore energy cost; −25% chance of attribute gain from exploring | Injuries while exploring |
-| S11 | **Pathfinder** | +1 WIS | −10% travel time in explored hexes | Extensive travel | S12 | **Footsore** | −1 WIS | +10% travel energy cost in explored hexes | Repeated travel injuries/exhaustion |
-| S13 | **Forgeborn** | +1 CRA | +10% weapon/armor crafting quality | Successful forging | S14 | **Fumble-fingers** | −1 CRA | −10% crafting quality | Crafting failures |
-| S15 | **Alchemist's Touch** | +1 INT | +10% refining yield | Successful refining | S16 | **Wasteful** | −1 INT | −5% refining yield | Failed refining attempts |
-| S17 | **Beast Slayer** | +1 STR | +15% beast encounter success | Surviving T2+ beast encounters | S18 | **Beast-shy** | −1 STR | −10% beast encounter success | Near-death beast encounters |
-| S19 | **Master Builder** | +1 INT | −10% building construction time | Constructing buildings | S20 | **Shoddy Builder** | −1 INT | +10% building construction time | Building failures/collapses |
-| S21 | **Herdsman** | +1 CHA | +10% livestock yield | Sustained livestock management | S22 | **Neglectful** | −1 CHA | −10% livestock yield; +10% livestock sickness chance | Livestock deaths/neglect |
-| S23 | **Shepherd** | +1 SUR | Follower food consumption −15% | Maintaining followers over time | S24 | **Harsh Keeper** | −1 SUR | Followers consume +15% food; +10% follower desertion rate | Repeated follower starvation/deaths |
-| S25 | **Cartographer** | — | +10% survey energy efficiency; +25% chance of WIS gain from surveying | Surveying many areas | S26 | **Disoriented** | — | −10% survey quality; +10% survey energy cost | Getting lost during surveys |
-| S27 | **Cook** | +1 VIT | +15% food buff effectiveness from cooking | Successful cooking | S28 | **Scorched Palate** | −1 VIT | −15% food buff effectiveness | Repeated cooking failures |
-| S29 | **Tamer** | +1 LEA | +1 max follower | Recruiting/maintaining many followers | S30 | **Unruly** | −1 LEA | Followers desert 25% faster | Repeated follower desertions |
-| S31 | **Survivor** | +1 VIT | +10% health regen rate | Surviving at <20% health | S32 | **Shaken** | −1 VIT | −10% health regen rate; −5% success chance when health <50% | Accumulated near-death experiences |
-| S33 | **Quarrier** | +1 STR | −10% mine collapse chance | Mining without collapses | S34 | **Cave-in Survivor** | −1 STR | +10% mine collapse chance; +5% mining energy cost | Severe mine collapses |
-| S35 | **Herbalist** | +1 SUR | +10% herb yield; herbal foods +5% regen bonus | Gathering herbs | S36 | **Rash Forager** | −1 SUR | −10% herb yield; +10% chance of poisoning from gathered food | Repeated foraging poisonings |
-| S37 | **Marksman** | +1 DEX | +10% ranged equipment effectiveness | Successful ranged combat | S38 | **Shaky Hands** | −1 DEX | −10% ranged equipment effectiveness | Accumulated combat trauma |
+### Skill Traits (Positive)
+
+Gained from **successful actions**. More critical successes have higher base chances.
+
+| # | Trait | Opposite | Domain | Modifier | Special Effect | Gained from |
+|---|---|---|---|---|---|---|
+| S01 | **Green Thumb** | Barren Touch | harvesting | +1 WIS | +10% harvest yield from fertile areas | Successful harvesting/foraging |
+| S03 | **Born Hunter** | Skittish | hunting | +1 DEX | +10% hunting success | Successful hunts |
+| S05 | **Prospector** | Jinxed Miner | mining (discovery) | — | +10% chance to find rare veins on survey; +25% chance of INT gain from mining | Successful mining (rare vein discovery) |
+| S07 | **Master Feller** | Timber-cursed | logging | +1 END | +10% logging yield | Successful logging |
+| S09 | **Trailblazer** | Lost | exploring | — | −15% explore energy cost; +25% chance of WIS gain from exploring | Exploring new hexes |
+| S11 | **Pathfinder** | Footsore | travel | +1 WIS | −10% travel time in explored hexes | Extensive travel |
+| S13 | **Forgeborn** | Fumble-fingers | crafting | +1 CRA | +10% weapon/armor crafting quality | Successful forging |
+| S15 | **Alchemist's Touch** | Wasteful | refining | +1 INT | +10% refining yield | Successful refining |
+| S17 | **Beast Slayer** | Beast-shy | combat (beasts) | +1 STR | +15% beast encounter success | Surviving T2+ beast encounters |
+| S19 | **Master Builder** | Shoddy Builder | building | +1 INT | −10% building construction time | Constructing buildings |
+| S21 | **Herdsman** | Neglectful | livestock | +1 CHA | +10% livestock yield | Sustained livestock management |
+| S23 | **Shepherd** | Harsh Keeper | followers | +1 SUR | Follower food consumption −15% | Maintaining followers over time |
+| S25 | **Cartographer** | Disoriented | survey | — | +10% survey energy efficiency; +25% chance of WIS gain from surveying | Surveying many areas |
+| S27 | **Cook** | Scorched Palate | cooking | +1 VIT | +15% food buff effectiveness from cooking | Successful cooking |
+| S29 | **Tamer** | Unruly | follower recruitment | +1 LEA | +1 max follower | Recruiting/maintaining many followers |
+| S31 | **Survivor** | Shaken | endurance | +1 VIT | +10% health regen rate | Surviving at <20% health |
+| S33 | **Quarrier** | Cave-in Survivor | mining (safety) | +1 STR | −10% mine collapse chance | Mining without collapses |
+| S35 | **Herbalist** | Rash Forager | herb gathering | +1 SUR | +10% herb yield; herbal foods +5% regen bonus | Gathering herbs |
+| S37 | **Marksman** | Shaky Hands | ranged combat | +1 DEX | +10% ranged equipment effectiveness | Successful ranged combat |
+
+### Skill Traits (Negative)
+
+Gained from **failures and defeats**. More severe failures have higher base chances. Represent lasting psychological and physical impacts.
+
+| # | Trait | Opposite | Domain | Modifier | Special Effect | Gained from |
+|---|---|---|---|---|---|---|
+| S02 | **Barren Touch** | Green Thumb | harvesting | −1 WIS | −10% harvest/foraging yield | Repeated harvesting/foraging failures |
+| S04 | **Skittish** | Born Hunter | hunting | −1 DEX | −10% hunting success | Repeated hunting failures |
+| S06 | **Jinxed Miner** | Prospector | mining (discovery) | — | +10% mine collapse chance; −25% chance of attribute gain from mining | Mine collapses |
+| S08 | **Timber-cursed** | Master Feller | logging | −1 END | −10% logging yield; +5% logging injury chance | Logging injuries |
+| S10 | **Lost** | Trailblazer | exploring | — | +15% explore energy cost; −25% chance of attribute gain from exploring | Injuries while exploring |
+| S12 | **Footsore** | Pathfinder | travel | −1 WIS | +10% travel energy cost in explored hexes | Repeated travel injuries/exhaustion |
+| S14 | **Fumble-fingers** | Forgeborn | crafting | −1 CRA | −10% crafting quality | Crafting failures |
+| S16 | **Wasteful** | Alchemist's Touch | refining | −1 INT | −5% refining yield | Failed refining attempts |
+| S18 | **Beast-shy** | Beast Slayer | combat (beasts) | −1 STR | −10% beast encounter success | Near-death beast encounters |
+| S20 | **Shoddy Builder** | Master Builder | building | −1 INT | +10% building construction time | Building failures/collapses |
+| S22 | **Neglectful** | Herdsman | livestock | −1 CHA | −10% livestock yield; +10% livestock sickness chance | Livestock deaths/neglect |
+| S24 | **Harsh Keeper** | Shepherd | followers | −1 SUR | Followers consume +15% food; +10% follower desertion rate | Repeated follower starvation/deaths |
+| S26 | **Disoriented** | Cartographer | survey | — | −10% survey quality; +10% survey energy cost | Getting lost during surveys |
+| S28 | **Scorched Palate** | Cook | cooking | −1 VIT | −15% food buff effectiveness | Repeated cooking failures |
+| S30 | **Unruly** | Tamer | follower recruitment | −1 LEA | Followers desert 25% faster | Repeated follower desertions |
+| S32 | **Shaken** | Survivor | endurance | −1 VIT | −10% health regen rate; −5% success chance when health <50% | Accumulated near-death experiences |
+| S34 | **Cave-in Survivor** | Quarrier | mining (safety) | −1 STR | +10% mine collapse chance; +5% mining energy cost | Severe mine collapses |
+| S36 | **Rash Forager** | Herbalist | herb gathering | −1 SUR | −10% herb yield; +10% chance of poisoning from gathered food | Repeated foraging poisonings |
+| S38 | **Shaky Hands** | Marksman | ranged combat | −1 DEX | −10% ranged equipment effectiveness | Accumulated combat trauma |
 
 > **Notes:**
-> - S09/S10 Trailblazer/Lost, S05/S06 Prospector/Jinxed Miner, and S25/S26 Cartographer/Disoriented have **no attribute modifier** — their special effects (including boosted/reduced attribute gain chances) are sufficient value.
-> - S13 Forgeborn changed from +1 END to **+1 CRA** to properly match its domain (crafting quality) and pair symmetrically with Fumble-fingers (−1 CRA).
-> - S27 Cook changed from +1 CRA to **+1 VIT** to avoid CRA doubling (Forgeborn already covers CRA) and to pair symmetrically with Scorched Palate (−1 VIT).
-> - S04 Skittish changed from −1 SUR to **−1 DEX** to match Born Hunter (+1 DEX) — hunting is a DEX-gated activity.
-> - S08 Timber-cursed gains **−1 END** modifier (was no modifier) to pair with Master Feller (+1 END).
-> - S10 Lost changed from −1 WIS to **no modifier** to pair symmetrically with Trailblazer (no modifier); effect reworded to mirror Trailblazer's structure.
-> - **New traits added:**
->   - S12 **Footsore** (−1 WIS) — negative counterpart to Pathfinder. Gained from repeated travel injuries.
->   - S22 **Neglectful** (−1 CHA) — negative counterpart to Herdsman. Gained from livestock deaths.
->   - S24 **Harsh Keeper** (−1 SUR) — negative counterpart to Shepherd. Gained from follower starvation/deaths.
->   - S32 **Shaken** (−1 VIT) — negative counterpart to Survivor. Gained from accumulated near-death experiences.
->   - S34 **Cave-in Survivor** (−1 STR) — negative counterpart to Quarrier. Gained from severe mine collapses (Jinxed Miner is now exclusively paired with Prospector).
->   - S36 **Rash Forager** (−1 SUR) — negative counterpart to Herbalist. Gained from foraging poisonings.
->   - S37 **Marksman** (+1 DEX) — new positive trait for ranged combat. Pairs with existing Shaky Hands.
-> - Quarrier and Prospector are now separate pairs (Quarrier ↔ Cave-in Survivor; Prospector ↔ Jinxed Miner) — previously they shared a negative, which was inconsistent with the exclusive-pair lock-out rule.
+> - S05/S06 Prospector/Jinxed Miner, S09/S10 Trailblazer/Lost, and S25/S26 Cartographer/Disoriented have **no attribute modifier** — their special effects (including boosted/reduced attribute gain chances) are sufficient value.
+> - Quarrier and Prospector are separate pairs (Quarrier ↔ Cave-in Survivor; Prospector ↔ Jinxed Miner) — mining discovery and mining safety are distinct skill domains.
 > - Additional skill traits can be introduced by future modules.
 
 ---
