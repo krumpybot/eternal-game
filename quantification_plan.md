@@ -51,7 +51,7 @@ Dependencies: none — these are leaf primitives.
 
 - Spawn: 2 personality + 1 physical
 - Max 10 traits; gain uses **chance-based system** (no XP tracking):
-  - `gain_chance = base_chance × (1 − trait_count / 10)` — 0% at 10 traits
+  - `gain_chance = base_chance × (1 − (trait_count / 10))²` — quadratic decrease, 0% at 10 traits
   - Event criticality determines base chance (routine ~0.5%, critical ~8–15%)
 - **Attribute progression** also chance-based:
   - `gain_chance = base_chance × (1 − (level / 20))²` — exponential decrease, 0% at level 20

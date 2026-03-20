@@ -267,12 +267,12 @@ Conversion probabilities are autoregulator-tunable.
 | I04 | **Concussed** | −1 INT | −15% crafting/refining quality; −10% survey efficiency | Addled, Deaf |
 | I05 | **Sprained** | −1 DEX | +20% travel energy cost | Lame |
 | I06 | **Winded** | −1 END | −20% energy regen rate | Broken Spirit |
-| I07 | **Gashed** | −1 VIT | −100% health regen rate (must have positive regen buff to heal) | Scarred |
+| I07 | **Gashed** | −1 VIT | −100% health regen rate (must have positive regen buff to heal); +25% to all energy costs | Scarred |
 | I08 | **Burned** | −1 CRA | −15% crafting quality; −10% production efficiency | Scarred, Nerve-dead, Missing Fingers |
 | I09 | **Dislocated** | −1 STR | −20% carry capacity | Crooked |
 | I10 | **Blinded (temporary)** | −2 DEX | −25% all success rates; cannot survey | One-eyed |
 | I11 | **Frostbitten** | −1 END | −15% energy regen; +20% cold biome energy costs | Nerve-dead, Missing Fingers |
-| I12 | **Poisoned** | −1 VIT | −100% health regen rate (must have positive regen buff to heal) | Sickened |
+| I12 | **Poisoned** | −1 VIT | −100% health regen rate (must have positive regen buff to heal); −50% food buff effectiveness | Sickened |
 | I13 | **Traumatised** | −1 CHA | −50% chance of attribute gain | Broken Spirit |
 
 ---

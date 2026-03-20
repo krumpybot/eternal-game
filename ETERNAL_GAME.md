@@ -250,13 +250,13 @@ Traits are organized into **5 types**:
 | **Personality** | Core character disposition (Brave, Craven, Studious, etc.) | At mint (2 traits); rarely through major life events | Can be replaced by opposite trait through events |
 | **Physical** | Bodily characteristics (Sturdy, Nimble, Perceptive, etc.) | At mint (1 trait); rarely through events | Can be replaced by opposite trait through events |
 | **Skill** | Aptitudes from experience (Green Thumb, Born Hunter, etc.) | Gained by performing actions - positive from success, negative from failure | **Cannot be lost once gained** |
-| **Injury** | Temporary wounds (Lacerated, Fractured, Bruised, etc.) | From encounter/activity damage | Lost when health returns to >100 and any action is completed; may convert to disability (probability scales with damage dealt) |
+| **Injury** | Temporary wounds (Lacerated, Fractured, Bruised, etc.) | From encounter/activity damage | Lost when health returns to >75% of maximum health and any action is completed; may convert to disability (probability scales with damage dealt) |
 | **Disability** | Permanent scars (One-eyed, Lame, etc.) | Converted from severe injury traits | **Cannot be lost** |
 
 - **At mint**: 2 personality traits + 1 physical trait.
 - **Max 10 trait slots**. Trait gain uses a **chance-based system** (no XP/history tracking):
   - Every action/event has a small base chance to grant a trait; event criticality scales the chance.
-  - `gain_chance = base_chance × (1 − trait_count / 10)` — at 10 traits, gain chance is **0%**.
+  - `gain_chance = base_chance × (1 − (trait_count / 10))²` — quadratic decrease, 0% at 10 traits.
 - **Exclusivity groups**: grouped traits are fully exclusive (Brave vs Craven — impossible to have both). Almost all personality and physical traits have an opposite.
 - Traits may grant **attribute modifiers**, **special effects**, or both (not every trait needs both).
   - Max **±2** per trait. Shapes: `[+1]`, `[−1]`, `[+2]`, `[−2]`, `[+1, +1]`, `[+1, −1]`, `[−1, −1]`. Dual shapes are rarer.
@@ -735,7 +735,7 @@ Hazards can be biome- or task-specific events. Hazards occur **by chance per tic
 - Adventurer energy
 - Attributes and traits
 
-Surviving hazards may grant resources (mine collapse reveals a new vein, wolf attack yields a pelt) or **positive traits** (perceptive, quick-witted, etc.).
+Surviving hazards may grant resources (mine collapse reveals a new vein, wolf attack yields a pelt) or **positive skill traits** (Prospector, Beast Slayer, Quarrier, etc.).
 
 ### 13.3 Legacy
 
