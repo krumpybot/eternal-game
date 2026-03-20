@@ -60,11 +60,11 @@ Dependencies: none — these are leaf primitives.
 - Some traits have only modifier or only special effect
 - No-doubling rule (modifier ≠ same stat as special effect)
 - Exclusive pairs enforced for personality/physical
-- **Personality and physical traits**: fully scoped in base module (see `trait_table_draft.md`)
+- **Personality and physical traits**: fully scoped in base module (see `Appendix_C_Trait_Catalog.md`)
 - **Skill, injury, disability traits**: base set defined; new traits can be introduced by future modules
 - CK3-inspired: 19 personality pairs (38 traits), 11 physical groups (23 traits), 18 skill pairs (36 traits), 120 total base traits
 
-Full catalog: `trait_table_draft.md`
+Full catalog: `Appendix_C_Trait_Catalog.md`
 
 ### 1d. Follower Scaling ✅
 
@@ -406,4 +406,4 @@ Worked example: typical adventurer's first 24 real-hours. Energy budget, health 
 ---
 
 *Quantification plan v0.2 — March 2026*
-*Phase 1 completed. Phase 2 next.*
+*Phase 1 pending final review. Phase 2 next.*
