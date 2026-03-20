@@ -182,77 +182,55 @@ Physical traits **never affect INT or WIS** — they represent bodily characteri
 
 ---
 
-## 3. Skill Traits (Positive)
+## 3. Skill Traits
 
-Positive skill traits are gained through **successful actions** (chance-based per action resolution). Once gained, they cannot be lost. They become harder to acquire as total trait count rises (same exponential `(1 − count/10)²` formula).
+Skill traits represent permanent specialization earned through gameplay. **Positive** skill traits are gained from **successful actions** (chance-based per action resolution). **Negative** skill traits are gained from **failures and defeats** (more severe failures have higher trigger chance). Once gained, a skill trait **cannot be lost**.
 
-Each action type has a small base chance to grant the relevant skill trait. More critical successes (rare finds, high-tier beast survival) have higher base chances.
+Skill traits become harder to acquire as total trait count rises (same exponential `(1 − count/10)²` formula). More critical successes/failures have higher base chances.
 
-| # | Trait | Modifier | Special Effect | Gained from (chance trigger) |
-|---|---|---|---|---|
-| S01 | **Green Thumb** | +1 WIS | +10% harvest yield from fertile areas | Successful harvesting/foraging |
-| S02 | **Born Hunter** | +1 DEX | +10% hunting success | Successful hunts |
-| S03 | **Prospector** | — | +10% chance to find rare veins on survey; +25% chance of INT gain from mining | Successful mining (rare vein discovery) |
-| S04 | **Master Feller** | +1 END | +10% logging yield | Successful logging |
-| S05 | **Trailblazer** | — | −15% explore energy cost; +25% chance of WIS gain from exploring | Exploring new hexes |
-| S06 | **Pathfinder** | +1 WIS | −10% travel time in explored hexes | Extensive travel |
-| S07 | **Forgeborn** | +1 END | +10% weapon/armor crafting quality | Successful forging |
-| S08 | **Alchemist's Touch** | +1 INT | +10% refining yield | Successful refining |
-| S09 | **Beast Slayer** | +1 STR | +15% beast encounter success | Surviving T2+ beast encounters |
-| S10 | **Master Builder** | +1 INT | −10% building construction time | Constructing buildings |
-| S11 | **Herdsman** | +1 CHA | +10% livestock yield | Sustained livestock management |
-| S12 | **Shepherd** | +1 SUR | Follower food consumption −15% | Maintaining followers over time |
-| S13 | **Cartographer** | — | +10% survey energy efficiency; +25% chance of WIS gain from surveying | Surveying many areas |
-| S14 | **Cook** | +1 CRA | +15% food buff effectiveness from cooking | Successful cooking |
-| S15 | **Tamer** | +1 LEA | +1 max follower | Recruiting/maintaining many followers |
-| S16 | **Survivor** | +1 VIT | +10% health regen rate | Surviving at <20% health |
-| S17 | **Quarrier** | +1 STR | −10% mine collapse chance | Mining without collapses |
-| S18 | **Herbalist** | +1 SUR | +10% herb yield; herbal foods +5% regen bonus | Gathering herbs |
+**Once a skill trait is learned, its opposite can never be gained** — learning a positive trait permanently locks out the corresponding negative, and vice versa. This creates meaningful divergence between adventurers as they specialize.
 
-> **Note:** Traits S03, S05, S13 have **no attribute modifier** — their special effects (including boosted attribute gain chances) are sufficient value. Additional skill traits can be introduced by future modules.
+All skill traits are organized in exclusive pairs grouped by activity domain. Each pair shares a domain and the lock-out rule: gaining one permanently prevents the other.
 
----
-
-## 4. Skill Traits (Negative)
-
-Negative skill traits are gained from **failures and defeats** (chance-based — more severe failures have higher trigger chance). Once gained, they cannot be lost. They represent lasting psychological impacts.
-
-**Once a skill trait is learned, its opposite (if any) can never be gained** — learning a negative skill trait permanently locks out the corresponding positive trait, and vice versa.
-
-| # | Trait | Modifier | Special Effect | Gained from (chance trigger) |
-|---|---|---|---|---|
-| S21 | **Skittish** | −1 SUR | −10% hunting success | Repeated hunting failures |
-| S22 | **Jinxed Miner** | — | +10% mine collapse chance; −25% chance of attribute gain from mining | Mine collapses |
-| S23 | **Fumble-fingers** | −1 CRA | −10% crafting quality | Crafting failures |
-| S24 | **Lost** | −1 WIS | +10% explore energy cost | Injuries while exploring |
-| S25 | **Beast-shy** | −1 STR | −10% beast encounter success | Near-death beast encounters |
-| S26 | **Wasteful** | −1 INT | −5% refining yield | Failed refining attempts |
-| S27 | **Timber-cursed** | — | −10% logging yield; +5% logging injury chance | Logging injuries |
-| S28 | **Shaky Hands** | −1 DEX | −5% ranged equipment effectiveness | Accumulated combat trauma |
-| S29 | **Barren Touch** | −1 WIS | −10% harvest/foraging yield | Repeated harvesting/foraging failures |
-| S30 | **Shoddy Builder** | −1 INT | +10% building construction time | Building failures/collapses |
-| S31 | **Scorched Palate** | −1 VIT | −15% food buff effectiveness | Repeated cooking failures |
-| S32 | **Disoriented** | — | −10% survey quality; +10% survey energy cost | Getting lost during surveys |
-| S33 | **Unruly** | −1 LEA | Followers desert 25% faster | Repeated follower desertions |
+| # | Positive Trait | Mod | Special Effect | Gained from | # | Negative Trait | Mod | Special Effect | Gained from |
+|---|---|---|---|---|---|---|---|---|---|
+| S01 | **Green Thumb** | +1 WIS | +10% harvest yield from fertile areas | Successful harvesting/foraging | S02 | **Barren Touch** | −1 WIS | −10% harvest/foraging yield | Repeated harvesting/foraging failures |
+| S03 | **Born Hunter** | +1 DEX | +10% hunting success | Successful hunts | S04 | **Skittish** | −1 DEX | −10% hunting success | Repeated hunting failures |
+| S05 | **Prospector** | — | +10% chance to find rare veins on survey; +25% chance of INT gain from mining | Successful mining (rare vein discovery) | S06 | **Jinxed Miner** | — | +10% mine collapse chance; −25% chance of attribute gain from mining | Mine collapses |
+| S07 | **Master Feller** | +1 END | +10% logging yield | Successful logging | S08 | **Timber-cursed** | −1 END | −10% logging yield; +5% logging injury chance | Logging injuries |
+| S09 | **Trailblazer** | — | −15% explore energy cost; +25% chance of WIS gain from exploring | Exploring new hexes | S10 | **Lost** | — | +15% explore energy cost; −25% chance of attribute gain from exploring | Injuries while exploring |
+| S11 | **Pathfinder** | +1 WIS | −10% travel time in explored hexes | Extensive travel | S12 | **Footsore** | −1 WIS | +10% travel energy cost in explored hexes | Repeated travel injuries/exhaustion |
+| S13 | **Forgeborn** | +1 CRA | +10% weapon/armor crafting quality | Successful forging | S14 | **Fumble-fingers** | −1 CRA | −10% crafting quality | Crafting failures |
+| S15 | **Alchemist's Touch** | +1 INT | +10% refining yield | Successful refining | S16 | **Wasteful** | −1 INT | −5% refining yield | Failed refining attempts |
+| S17 | **Beast Slayer** | +1 STR | +15% beast encounter success | Surviving T2+ beast encounters | S18 | **Beast-shy** | −1 STR | −10% beast encounter success | Near-death beast encounters |
+| S19 | **Master Builder** | +1 INT | −10% building construction time | Constructing buildings | S20 | **Shoddy Builder** | −1 INT | +10% building construction time | Building failures/collapses |
+| S21 | **Herdsman** | +1 CHA | +10% livestock yield | Sustained livestock management | S22 | **Neglectful** | −1 CHA | −10% livestock yield; +10% livestock sickness chance | Livestock deaths/neglect |
+| S23 | **Shepherd** | +1 SUR | Follower food consumption −15% | Maintaining followers over time | S24 | **Harsh Keeper** | −1 SUR | Followers consume +15% food; +10% follower desertion rate | Repeated follower starvation/deaths |
+| S25 | **Cartographer** | — | +10% survey energy efficiency; +25% chance of WIS gain from surveying | Surveying many areas | S26 | **Disoriented** | — | −10% survey quality; +10% survey energy cost | Getting lost during surveys |
+| S27 | **Cook** | +1 VIT | +15% food buff effectiveness from cooking | Successful cooking | S28 | **Scorched Palate** | −1 VIT | −15% food buff effectiveness | Repeated cooking failures |
+| S29 | **Tamer** | +1 LEA | +1 max follower | Recruiting/maintaining many followers | S30 | **Unruly** | −1 LEA | Followers desert 25% faster | Repeated follower desertions |
+| S31 | **Survivor** | +1 VIT | +10% health regen rate | Surviving at <20% health | S32 | **Shaken** | −1 VIT | −10% health regen rate; −5% success chance when health <50% | Accumulated near-death experiences |
+| S33 | **Quarrier** | +1 STR | −10% mine collapse chance | Mining without collapses | S34 | **Cave-in Survivor** | −1 STR | +10% mine collapse chance; +5% mining energy cost | Severe mine collapses |
+| S35 | **Herbalist** | +1 SUR | +10% herb yield; herbal foods +5% regen bonus | Gathering herbs | S36 | **Rash Forager** | −1 SUR | −10% herb yield; +10% chance of poisoning from gathered food | Repeated foraging poisonings |
+| S37 | **Marksman** | +1 DEX | +10% ranged equipment effectiveness | Successful ranged combat | S38 | **Shaky Hands** | −1 DEX | −10% ranged equipment effectiveness | Accumulated combat trauma |
 
 > **Notes:**
-> - S22, S27, S32 have **no attribute modifier** — their special effects (including reduced attribute gain chances or increased failure risk) are penalty enough.
-> - **Skill trait opposites** (positive ↔ negative for the same activity):
->   - S01 Green Thumb ↔ S29 Barren Touch (harvesting)
->   - S02 Born Hunter ↔ S21 Skittish (hunting)
->   - S03 Prospector ↔ S22 Jinxed Miner (mining)
->   - S04 Master Feller ↔ S27 Timber-cursed (logging)
->   - S05 Trailblazer ↔ S24 Lost (exploring)
->   - S08 Alchemist's Touch ↔ S26 Wasteful (refining)
->   - S09 Beast Slayer ↔ S25 Beast-shy (combat)
->   - S10 Master Builder ↔ S30 Shoddy Builder (building)
->   - S13 Cartographer ↔ S32 Disoriented (survey)
->   - S14 Cook ↔ S31 Scorched Palate (cooking)
->   - S15 Tamer ↔ S33 Unruly (followers)
->   - S07 Forgeborn ↔ S23 Fumble-fingers (crafting/forging)
->   - S17 Quarrier ↔ S22 Jinxed Miner (mining — shared negative)
->   - S02 Born Hunter ↔ S28 Shaky Hands (hunting/ranged — partial overlap)
-> - S06 Pathfinder, S11 Herdsman, S12 Shepherd, S16 Survivor, S18 Herbalist currently have no negative counterpart. Future modules may add these.
+> - S09/S10 Trailblazer/Lost, S05/S06 Prospector/Jinxed Miner, and S25/S26 Cartographer/Disoriented have **no attribute modifier** — their special effects (including boosted/reduced attribute gain chances) are sufficient value.
+> - S13 Forgeborn changed from +1 END to **+1 CRA** to properly match its domain (crafting quality) and pair symmetrically with Fumble-fingers (−1 CRA).
+> - S27 Cook changed from +1 CRA to **+1 VIT** to avoid CRA doubling (Forgeborn already covers CRA) and to pair symmetrically with Scorched Palate (−1 VIT).
+> - S04 Skittish changed from −1 SUR to **−1 DEX** to match Born Hunter (+1 DEX) — hunting is a DEX-gated activity.
+> - S08 Timber-cursed gains **−1 END** modifier (was no modifier) to pair with Master Feller (+1 END).
+> - S10 Lost changed from −1 WIS to **no modifier** to pair symmetrically with Trailblazer (no modifier); effect reworded to mirror Trailblazer's structure.
+> - **New traits added:**
+>   - S12 **Footsore** (−1 WIS) — negative counterpart to Pathfinder. Gained from repeated travel injuries.
+>   - S22 **Neglectful** (−1 CHA) — negative counterpart to Herdsman. Gained from livestock deaths.
+>   - S24 **Harsh Keeper** (−1 SUR) — negative counterpart to Shepherd. Gained from follower starvation/deaths.
+>   - S32 **Shaken** (−1 VIT) — negative counterpart to Survivor. Gained from accumulated near-death experiences.
+>   - S34 **Cave-in Survivor** (−1 STR) — negative counterpart to Quarrier. Gained from severe mine collapses (Jinxed Miner is now exclusively paired with Prospector).
+>   - S36 **Rash Forager** (−1 SUR) — negative counterpart to Herbalist. Gained from foraging poisonings.
+>   - S37 **Marksman** (+1 DEX) — new positive trait for ranged combat. Pairs with existing Shaky Hands.
+> - Quarrier and Prospector are now separate pairs (Quarrier ↔ Cave-in Survivor; Prospector ↔ Jinxed Miner) — previously they shared a negative, which was inconsistent with the exclusive-pair lock-out rule.
+> - Additional skill traits can be introduced by future modules.
 
 ---
 
@@ -369,75 +347,74 @@ The following tables show the distribution of attribute modifiers across all per
 
 > All attributes within 6–8 total instances. Maximum net deviation is ±1 (STR, DEX, SUR, CRA at +1; CHA at −1). CHA's slight negative skew comes from Zoophilist's `[+1 WIS, −1 CHA]` shape where the positive WIS is the primary modifier and CHA is the trade-off cost — thematically, someone who bonds deeply with animals may be less socially adept with people. No attribute exceeds ±1 net.
 
-### Skill Trait Modifier Tally (31 traits: 18 positive, 13 negative)
+### Skill Trait Modifier Tally (38 traits: 19 pairs across 19 activity domains)
 
-Skill traits are earned through gameplay (not minted). They represent specialization and permanent consequences. Some traits have no modifier (special effect only).
+Skill traits are earned through gameplay (not minted). They represent permanent specialization and consequences. Each pair shares an activity domain and is mutually exclusive. Some traits have no modifier (special effect only).
 
-**Positive Skill Traits (18)**
-
-| Attribute | Traits | Count |
-|---|---|---|
-| STR | S09 Beast Slayer, S17 Quarrier | 2 |
-| END | S04 Master Feller, S07 Forgeborn | 2 |
-| DEX | S02 Born Hunter | 1 |
-| VIT | S16 Survivor | 1 |
-| INT | S08 Alchemist's Touch, S10 Master Builder | 2 |
-| WIS | S01 Green Thumb, S06 Pathfinder | 2 |
-| CHA | S11 Herdsman | 1 |
-| SUR | S12 Shepherd, S18 Herbalist | 2 |
-| CRA | S14 Cook | 1 |
-| LEA | S15 Tamer | 1 |
-| — (no modifier) | S03 Prospector, S05 Trailblazer, S13 Cartographer | 3 |
-
-**Negative Skill Traits (13)**
+**Positive Skill Traits (19)**
 
 | Attribute | Traits | Count |
 |---|---|---|
-| STR | S25 Beast-shy | 1 |
-| END | — | 0 |
-| DEX | S28 Shaky Hands | 1 |
-| VIT | S31 Scorched Palate | 1 |
-| INT | S26 Wasteful, S30 Shoddy Builder | 2 |
-| WIS | S24 Lost, S29 Barren Touch | 2 |
-| CHA | — | 0 |
-| SUR | S21 Skittish | 1 |
-| CRA | S23 Fumble-fingers | 1 |
-| LEA | S33 Unruly | 1 |
-| — (no modifier) | S22 Jinxed Miner, S27 Timber-cursed, S32 Disoriented | 3 |
+| STR | S17 Beast Slayer, S33 Quarrier | 2 |
+| END | S07 Master Feller | 1 |
+| DEX | S03 Born Hunter, S37 Marksman | 2 |
+| VIT | S27 Cook, S31 Survivor | 2 |
+| INT | S15 Alchemist's Touch, S19 Master Builder | 2 |
+| WIS | S01 Green Thumb, S11 Pathfinder | 2 |
+| CHA | S21 Herdsman | 1 |
+| SUR | S23 Shepherd, S35 Herbalist | 2 |
+| CRA | S13 Forgeborn | 1 |
+| LEA | S29 Tamer | 1 |
+| — (no modifier) | S05 Prospector, S09 Trailblazer, S25 Cartographer | 3 |
+
+**Negative Skill Traits (19)**
+
+| Attribute | Traits | Count |
+|---|---|---|
+| STR | S18 Beast-shy, S34 Cave-in Survivor | 2 |
+| END | S08 Timber-cursed | 1 |
+| DEX | S04 Skittish, S38 Shaky Hands | 2 |
+| VIT | S28 Scorched Palate, S32 Shaken | 2 |
+| INT | S16 Wasteful, S20 Shoddy Builder | 2 |
+| WIS | S02 Barren Touch, S12 Footsore | 2 |
+| CHA | S22 Neglectful | 1 |
+| SUR | S24 Harsh Keeper, S36 Rash Forager | 2 |
+| CRA | S14 Fumble-fingers | 1 |
+| LEA | S30 Unruly | 1 |
+| — (no modifier) | S06 Jinxed Miner, S10 Lost, S26 Disoriented | 3 |
 
 **Skill Trait Net Balance**
 
 | Attribute | Positive (+) | Negative (−) | Net | Total |
 |---|---|---|---|---|
-| STR | 2 | 1 | +1 | 3 |
-| END | 2 | 0 | **+2** | 2 |
-| DEX | 1 | 1 | 0 | 2 |
-| VIT | 1 | 1 | 0 | 2 |
+| STR | 2 | 2 | 0 | 4 |
+| END | 1 | 1 | 0 | 2 |
+| DEX | 2 | 2 | 0 | 4 |
+| VIT | 2 | 2 | 0 | 4 |
 | INT | 2 | 2 | 0 | 4 |
 | WIS | 2 | 2 | 0 | 4 |
-| CHA | 1 | 0 | **+1** | 1 |
-| SUR | 2 | 1 | +1 | 3 |
+| CHA | 1 | 1 | 0 | 2 |
+| SUR | 2 | 2 | 0 | 4 |
 | CRA | 1 | 1 | 0 | 2 |
 | LEA | 1 | 1 | 0 | 2 |
 
 > **Analysis:**
 >
-> Skill traits are less balanced than personality/physical traits by design — they represent earned specialization, not a minted lottery. Key observations:
+> All attributes are now at **net zero** — every positive skill modifier has a corresponding negative. Key changes from v0.5:
 >
-> - **END is +2 net** (2 positive, 0 negative). Master Feller and Forgeborn both grant +1 END, but no negative skill trait penalizes END. This makes END the easiest attribute to accumulate through gameplay.
-> - **CHA is +1 net** with only 1 instance total (Herdsman). No negative skill trait penalizes CHA. CHA is underrepresented in skill traits — only livestock management triggers it.
-> - **STR and SUR are +1 net** — minor positive skew from having one more positive than negative each.
-> - **INT and WIS are perfectly balanced** at 2/2 each — reflecting that knowledge can be gained and lost through both study and neglect.
-> - **3 positive traits have no modifier** (Prospector, Trailblazer, Cartographer) — their special effects include boosted attribute gain chances instead.
-> - **3 negative traits have no modifier** (Jinxed Miner, Timber-cursed, Disoriented) — their special effects are penalty enough.
+> - **END gap closed**: Timber-cursed now carries −1 END (was no modifier), properly pairing with Master Feller (+1 END). Forgeborn moved to +1 CRA.
+> - **CHA gap closed**: New trait Neglectful (−1 CHA) pairs with Herdsman (+1 CHA).
+> - **DEX expanded**: Skittish corrected from −1 SUR to −1 DEX to match Born Hunter. New pair Marksman/Shaky Hands adds a second DEX pair.
+> - **VIT expanded**: Cook moved from +1 CRA to +1 VIT, pairing with Scorched Palate. New pair Survivor/Shaken adds a second VIT pair.
+> - **3 positive and 3 negative traits have no modifier** — their special effects are sufficient value.
+> - Representation ranges from 2 (END, CHA, CRA, LEA) to 4 (STR, DEX, VIT, INT, WIS, SUR). Lower-count attributes are appropriate — END and CHA are broad attributes with significant impact per point, and CRA/LEA have fewer distinct activity domains.
 >
-> **Improvement potential:**
+> **Remaining improvement potential (future modules):**
 >
-> 1. **Add a negative END skill trait.** The +2 net gap is the largest imbalance. A trait like "**Exhausted**" (−1 END, −10% energy regen rate, gained from repeated overexertion/working while energy-depleted) would close the gap and add a meaningful consequence for pushing too hard.
-> 2. **Add a negative CHA skill trait.** Currently CHA has no negative skill counterpart. A trait like "**Pariah**" (−1 CHA, −10% follower recruitment success, gained from repeated social failures or follower deaths) would balance the Herdsman positive.
-> 3. **Consider a positive VIT skill trait counterpart.** Survivor (+1 VIT) has no activity-paired negative. Scorched Palate (−1 VIT) comes from cooking failures — a different domain. A cooking-specific positive VIT trait could pair with it, but Cook already exists with +1 CRA.
-> 4. **DEX and CRA are light** (2 instances each). Future modules could expand these through combat skill traits (archery, dual-wielding) and advanced crafting paths.
-> 5. **No skill traits affect LEA beyond Tamer/Unruly.** Leadership development through gameplay is limited. A trait like "**Tactician**" (+1 LEA, gained from successful large-party encounters) could add depth.
+> 1. **CRA is light** (1 pair). Advanced crafting modules (enchanting, inscription, alchemy mastery) could add CRA skill pairs.
+> 2. **LEA is light** (1 pair). Diplomatic or military leadership modules could add LEA skill pairs (e.g., Tactician/Reckless Commander).
+> 3. **END is light** (1 pair). Endurance-testing activities (long-distance travel, marathon construction) could expand this.
+> 4. **CHA is light** (1 pair). Social/trade modules could add CHA skill pairs (e.g., Silver Tongue/Offputting from bartering).
 
 ---
 
@@ -447,11 +424,11 @@ Skill traits are earned through gameplay (not minted). They represent specializa
 |---|---|---|---|---|
 | Personality | 38 (19 pairs) | 19 groups | 2 at mint | Base module only |
 | Physical | 23 (11 pairs + 1 solo) | 11 groups | 1 at mint | Base module only |
-| Skill (positive) | 18 | None (but see opposites) | 0 at mint | Future modules can add more |
-| Skill (negative) | 13 | None (but see opposites) | 0 at mint | Future modules can add more |
+| Skill (positive) | 19 | 19 pairs (exclusive) | 0 at mint | Future modules can add more |
+| Skill (negative) | 19 | 19 pairs (exclusive) | 0 at mint | Future modules can add more |
 | Injury | 12 | None | 0 at mint | Future modules can add more |
 | Disability | 10 | None | 0 at mint | Future modules can add more |
-| **Total (base)** | **114** | **30 groups** | **3 at mint** | — |
+| **Total (base)** | **121** | **49 groups** | **3 at mint** | — |
 
 **Modifier shape distribution:**
 
@@ -464,7 +441,7 @@ Skill traits are earned through gameplay (not minted). They represent specializa
 | `[+1, +1]` | 4 | P17 Tenacious, H19 Robust, H23 Ambidextrous |
 | `[+1, −1]` | 4 | P08 Reckless, P27 Fierce, P37 Zoophilist, H20 Slight |
 | `[−1, −1]` | 6 | P06 Idle, P18 Fickle, H10 Short, I03 Fractured, D09 Missing Fingers |
-| No modifier | 9 | S03, S05, S13, S22, S27, S32, D04, and others — special effect only |
+| No modifier | 10 | S05, S06, S09, S10, S25, S26, D04, and others — special effect only |
 
 ---
 
@@ -486,7 +463,7 @@ Skill traits are earned through gameplay (not minted). They represent specializa
 
 4. **Attribute modifier balance**: Personality and physical traits are designed for rough parity across all 10 attributes. Physical traits never affect INT or WIS. Personality traits are weighted toward INT, WIS, CHA, CRA, LEA. Combined, all attributes fall within 6–8 total instances and no attribute deviates by more than ±1 from net zero. Dual modifier shapes (`[+1, +1]`, `[−1, −1]`) are used on select traits (Diligent/Idle, Tenacious/Fickle, Tall/Short) to improve cross-attribute coverage without inflating trait count. See Attribute Modifier Balance section for full tally.
 
-5. **Skill trait permanency and exclusivity**: Skill traits can never be lost. Once a positive skill trait is learned, its corresponding negative skill trait (if one exists) can never be gained, and vice versa. This creates meaningful divergence between adventurers as they specialize.
+5. **Skill trait permanency and exclusivity**: Skill traits can never be lost. All 19 skill domains have both a positive and negative trait organized as exclusive pairs. Once either trait in a pair is learned, the opposite can never be gained. This creates meaningful divergence between adventurers as they specialize.
 
 6. **Encounters and events** need detailed definition tables (event name, description, outcome calculation, attribute gain chances, trait gain chances, potential outcomes). This is tracked in the quantification plan (Phase 11c).
 
