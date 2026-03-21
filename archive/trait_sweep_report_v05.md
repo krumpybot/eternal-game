@@ -38,7 +38,7 @@ All requested changes from the update file have been applied to `trait_table_dra
 - **P36 Content**: "at settlement" → "on a settlement hex" (minor wording)
 
 ### Physical Traits
-- **H01**: Strong-backed → **Sturdy**
+- **H01**: Strong-backed → **Brawny**
 - **H04 Clumsy**: removed mining yield bonus; now −10% hazard avoidance only
 - **H05/H06**: Eagle-eyed/Dim-sighted → **Perceptive/Oblivious**. Perceptive: −10% explore/survey/delve energy cost. Oblivious: −5% chance of negative trait gain.
 - **H08 Ailing**: disease resistance → −10% health regen rate
@@ -49,7 +49,7 @@ All requested changes from the update file have been applied to `trait_table_dra
 - **H14 Dull-nosed**: poison resistance → +10% harvesting/livestock yields
 - **H15/H16**: Iron-stomached/Weak-stomached → **Voracious/Squeamish**. Voracious: +10% food cost, −5% success when hungry. Squeamish: −15% food cost.
 - **H17/H18**: Thick-skinned/Thin-skinned → **Resilient/Sensitive**. Sensitive: +10% chance of negative trait gain.
-- **H19/H20**: Towering/Stunted → **Robust/Slight**. Group changed to "constitution". Robust: +10% max health. Slight: −10% max health, +5% energy regen.
+- **H19/H20**: Towering/Stunted → **Stocky/Wiry**. Group changed to "constitution". Stocky: +10% max health. Wiry: −10% max health, +5% energy regen.
 - **H21/H22**: Comely/Plain → Comely/**Ugly**. Comely: −5% upkeep, +25% social encounter success. Ugly: +25% positive skill trait gain, cannot gain labourer followers.
 - **H23 Ambidextrous**: added +5% to all personal yields
 
@@ -66,7 +66,7 @@ All requested changes from the update file have been applied to `trait_table_dra
 | **P15** | **Curious** | +1 WIS | −10% explore/survey/delve energy cost | ⚠️ **WIS = explore/survey energy efficiency.** The +1 WIS already reduces explore/survey energy cost via `cost = base × (1 − WIS × 0.04)`. The special effect doubles down on the same stat domain. |
 | **H05** | **Perceptive** | +1 DEX | −10% explore/survey/delve energy cost | ✅ Clean — DEX is hazard avoidance, not energy cost. No overlap. |
 | **H07** | **Hardy** | +1 STR | +10% health regen rate | ✅ Clean — STR is carry capacity, not health regen. |
-| **H19** | **Robust** | +1 STR, +1 END | +10% max health | ⚠️ **Borderline.** END increases max energy (not max health), and STR is carry capacity. VIT is the max health attribute. Technically clean, but thematically the "constitution" group + END + max health feels like double-dipping on "toughness". **Recommend flagging for review.** |
+| **H19** | **Stocky** | +1 STR, +1 END | +10% max health | ⚠️ **Borderline.** END increases max energy (not max health), and STR is carry capacity. VIT is the max health attribute. Technically clean, but thematically the "constitution" group + END + max health feels like double-dipping on "toughness". **Recommend flagging for review.** |
 | **H13** | **Keen-nosed** | +1 SUR | +10% foraging/hunting success | ⚠️ **SUR = hunting/foraging success.** `hunt_success += SUR × 5%` and `forage_success += SUR × 5%`. The +1 SUR already boosts hunting/foraging via attribute formula. Special effect stacks on the same domain. |
 | **P12** | **Greedy** | −1 CHA | −10% all upkeep costs | ⚠️ **CHA = upkeep energy efficiency.** `cost = base × (1 − CHA × 0.03)`. The −1 CHA increases upkeep cost, while the special effect reduces all upkeep cost — these are offsetting rather than doubling, but they're operating on the exact same stat. The intent is clearly to offset the −CHA penalty, which is a reasonable design choice, but it technically touches the same domain. |
 
@@ -77,7 +77,7 @@ All requested changes from the update file have been applied to `trait_table_dra
 | **Clear violation** | 1 | P15 Curious (+WIS + explore energy reduction) |
 | **Same-domain overlap** | 1 | H13 Keen-nosed (+SUR + foraging/hunting success) |
 | **Intentional offset** | 1 | P12 Greedy (−CHA offset by upkeep reduction) |
-| **Borderline thematic** | 1 | H19 Robust (END + max health — different formulas but same "toughness" theme) |
+| **Borderline thematic** | 1 | H19 Stocky (END + max health — different formulas but same "toughness" theme) |
 
 **Recommendation for P15 Curious**: Change special effect to something WIS-adjacent but not directly energy cost — e.g., "+10% chance to discover special/underworld areas on survey" (the original effect) or "+10% survey quality" to avoid overlap with WIS's explore energy formula.
 
@@ -98,7 +98,7 @@ All requested changes from the update file have been applied to `trait_table_dra
 | **Time-lock duration increases** | P07 Cautious (+10% travel/explore/survey/delve), P25 Methodical (+5% crafting/repair), P26 Scatterbrained (+5% all) | ⚠️ **Scatterbrained (+5% all) strictly contains Methodical (+5% crafting/repair) and overlaps with Cautious (+10% travel).** A character with both Scatterbrained and Cautious effectively gets +15% to travel time-locks and +5% to everything else. Scatterbrained is supposed to be negative (paired with Methodical), but Methodical's effect (+5% to crafting/repair time-locks) is also a *penalty* — so both sides of the focus pair are penalties? |
 | **Upkeep cost reduction** | P12 Greedy (−10% all upkeep), P33 Shrewd (−15% building upkeep), H21 Comely (−5% upkeep) | ⚠️ **Three traits reducing upkeep costs.** Greedy is broadest (all), Shrewd is building-specific, Comely is general. Stacking all three gives massive upkeep savings. Different scopes, but the upkeep domain is over-represented. |
 | **Follower throughput** | P11 Generous (+5% labourer throughput), P21 Commanding (+10% follower throughput) | ⚠️ **Same effect, different magnitudes.** Generous gives +5% labourer throughput; Commanding gives +10% follower throughput (which includes labourers). Commanding strictly supersedes Generous's throughput component. |
-| **Energy regen rate** | P17 Tenacious (+10% while health <75%), P18 Fickle (+20% while health full), P36 Content (+10% on settlement hex), H20 Slight (+5% always) | ✅ Different conditions — acceptable variety. |
+| **Energy regen rate** | P17 Tenacious (+10% while health <75%), P18 Fickle (+20% while health full), P36 Content (+10% on settlement hex), H20 Wiry (+5% always) | ✅ Different conditions — acceptable variety. |
 | **Damage dealt/taken in encounters** | P27 Fierce (+20% damage dealt), P28 Composed (−10% damage taken), H12 Broad (+5% damage in encounters), P34 Naive (+10% damage taken) | ✅ Different directions and magnitudes — acceptable. |
 | **Health loss / damage taken from encounters** | P28 Composed (−10% damage taken from encounter outcomes), H17 Resilient (−10% health loss from encounters) | ⚠️ **Potentially identical effect.** "Damage taken from encounter outcomes" and "health loss from encounters" may be the same mechanic unless encounters have non-health damage. **Clarification needed** — are these mechanically distinct? If not, same effect at same magnitude. |
 | **Food cost** | P11 Generous (+10% follower food cost), P24 Pessimistic (−10% food cost rationing), H15 Voracious (+10% personal food cost), H16 Squeamish (−15% personal food cost) | ✅ Different targets (follower vs personal) and directions. Acceptable. |
@@ -130,14 +130,14 @@ This breaks the expected pattern where one trait in a pair is beneficial and the
 
 | Game Mechanic | Traits Affecting It | Coverage Assessment |
 |---|---|---|
-| **Carry capacity** (STR-based) | H01 Sturdy (+10kg) | ✅ Light touch |
+| **Carry capacity** (STR-based) | H01 Brawny (+10kg) | ✅ Light touch |
 | **Max energy** (END-based) | — (no special effects) | ✅ Appropriately left to END attribute |
-| **Energy regen** | P17 Tenacious, P18 Fickle, P36 Content, H20 Slight | ✅ Well covered with varied conditions |
+| **Energy regen** | P17 Tenacious, P18 Fickle, P36 Content, H20 Wiry | ✅ Well covered with varied conditions |
 | **Energy cost (general)** | P10 Solitary (−10% all, conditional) | ✅ Unique conditional |
 | **Energy cost (explore/survey/delve)** | P15 Curious, H05 Perceptive | ⚠️ Duplicate — see above |
 | **Energy cost (travel)** | H11 Lean (−10%) | ✅ |
 | **Hazard avoidance** (DEX-based) | H03 Nimble (+10%), H04 Clumsy (−10%) | ✅ |
-| **Max health** (VIT-based) | P18 Fickle (−10%), H19 Robust (+10%), H20 Slight (−10%) | ✅ |
+| **Max health** (VIT-based) | P18 Fickle (−10%), H19 Stocky (+10%), H20 Wiry (−10%) | ✅ |
 | **Health regen** | P19 Devout (+5%), H07 Hardy (+10%), H08 Ailing (−10%) | ✅ |
 | **Health loss from encounters** | P28 Composed (−10%), H17 Resilient (−10%), P34 Naive (+10%) | ⚠️ Composed/Resilient potentially identical |
 | **Damage dealt** | P27 Fierce (+20%), H12 Broad (+5%) | ✅ |
@@ -150,7 +150,7 @@ This breaks the expected pattern where one trait in a pair is beneficial and the
 | **Livestock yields** | H14 Dull-nosed (+10%) | ✅ |
 | **Crafting quality** (CRA-based) | P20 Skeptical (+5%) | ✅ |
 | **Time-lock durations** | P07 Cautious (+10%), P08 Reckless (−10%), P25 Methodical (+5%), P26 Scatterbrained (+5%) | ⚠️ See Methodical issue above |
-| **Travel time** | P14 Impulsive (−10%), H02 Frail (−5%) | ✅ |
+| **Travel time** | P14 Impulsive (−10%), H02 Delicate (−5%) | ✅ |
 | **Upkeep costs** | P12 Greedy (−10% all), P33 Shrewd (−15% building), H21 Comely (−5%) | ⚠️ Over-represented |
 | **Food system** | P11 Generous (+10% follower food), P23 Optimistic (+10% buff duration), P24 Pessimistic (−10% food cost), H15 Voracious, H16 Squeamish | ✅ Well covered |
 | **Follower management** | P09 Sociable (+1 max), P21 Commanding (+10% throughput), P11 Generous (+5% throughput), P31 Merciful (−20% desertion) | ✅ |
@@ -216,13 +216,13 @@ This breaks the expected pattern where one trait in a pair is beneficial and the
 
 ## 7. GROUP CONFLICT: CONSTITUTION
 
-H07/H08 (Hardy/Ailing) and H19/H20 (Robust/Slight) now share the **"constitution"** group. This means all four traits are mutually exclusive — an adventurer can only have one of Hardy, Ailing, Robust, or Slight.
+H07/H08 (Hardy/Ailing) and H19/H20 (Stocky/Wiry) now share the **"constitution"** group. This means all four traits are mutually exclusive — an adventurer can only have one of Hardy, Ailing, Stocky, or Wiry.
 
 **This is likely intentional** (all relate to physical constitution), but worth confirming:
 - Previously Hardy/Ailing were constitution and Towering/Stunted were size — two separate groups allowing an adventurer to be both Hardy and Towering.
-- Now a Robust adventurer cannot also be Hardy. This reduces physical trait combinations.
+- Now a Stocky adventurer cannot also be Hardy. This reduces physical trait combinations.
 
-**Recommendation**: If the intent is full mutual exclusivity, this is fine. If Hardy/Robust should be stackable (different aspects of constitution), use distinct group names (e.g., "health" for Hardy/Ailing, "constitution" for Robust/Slight).
+**Recommendation**: If the intent is full mutual exclusivity, this is fine. If Hardy/Stocky should be stackable (different aspects of constitution), use distinct group names (e.g., "health" for Hardy/Ailing, "constitution" for Stocky/Wiry).
 
 ---
 

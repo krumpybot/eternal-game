@@ -140,8 +140,8 @@ Physical traits **never affect INT or WIS** — they represent bodily characteri
 
 | # | Trait | Opposite | Group | Modifier | Special Effect |
 |---|---|---|---|---|---|
-| H01 | **Sturdy** | Frail | build | +1 END | +10 kg carry capacity; −5% construction time-lock duration |
-| H02 | **Frail** | Sturdy | build | −1 END | −10 kg carry capacity; −5% travel time |
+| H01 | **Brawny** | Delicate | build | +1 END | +10 kg carry capacity; −5% construction time-lock duration |
+| H02 | **Delicate** | Brawny | build | −1 END | −10 kg carry capacity; −5% travel time |
 | H03 | **Nimble** | Clumsy | agility | +1 SUR | +10% hazard avoidance |
 | H04 | **Clumsy** | Nimble | agility | −1 SUR | −10% hazard avoidance |
 | H05 | **Perceptive** | Oblivious | vision | +1 DEX | −10% explore/survey/delve energy cost |
@@ -158,14 +158,14 @@ Physical traits **never affect INT or WIS** — they represent bodily characteri
 | H16 | **Squeamish** | Voracious | digestion | −1 VIT | −15% personal food cost |
 | H17 | **Resilient** | Sensitive | resilience | +1 END | −10% health loss from encounters |
 | H18 | **Sensitive** | Resilient | resilience | −1 END | +10% chance of negative trait gain |
-| H19 | **Robust** | Slight | size | +1 STR, +1 END | +10% max health; −10% construction energy cost |
-| H20 | **Slight** | Robust | size | +1 SUR, −1 STR | −10% max health; +5% energy regen rate |
+| H19 | **Stocky** | Wiry | size | +1 STR, +1 END | +10% max health; −10% construction energy cost |
+| H20 | **Wiry** | Stocky | size | +1 SUR, −1 STR | −10% max health; +5% energy regen rate |
 | H21 | **Comely** | Ugly | appearance | +1 CHA | −5% upkeep cost; +25% social encounter success |
 | H22 | **Ugly** | Comely | appearance | −1 CHA | +25% positive skill trait gain chance; cannot gain labourer followers |
 | H23 | **Ambidextrous** | — | handedness | +1 DEX, +1 CRA | +5% all personal yields |
 
 > **Notes:**
-> - H01 Sturdy (renamed from Strong-backed).
+> - H01 Brawny (renamed from Strong-backed).
 > - H04 Clumsy: simplified special effect to −10% hazard avoidance only.
 > - H05/H06 Perceptive/Oblivious (renamed from Eagle-eyed/Dim-sighted).
 > - H08 Ailing has a single `[−1]` modifier with −10% health regen rate.
@@ -174,11 +174,11 @@ Physical traits **never affect INT or WIS** — they represent bodily characteri
 > - H11/H12 Lean/Broad (renamed from Fleet-footed/Heavy-footed). Broad's special effect changed to production yields + encounter damage.
 > - H15/H16 Voracious/Squeamish (renamed from Iron-stomached/Weak-stomached).
 > - H17/H18 Resilient/Sensitive (renamed from Thick-skinned/Thin-skinned).
-> - H19/H20 Robust/Slight (renamed from Towering/Stunted) — group remains 'size'. CK3-inspired congenital traits with `[+1, +1]` and `[+1, −1]` shapes.
+> - H19/H20 Stocky/Wiry (renamed from Towering/Stunted) — group remains 'size'. CK3-inspired congenital traits with `[+1, +1]` and `[+1, −1]` shapes.
 > - H21/H22 Comely/Ugly (renamed Plain→Ugly). Ugly's special effect includes +25% positive skill trait gain but cannot gain labourer followers.
 > - H23 Ambidextrous remains the sole trait with no opposite. Now has special effect: +5% to all personal yields.
 > - **Physical traits never modify INT or WIS.** Mental attributes are exclusively the domain of personality traits.
-> - Renamed from CK3/previous originals: Strong-backed→Sturdy, Eagle-eyed→Perceptive, Dim-sighted→Oblivious, Fleet-footed→Lean, Heavy-footed→Broad, Iron-stomached→Voracious, Weak-stomached→Squeamish, Thick-skinned→Resilient, Thin-skinned→Sensitive, Towering→Robust, Stunted→Slight, Plain→Ugly.
+> - Renamed from CK3/previous originals: Strong-backed→Brawny, Eagle-eyed→Perceptive, Dim-sighted→Oblivious, Fleet-footed→Lean, Heavy-footed→Broad, Iron-stomached→Voracious, Weak-stomached→Squeamish, Thick-skinned→Resilient, Thin-skinned→Sensitive, Towering→Stocky, Stunted→Wiry, Plain→Ugly.
 
 ---
 
@@ -326,8 +326,8 @@ The following tables show the distribution of attribute modifiers across all per
 
 | Attribute | Positive (+) | Negative (−) | Net | Count |
 |---|---|---|---|---|
-| STR | 2 (H07, H19 Robust) | 2 (H08, H20 Slight) | 0 | 4 |
-| END | 3 (H01 Sturdy, H17 Resilient, H19 Robust) | 2 (H02, H18 Sensitive) | +1 | 5 |
+| STR | 2 (H07, H19 Stocky) | 2 (H08, H20 Wiry) | 0 | 4 |
+| END | 3 (H01 Brawny, H17 Resilient, H19 Stocky) | 2 (H02, H18 Sensitive) | +1 | 5 |
 | DEX | 3 (H05, H11, H23) | 3 (H06, H10, H12) | 0 | 6 |
 | VIT | 1 (H15) | 1 (H16) | 0 | 2 |
 | INT | 0 | 0 | 0 | 0 |
@@ -441,8 +441,8 @@ Skill traits are earned through gameplay (not minted). They represent permanent 
 | `[−1]` | ~36 | Most common (negative) |
 | `[+2]` | 0 | — |
 | `[−2]` | 1 | I10 Blinded (temporary) has −2 DEX |
-| `[+1, +1]` | 4 | P17 Tenacious, H19 Robust, H23 Ambidextrous |
-| `[+1, −1]` | 4 | P08 Reckless, P27 Fierce, P37 Zoophilist, H20 Slight |
+| `[+1, +1]` | 4 | P17 Tenacious, H19 Stocky, H23 Ambidextrous |
+| `[+1, −1]` | 4 | P08 Reckless, P27 Fierce, P37 Zoophilist, H20 Wiry |
 | `[−1, −1]` | 6 | P06 Idle, P18 Fickle, H10 Short, I03 Fractured, D09 Missing Fingers |
 | No modifier | 10 | S05, S06, S09, S10, S25, S26, D04, and others — special effect only |
 
@@ -472,7 +472,7 @@ Skill traits are earned through gameplay (not minted). They represent permanent 
 
 7. **Future module extensibility**: Skill, injury, and disability traits can be introduced by future modules. Only personality and physical traits are fully scoped at base module deployment. The trait registry uses `u16` IDs with reserved ranges for future modules.
 
-8. **CK3 inspiration**: Trait system draws from Crusader Kings 3's categories — personality pairs, congenital physical traits, lifestyle skills earned through actions, and tiered injury/disability progression. Adapted for onchain constraints (chance-based, no complex state tracking). Traits sharing CK3 names have been renamed where natural synonyms exist (e.g., Gregarious→Sociable, Wrathful→Fierce, Giant→Robust, Dwarf→Slight, Compassionate→Merciful) to differentiate. Some names kept where no comfortable alternative exists or the common term is preferred (e.g., Brave/Craven, Generous/Greedy, Scarred, Herbalist).
+8. **CK3 inspiration**: Trait system draws from Crusader Kings 3's categories — personality pairs, congenital physical traits, lifestyle skills earned through actions, and tiered injury/disability progression. Adapted for onchain constraints (chance-based, no complex state tracking). Traits sharing CK3 names have been renamed where natural synonyms exist (e.g., Gregarious→Sociable, Wrathful→Fierce, Giant→Stocky, Dwarf→Wiry, Compassionate→Merciful) to differentiate. Some names kept where no comfortable alternative exists or the common term is preferred (e.g., Brave/Craven, Generous/Greedy, Scarred, Herbalist).
 
 ---
 

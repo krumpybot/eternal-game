@@ -248,7 +248,7 @@ Traits are organized into **5 types**:
 | Type | Description | Gained | Lost |
 |---|---|---|---|
 | **Personality** | Core character disposition (Brave, Craven, Studious, etc.) | At mint (2 traits); rarely through major life events | Can be replaced by opposite trait through events |
-| **Physical** | Bodily characteristics (Sturdy, Nimble, Perceptive, etc.) | At mint (1 trait); rarely through events | Can be replaced by opposite trait through events |
+| **Physical** | Bodily characteristics (Brawny, Nimble, Perceptive, etc.) | At mint (1 trait); rarely through events | Can be replaced by opposite trait through events |
 | **Skill** | Aptitudes from experience (Green Thumb, Born Hunter, etc.) | Gained by performing actions - positive from success, negative from failure | **Cannot be lost once gained** |
 | **Injury** | Temporary wounds (Lacerated, Fractured, Bruised, etc.) | From encounter/activity damage | Lost when health returns to >75% of maximum health and any action is completed; may convert to disability (probability scales with damage dealt) |
 | **Disability** | Permanent scars (One-eyed, Lame, etc.) | Converted from severe injury traits | **Cannot be lost** |
