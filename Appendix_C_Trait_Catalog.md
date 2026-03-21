@@ -79,44 +79,44 @@ Personality traits can affect **all attributes**, but are slightly more heavily 
 
 | # | Trait | Opposite | Group | Modifier | Special Effect |
 |---|---|---|---|---|---|
-| P01 | **Brave** | Craven | courage | +1 STR | +25% success in beast encounters |
-| P02 | **Craven** | Brave | courage | −1 STR | −25% success in beast encounters |
+| P01 | **Brave** | Craven | courage | +1 STR | +25% beast encounter success |
+| P02 | **Craven** | Brave | courage | −1 STR | −25% beast encounter success |
 | P03 | **Studious** | Dull-witted | intellect | +1 INT | +25% chance of attribute gain from crafting/refining actions |
 | P04 | **Dull-witted** | Studious | intellect | −1 INT | −25% chance of attribute gain from crafting/refining actions |
 | P05 | **Diligent** | Idle | drive | +1 INT | +10% chance of attribute gain from all actions |
 | P06 | **Idle** | Diligent | drive | −1 END, −1 INT | −10% chance of attribute gain from all actions |
-| P07 | **Cautious** | Reckless | risk | +1 WIS | +10% to travel/explore/survey/delve time-lock durations |
-| P08 | **Reckless** | Cautious | risk | +1 DEX, −1 WIS | −10% to travel/explore/survey/delve time-lock durations |
+| P07 | **Cautious** | Reckless | risk | +1 WIS | +10% travel/explore/survey/delve time-lock duration |
+| P08 | **Reckless** | Cautious | risk | +1 DEX, −1 WIS | −10% travel/explore/survey/delve time-lock duration |
 | P09 | **Sociable** | Solitary | social | +1 CHA | +1 max follower |
-| P10 | **Solitary** | Sociable | social | −1 CHA | −10% to all energy costs when adventurer has no human followers (labourers only in base module; donkeys & mounts don't prevent the effect) |
-| P11 | **Generous** | Greedy | wealth | +1 CHA | +10% follower food cost, +5% labourer follower throughput |
-| P12 | **Greedy** | Generous | wealth | −1 CHA | −10% all upkeep costs, +20% personal food cost |
-| P13 | **Patient** | Impulsive | tempo | +1 CRA | +5% to all success chances |
-| P14 | **Impulsive** | Patient | tempo | −1 CRA | −10% travel time (rush movement) |
+| P10 | **Solitary** | Sociable | social | −1 CHA | −10% all energy costs with no human followers; donkeys and mounts do not count |
+| P11 | **Generous** | Greedy | wealth | +1 CHA | +10% follower food cost; +5% labourer throughput |
+| P12 | **Greedy** | Generous | wealth | −1 CHA | −10% all upkeep costs; +20% personal food cost |
+| P13 | **Patient** | Impulsive | tempo | +1 CRA | +5% all success chances |
+| P14 | **Impulsive** | Patient | tempo | −1 CRA | −10% travel time |
 | P15 | **Curious** | Incurious | wonder | +1 WIS | +25% chance of attribute gain from explore/survey/delve actions |
-| P16 | **Incurious** | Curious | wonder | −1 WIS | −10% energy cost while on a settlement hex |
+| P16 | **Incurious** | Curious | wonder | −1 WIS | −10% energy cost on settlement hexes |
 | P17 | **Tenacious** | Fickle | resolve | +1 END, +1 CRA | +10% energy regen while health <75% |
-| P18 | **Fickle** | Tenacious | resolve | −1 END, −1 CRA | −10% max health; +20% energy regen while health is full |
+| P18 | **Fickle** | Tenacious | resolve | −1 END, −1 CRA | −10% max health; +20% energy regen at full health |
 | P19 | **Devout** | Skeptical | faith | +1 VIT | +5% health regen rate |
-| P20 | **Skeptical** | Devout | faith | −1 VIT | +5% crafting quality (mutation bonus) |
+| P20 | **Skeptical** | Devout | faith | −1 VIT | +5% crafting quality |
 | P21 | **Commanding** | Meek | authority | +1 LEA | +10% follower throughput |
-| P22 | **Meek** | Commanding | authority | −1 LEA | +5% personal production efficiency (solo bonus) |
+| P22 | **Meek** | Commanding | authority | −1 LEA | +5% personal production efficiency |
 | P23 | **Optimistic** | Pessimistic | outlook | +1 VIT | +10% food buff duration |
-| P24 | **Pessimistic** | Optimistic | outlook | −1 VIT | −10% food cost (rationing) |
+| P24 | **Pessimistic** | Optimistic | outlook | −1 VIT | −10% food cost |
 | P25 | **Methodical** | Scatterbrained | focus | +1 CRA | −15% equipment durability decay rate |
-| P26 | **Scatterbrained** | Methodical | focus | −1 CRA | +5% to all time-lock durations |
-| P27 | **Fierce** | Composed | temper | +1 STR, −1 WIS | +20% damage dealt in beast encounters |
-| P28 | **Composed** | Fierce | temper | +1 WIS | −25% chance of negative trait gain from beast encounters |
-| P29 | **Forthright** | Sly | honesty | +1 SUR | +10% chance of positive skill trait gain from successful actions |
-| P30 | **Sly** | Forthright | honesty | −1 SUR | −20% chance of negative skill trait gain from failures |
-| P31 | **Merciful** | Ruthless | empathy | +1 VIT | Followers desert 20% slower; +20% chance of positive trait gain from helping/healing events |
-| P32 | **Ruthless** | Merciful | empathy | −1 VIT | +20% yield from hunting, +20% chance of positive trait gain from hunting/beast encounters |
+| P26 | **Scatterbrained** | Methodical | focus | −1 CRA | +5% all time-lock durations |
+| P27 | **Fierce** | Composed | temper | +1 STR, −1 WIS | +20% damage in beast encounters |
+| P28 | **Composed** | Fierce | temper | +1 WIS | −25% negative trait gain chance from beast encounters |
+| P29 | **Forthright** | Sly | honesty | +1 SUR | +10% positive skill trait gain chance from successful actions |
+| P30 | **Sly** | Forthright | honesty | −1 SUR | −20% negative skill trait gain chance from failures |
+| P31 | **Merciful** | Ruthless | empathy | +1 VIT | −20% follower desertion rate; +20% positive trait gain chance from helping/healing events |
+| P32 | **Ruthless** | Merciful | empathy | −1 VIT | +20% hunting yield; +20% positive trait gain chance from hunting/beast encounters |
 | P33 | **Shrewd** | Naive | cunning | +1 INT | −15% building upkeep cost |
-| P34 | **Naive** | Shrewd | cunning | −1 INT | +5% encounter success chance, +10% damage taken from encounters |
+| P34 | **Naive** | Shrewd | cunning | −1 INT | +5% encounter success chance; +10% damage taken from encounters |
 | P35 | **Ambitious** | Content | aspiration | +1 LEA | +10% chance of trait gain from all actions |
-| P36 | **Content** | Ambitious | aspiration | −1 LEA | +10% energy regen while on a settlement hex |
-| P37 | **Zoophilist** | Zoophobe | speciesism | +1 WIS, −1 CHA | −25% travel time-lock duration with a mount, +10% health regen rate with an animal follower |
-| P38 | **Zoophobe** | Zoophilist | speciesism | −1 WIS | −25% hunting energy cost, +15% to all energy costs with an animal follower |
+| P36 | **Content** | Ambitious | aspiration | −1 LEA | +10% energy regen on settlement hexes |
+| P37 | **Zoophilist** | Zoophobe | speciesism | +1 WIS, −1 CHA | −25% travel time-lock duration with a mount; +10% health regen rate with an animal follower |
+| P38 | **Zoophobe** | Zoophilist | speciesism | −1 WIS | −25% hunting energy cost; +15% all energy costs with an animal follower |
 
 > **Notes:**
 > - P05 Diligent uses `[+1]` (INT — diligent application sharpens the mind through study and practice).
@@ -140,8 +140,8 @@ Physical traits **never affect INT or WIS** — they represent bodily characteri
 
 | # | Trait | Opposite | Group | Modifier | Special Effect |
 |---|---|---|---|---|---|
-| H01 | **Sturdy** | Frail | build | +1 END | +10 kg carry capacity, −5% construction time-lock duration |
-| H02 | **Frail** | Sturdy | build | −1 END | −10 kg carry capacity; −5% travel time (light frame) |
+| H01 | **Sturdy** | Frail | build | +1 END | +10 kg carry capacity; −5% construction time-lock duration |
+| H02 | **Frail** | Sturdy | build | −1 END | −10 kg carry capacity; −5% travel time |
 | H03 | **Nimble** | Clumsy | agility | +1 SUR | +10% hazard avoidance |
 | H04 | **Clumsy** | Nimble | agility | −1 SUR | −10% hazard avoidance |
 | H05 | **Perceptive** | Oblivious | vision | +1 DEX | −10% explore/survey/delve energy cost |
@@ -151,18 +151,18 @@ Physical traits **never affect INT or WIS** — they represent bodily characteri
 | H09 | **Tall** | Short | stature | +1 LEA | +10% logging yield |
 | H10 | **Short** | Tall | stature | −1 DEX, −1 LEA | +15% mining yield |
 | H11 | **Lean** | Broad | movement | +1 DEX | −10% travel energy cost |
-| H12 | **Broad** | Lean | movement | −1 DEX | +5% logging/mining/harvesting yields, +5% damage in encounters |
-| H13 | **Keen-nosed** | Dull-nosed | senses | +1 SUR | −10% foraging/hunting/delving energy cost, +10% cooking success chance |
+| H12 | **Broad** | Lean | movement | −1 DEX | +5% logging/mining/harvesting yields; +5% damage in encounters |
+| H13 | **Keen-nosed** | Dull-nosed | senses | +1 SUR | −10% foraging/hunting/delving energy cost; +10% cooking success chance |
 | H14 | **Dull-nosed** | Keen-nosed | senses | −1 SUR | +10% harvesting/livestock yields |
-| H15 | **Voracious** | Squeamish | digestion | +1 VIT | +10% personal food cost, −5% to success chances when below 50% maximum food |
+| H15 | **Voracious** | Squeamish | digestion | +1 VIT | +10% personal food cost; −5% success chance below 50% food capacity |
 | H16 | **Squeamish** | Voracious | digestion | −1 VIT | −15% personal food cost |
 | H17 | **Resilient** | Sensitive | resilience | +1 END | −10% health loss from encounters |
 | H18 | **Sensitive** | Resilient | resilience | −1 END | +10% chance of negative trait gain |
-| H19 | **Robust** | Slight | size | +1 STR, +1 END | +10% max health, −10% construction energy cost |
-| H20 | **Slight** | Robust | size | +1 SUR, −1 STR | −10% max health, +5% energy regen rate |
-| H21 | **Comely** | Ugly | appearance | +1 CHA | −5% upkeep cost, +25% success chance in social encounters |
-| H22 | **Ugly** | Comely | appearance | −1 CHA | +25% chance of positive skill trait gain, cannot gain labourer followers |
-| H23 | **Ambidextrous** | — | handedness | +1 DEX, +1 CRA | +5% to all personal yields |
+| H19 | **Robust** | Slight | size | +1 STR, +1 END | +10% max health; −10% construction energy cost |
+| H20 | **Slight** | Robust | size | +1 SUR, −1 STR | −10% max health; +5% energy regen rate |
+| H21 | **Comely** | Ugly | appearance | +1 CHA | −5% upkeep cost; +25% social encounter success |
+| H22 | **Ugly** | Comely | appearance | −1 CHA | +25% positive skill trait gain chance; cannot gain labourer followers |
+| H23 | **Ambidextrous** | — | handedness | +1 DEX, +1 CRA | +5% all personal yields |
 
 > **Notes:**
 > - H01 Sturdy (renamed from Strong-backed).
@@ -198,12 +198,12 @@ All skill traits are organized in exclusive pairs grouped by activity domain. Ea
 | S02 | **Barren Touch** | Green Thumb | harvesting | −1 WIS | −10% harvest yield | Harvesting/foraging failures |
 | S03 | **Born Hunter** | Skittish | hunting | +1 DEX | +10% hunting success | Successful hunts |
 | S04 | **Skittish** | Born Hunter | hunting | −1 DEX | −10% hunting success | Hunting failures |
-| S05 | **Prospector** | Jinxed Miner | mining (discovery) | — | +10% mining success chance, +25% chance of attribute gain from mining | Successful mining (rare vein discovery) |
-| S06 | **Jinxed Miner** | Prospector | mining (discovery) | — | +10% mine collapse chance; −25% chance of attribute gain from mining | Mine collapses |
+| S05 | **Prospector** | Jinxed Miner | mining (discovery) | — | +10% mining success; +25% attribute gain chance from mining | Successful mining (rare vein discovery) |
+| S06 | **Jinxed Miner** | Prospector | mining (discovery) | — | +10% mine collapse chance; −25% attribute gain chance from mining | Mine collapses |
 | S07 | **Master Feller** | Timber-cursed | logging | +1 END | +10% logging yield | Successful logging |
 | S08 | **Timber-cursed** | Master Feller | logging | −1 END | −10% logging yield; +5% logging injury chance | Logging injuries |
-| S09 | **Trailblazer** | Lost | exploring | — | −15% explore energy cost; +25% chance of attribute gain from exploring | Exploring new hexes |
-| S10 | **Lost** | Trailblazer | exploring | — | +15% explore energy cost; −25% chance of attribute gain from exploring | Injuries while exploring |
+| S09 | **Trailblazer** | Lost | exploring | — | −15% explore energy cost; +25% attribute gain chance from exploring | Exploring new hexes |
+| S10 | **Lost** | Trailblazer | exploring | — | +15% explore energy cost; −25% attribute gain chance from exploring | Injuries while exploring |
 | S11 | **Pathfinder** | Footsore | travel | +1 WIS | −10% travel time in explored hexes | Extensive travel |
 | S12 | **Footsore** | Pathfinder | travel | −1 WIS | +10% travel energy cost in explored hexes | Travel injuries/exhaustion |
 | S13 | **Artificer** | Fumble-fingers | crafting | +1 CRA | +10% crafting quality | Crafting success |
@@ -216,20 +216,20 @@ All skill traits are organized in exclusive pairs grouped by activity domain. Ea
 | S20 | **Shoddy Builder** | Master Builder | building | −1 INT | +10% building construction time | Building failures/collapses |
 | S21 | **Herdsman** | Neglectful | livestock | +1 CHA | +10% livestock yield | Sustained livestock management |
 | S22 | **Neglectful** | Herdsman | livestock | −1 CHA | −10% livestock yield; +10% livestock sickness chance | Livestock deaths/neglect |
-| S23 | **Shepherd** | Harsh Keeper | followers | +1 SUR | Follower food consumption −15%, +5% follower task throughput | Gaining new followers (increasingly higher chance the more followers gained) |
-| S24 | **Harsh Keeper** | Shepherd | followers | −1 SUR | Followers consume +15% food; +10% follower desertion rate | Follower starvation/deaths |
+| S23 | **Shepherd** | Harsh Keeper | followers | +1 SUR | −15% follower food consumption; +5% follower task throughput | Gaining new followers (increasingly higher chance the more followers gained) |
+| S24 | **Harsh Keeper** | Shepherd | followers | −1 SUR | +15% follower food consumption; +10% follower desertion rate | Follower starvation/deaths |
 | S25 | **Cartographer** | Disoriented | survey | — | −10% survey energy cost | Surveying many areas |
 | S26 | **Disoriented** | Cartographer | survey | — | +10% survey energy cost | Getting lost during surveys |
-| S27 | **Chef** | Scorched Palate | cooking | +1 VIT | +15% food buff effectiveness from cooking | Successful cooking |
+| S27 | **Chef** | Scorched Palate | cooking | +1 VIT | +15% food buff effectiveness | Successful cooking |
 | S28 | **Scorched Palate** | Chef | cooking | −1 VIT | −15% food buff effectiveness | Cooking failures |
 | S29 | **Tamer** | Unruly | follower recruitment | +1 LEA | +1 max follower | Recruiting/maintaining many followers |
-| S30 | **Unruly** | Tamer | follower recruitment | −1 LEA | Followers desert 25% faster | Follower desertions |
+| S30 | **Unruly** | Tamer | follower recruitment | −1 LEA | +25% follower desertion rate | Follower desertions |
 | S31 | **Survivor** | Shaken | endurance | +1 VIT | +10% health regen rate | Surviving at <20% health |
 | S32 | **Shaken** | Survivor | endurance | −1 VIT | −10% health regen rate; −5% success chance when health <50% | Accumulated near-death experiences |
 | S33 | **Quarrier** | Cave-in Survivor | mining (safety) | +1 STR | −10% mine collapse chance | Mining without collapses |
 | S34 | **Cave-in Survivor** | Quarrier | mining (safety) | −1 STR | +10% mine collapse chance; +5% mining energy cost | Severe mine collapses |
-| S35 | **Herbalist** | Rash Forager | herb gathering | +1 SUR | +10% herb yield; herbal foods +5% regen bonus | Gathering herbs |
-| S36 | **Rash Forager** | Herbalist | herb gathering | −1 SUR | −10% herb yield; +10% chance of poisoning from gathered food | Foraging poisonings |
+| S35 | **Herbalist** | Rash Forager | herb gathering | +1 SUR | +10% herb yield; +5% herbal food regen bonus | Gathering herbs |
+| S36 | **Rash Forager** | Herbalist | herb gathering | −1 SUR | −10% herb yield; +10% food poisoning chance | Foraging poisonings |
 
 
 > **Notes:**
@@ -267,13 +267,13 @@ Conversion probabilities are autoregulator-tunable.
 | I04 | **Concussed** | −1 INT | −15% crafting/refining quality; −10% survey efficiency | Addled, Deaf |
 | I05 | **Sprained** | −1 DEX | +20% travel energy cost | Lame |
 | I06 | **Winded** | −1 END | −20% energy regen rate | Broken Spirit |
-| I07 | **Gashed** | −1 VIT | −100% health regen rate (must have positive regen buff to heal); +25% to all energy costs | Scarred |
+| I07 | **Gashed** | −1 VIT | −100% health regen rate (requires positive regen buff to heal); +25% all energy costs | Scarred |
 | I08 | **Burned** | −1 CRA | −15% crafting quality; −10% production efficiency | Scarred, Nerve-dead, Missing Fingers |
 | I09 | **Dislocated** | −1 STR | −20% carry capacity | Crooked |
-| I10 | **Blinded (temporary)** | −2 DEX | −25% all success rates; cannot survey | One-eyed |
-| I11 | **Frostbitten** | −1 END | −15% energy regen; +20% cold biome energy costs | Nerve-dead, Missing Fingers |
-| I12 | **Poisoned** | −1 VIT | −100% health regen rate (must have positive regen buff to heal); −50% food buff effectiveness | Sickened |
-| I13 | **Traumatised** | −1 CHA | −50% chance of attribute gain | Broken Spirit |
+| I10 | **Blinded (temporary)** | −2 DEX | −25% all success chances; cannot survey | One-eyed |
+| I11 | **Frostbitten** | −1 END | −15% energy regen rate; +20% cold biome energy cost | Nerve-dead, Missing Fingers |
+| I12 | **Poisoned** | −1 VIT | −100% health regen rate (requires positive regen buff to heal); −50% food buff effectiveness | Sickened |
+| I13 | **Traumatised** | −1 CHA | −50% attribute gain chance | Broken Spirit |
 
 ---
 
@@ -286,13 +286,13 @@ Disability traits are permanent. They are converted from severe injury traits wh
 | D01 | **One-eyed** | −1 DEX | +10% explore/survey/delve energy cost | Blinded (temporary) |
 | D02 | **Lame** | −1 DEX | +15% travel energy cost; +15% travel time | Fractured, Sprained |
 | D03 | **Crooked** | −1 STR | −10 kg carry capacity | Fractured, Dislocated, Bruised |
-| D04 | **Scarred** | — | +5% beast encounter success (intimidation); +25% chance of CHA gain from social events | Lacerated, Gashed, Burned |
+| D04 | **Scarred** | — | +5% beast encounter success; +25% CHA gain chance from social events | Lacerated, Gashed, Burned |
 | D05 | **Addled** | −1 INT | −10% refining/crafting quality | Concussed |
 | D06 | **Nerve-dead** | −1 CRA | −10% crafting quality; immunity to pain-based injury effects | Burned, Frostbitten |
-| D07 | **Sickened** | −1 VIT | −5% max health; +5% poison resistance (built immunity) | Poisoned |
+| D07 | **Sickened** | −1 VIT | −5% max health; +5% poison resistance | Poisoned |
 | D08 | **Deaf** | −1 SUR | −10% beast encounter detection; immune to sound-based hazards | Concussed (critical) |
 | D09 | **Missing Fingers** | −1 CRA, −1 DEX | −15% crafting quality; −10% tool effectiveness | Frostbitten (severe), Burned (severe) |
-| D10 | **Broken Spirit** | −1 LEA | −1 max follower (min 1); −25% chance of positive trait gain | Winded, Traumatised |
+| D10 | **Broken Spirit** | −1 LEA | −1 max follower (min 1); −25% positive trait gain chance | Winded, Traumatised |
 
 > **Notes:**
 > - D04 Scarred has **no attribute modifier** — its effects are a mixed blessing (intimidation + social growth).
