@@ -327,16 +327,16 @@ Traits are organized into **5 types**:
 | Type | Description | Gained | Lost |
 |---|---|---|---|
 | **Personality** | Core character disposition (Brave, Craven, Studious, etc.) | At mint; rarely gained/lost through major life events | Can be replaced by opposite trait through events |
-| **Physical** | Bodily characteristics (Strong-backed, Nimble, Eagle-eyed, etc.) | At mint; rarely gained/lost | Can be replaced by opposite trait through events |
+| **Physical** | Bodily characteristics (Brawny, Nimble, Perceptive, etc.) | At mint; rarely gained/lost | Can be replaced by opposite trait through events |
 | **Skill** | Aptitudes earned through experience (Green Thumb, Born Hunter, etc.) | Gained by performing actions — positive from success, negative from failure | **Cannot be lost once gained** |
-| **Injury** | Temporary wounds (Lacerated, Fractured, Bruised, etc.) | Gained from encounter/activity damage outcomes | Lost when adventurer returns to >100 health and completes any action; may convert to a disability trait (probability scales with damage that caused the injury) |
+| **Injury** | Temporary wounds (Lacerated, Fractured, Bruised, etc.) | Gained from encounter/activity damage outcomes | Lost when adventurer returns to >75% of maximum health and completes any action; may convert to a disability trait (probability scales with damage that caused the injury) |
 | **Disability** | Permanent scars from severe injuries (One-eyed, Lame, etc.) | Converted from severe injury traits on resolution | **Cannot be lost** |
 
 - **At mint**: 2 personality traits + 1 physical trait, derived from seed.
 - **Max 10 trait slots**. Trait gain uses a **chance-based system** (no XP tracking):
   - Every action/event has a small base chance to grant a trait.
   - The **criticality of the event outcome** determines the base chance (routine success ~0.5%, critical event ~8–15%).
-  - `gain_chance = base_chance × (1 − trait_count / 10)` — at 10 traits, gain chance is **0%**.
+  - `gain_chance = base_chance × (1 − trait_count / 10)²` — quadratic decrease; at 10 traits, gain chance is **0%**.
 - **Exclusivity groups**: grouped traits are fully exclusive (e.g., Brave vs Craven — impossible to have both). Almost all personality and physical traits have an opposite.
 - Traits may grant **attribute modifiers**, **special effects**, or both:
   - Maximum modifier per trait: **+2 or −2** to any single attribute.
@@ -344,7 +344,7 @@ Traits are organized into **5 types**:
   - **No doubling**: a trait's attribute modifier must not amplify the same stat as its special effect.
   - Some traits have **only a modifier** or **only a special effect** — not every trait needs both.
   - Trait modifiers **suppress** attributes (reduce effective value) but do not remove underlying points.
-- Some trait special effects modify **attribute or trait gain chances** rather than direct mechanics (e.g., "Diligent: +25% chance of attribute gain from all actions" means a 1% base chance becomes 1.25%).
+- Some trait special effects modify **attribute or trait gain chances** rather than direct mechanics (e.g., "Diligent: +10% chance of attribute gain from all actions" means a 1% base chance becomes 1.1%).
 - Skill traits define an adventurer's aptitude from their adventures. Positive skill traits are potential outcomes of **successful** actions; negative skill traits are potential outcomes of **failures and defeats**. Skill traits become harder to acquire as the adventurer accumulates more skills.
 - Personality traits can be gained/replaced through **major life events** (very rare — surviving near-death encounters, first settlement, etc.).
 - Trait list is a large enumeration defined at deployment (see §28 for extensibility).
@@ -1051,7 +1051,7 @@ Hazards trigger as a **chance per action** (explore, travel, mine, log, harvest,
 2. If triggered: `beast_type` drawn from biome hazard table.
 3. **Resolution equation** (single roll, not a combat system):
    - Inputs: beast lethality, adventurer health, adventurer energy, attributes (Survival `+2.5%` success per point, Dexterity `+5%` avoidance per point), equipment defense, time of day
-   - Outcomes: **avoid** (no effect), **injury** (lose health, possibly gain an injury trait), **resource gain** (pelt, bone, meat), **positive skill trait** (Perceptive, Quick-Witted), or **death**.
+   - Outcomes: **avoid** (no effect), **injury** (lose health, possibly gain an injury trait), **resource gain** (pelt, bone, meat), **positive skill trait** (Beast Slayer, Survivor), or **death**.
    - Health loss from encounters varies by beast tier and outcome severity.
    - Injury traits (Lacerated, Fractured, Bruised, etc.) are gained from damage outcomes and impose penalties until resolved.
 4. Higher-tier beasts have higher lethality → more likely to injure/kill.
@@ -1224,7 +1224,7 @@ The base module defines 5 area types: `Control, Materials, Bare, Underworld, Spe
 
 ### Reserved trait slots
 
-The trait system supports up to 6 slots per adventurer. The base module ships with a starter trait list. Future modules can add new traits to the enumeration — the trait storage is generic (`TraitId` is a `u16`).
+The trait system supports up to 10 slots per adventurer. The base module ships with a starter trait list. Future modules can add new traits to the enumeration — the trait storage is generic (`TraitId` is a `u16`).
 
 ### Reserved recipe IDs
 
