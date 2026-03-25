@@ -4,7 +4,7 @@
 >
 > Resources are organized into **three layers**:
 > 1. **Raw Resources** — gathered, mined, hunted, foraged, fished, or herded directly from the world. The input layer.
-> 2. **Core Resources** — the 22 Eternum-heritage resources. Some are raw (usable directly), most are refined from raw precursors.
+> 2. **Core Resources** — the 22 Eternum-heritage resources. Some are raw (usable directly), most are refined from raw precursors listed in Section 1.
 > 3. **Refined & Processed Materials** — derived from raw resources through refining, crafting, or processing actions. The output layer that feeds into equipment, buildings, and consumables.
 >
 > Additionally: **Beast Parts** (generic, tiered by beast level), **Food** (raw + processed).
@@ -43,7 +43,7 @@ All resources are assigned permanent `u16` IDs at deployment. Reserved ranges en
 0x0180–0x01BF: Core Resources T3+ (Rare–Mythic) + raw precursors
 0x01C0–0x01FF: Core Resources — Reserved future
 0x0200–0x023F: Raw Materials — Mining (ores, minerals, stone)
-0x0240–0x027F: Raw Materials — Logging (wood, bark, resin)
+0x0240–0x027F: Raw Materials — Logging (wood, resin)
 0x0280–0x02BF: Raw Materials — Gathering (fibers, herbs, clay)
 0x02C0–0x02FF: Raw Materials — Animal (hides, bone, sinew)
 0x0300–0x033F: Refined Materials — Metals (ingots, alloys)
@@ -86,7 +86,7 @@ Raw resources are gathered directly from the world through player actions. They 
 | M02 | **Coal** | 1.5 | Common | Usable directly as fuel | Primary smelting/refining fuel. Essential for all metal production. Also a Core Resource (C03). |
 | M03 | **Clay** | 2.0 | Common | Kiln → Bricks; Potter → Pottery | Construction, crafting. |
 | M04 | **Sand** | 2.0 | Common | Furnace → Glass | Glass production, mortar ingredient. |
-| M05 | **Limestone** | 3.0 | Common | Kiln → Lime; grind → powder | Mortar base, flux, plaster. |
+| M05 | **Limestone** | 3.0 | Common | Kiln → Lime; grind → Flux | Mortar base, flux, plaster. |
 | M06 | **Flint** | 0.5 | Common | Usable directly | Fire-starting, primitive tools. |
 | M07 | **Salt** | 0.5 | Common | Usable directly | Food preservation, trade good. |
 | M08 | **Copper Ore** | 2.5 | Uncommon | Smelter → Copper (core) | T1 metal precursor. |
@@ -100,21 +100,20 @@ Raw resources are gathered directly from the world through player actions. They 
 | M16 | **Rough Sapphire** | 0.2 | Rare | Jeweler → Sapphire (core) | Gem precursor. |
 | M17 | **Rough Ruby** | 0.2 | Rare | Jeweler → Ruby (core) | Gem precursor. |
 | M18 | **Rare Metals** | 1.0 | Rare | Alloy component (Copper + Rare Metals → Bronze; Iron + Rare Metals → Cold Iron) | Low chance drop from **all** mining activities regardless of node. Represents trace alloy metals (tin, nickel, chromium, etc.). |
-| M19 | **Amber** | 0.3 | Rare | Jeweler → Polished Amber; alchemy reagent (future) | Fossilized resin. Jewelry, trade. |
+| M19 | **Amber** | 0.3 | Rare | Jewelry component (decorative); alchemy reagent (future) | Fossilized resin. Jewelry, trade. |
 | M20 | **Rough Deep Crystal** | 0.5 | Epic | Specialized refinement → Deep Crystal (core) | Resonant crystal. Found in deep crystalline deposits. |
 | M21 | **Ignium Ore** | 1.0 | Epic | Specialized refinement → Ignium (core) | Fire-aspected volcanic ore. |
 | M22 | **Ethereal Silica Sand** | 0.3 | Epic | Specialized refinement → Ethereal Silica (core) | Translucent, semi-ethereal sand found in magical desert formations. |
-| M23 | **Voidstone** | 2.5 | Epic | Specialized refinement → Refined Voidstone (refined) | Dark mineral from deep caves. Absorbs light and energy. Dimensionally unstable. |
-| M24 | **Sunstone** | 0.5 | Epic | Specialized refinement → Radiant Sunstone (refined) | Golden crystal that stores and emits light energy. Found at high altitudes and in desert biomes. |
-| M25 | **True Ice Shard** | 1.5 | Legendary | Specialized refinement → True Ice (core) | Glacial ice that never melts. Found in polar and high-mountain biomes. |
-| M26 | **Rough Twilight Quartz** | 0.4 | Legendary | Specialized refinement → Twilight Quartz (core) | Dimensional crystal that shifts colour. Found in special areas. |
-| M27 | **Alchemical Silver Ore** | 2.0 | Legendary | Complex refinement + reagents → Alchemical Silver (core) | Reactive, dangerous to refine. Anti-magical properties. |
-| M28 | **Starmetal Fragment** | 2.0 | Legendary | Specialized refinement → Starmetal Ingot (refined) | Meteorite ore. Extremely heat-resistant. Found in impact craters and deep mines. |
-| M29 | **Adamantine Ore** | 5.0 | Mythic | Master refinement → Adamantine (core) | Hardest known metal. Deepest mines only. |
-| M30 | **Mithral Ore** | 1.5 | Mythic | Master refinement → Mithral (core) | Lightest strong metal. Deepest mines only. |
-| M31 | **Raw Dragonhide** | 3.0 | Mythic | Curing process → Dragonhide (core) | Fossilised dragon hide, mined from long-dead dragon remains. Dragons once ruled the land; a cataclysm cut their numbers to endangered levels. Their indestructible hide can be mined from fossilised corpses. |
+| M23 | **Voidstone** | 2.5 | Epic | Specialized refinement → Voidsand (refined) | Dark mineral from deep caves. Absorbs light and energy. Dimensionally unstable. When processed, yields a sand-like reagent that produces unnaturally hot fires. |
+| M24 | **True Ice Shard** | 1.5 | Legendary | Specialized refinement → True Ice (core) | Glacial ice that never melts. Found in polar and high-mountain biomes. |
+| M25 | **Rough Twilight Quartz** | 0.4 | Legendary | Specialized refinement → Twilight Quartz (core) | Dimensional crystal that shifts colour. Found in special areas. |
+| M26 | **Alchemical Silver Ore** | 2.0 | Legendary | Complex refinement + reagents → Alchemical Silver (core) | Reactive, dangerous to refine. Anti-magical properties. |
+| M27 | **Starmetal Fragment** | 2.0 | Legendary | Specialized refinement → Starmetal Ingot (refined) | Meteorite ore. Extremely heat-resistant. Found in impact craters and deep mines. Starmetal Ingot is used to forge top-tier smithing equipment — tools, anvils, and crucibles that can withstand the extreme temperatures required for endgame metalwork. |
+| M28 | **Adamantine Ore** | 5.0 | Mythic | Master refinement → Adamantine (core) | Hardest known metal. Deepest mines only. Requires Voidsand heat + Starmetal equipment to smelt. |
+| M29 | **Mithral Ore** | 1.5 | Mythic | Master refinement → Mithral (core) | Lightest strong metal. Deepest mines only. Requires Voidsand heat + Starmetal equipment to smelt. |
+| M30 | **Unearthed Dragonhide** | 3.0 | Mythic | Specialized curing → Dragonhide (core) | Fossilised dragon hide, excavated from long-dead dragon remains. Dragons once ruled the land in an age before men; a cataclysm cut their numbers to extinction. Their indestructible hide survives fossilisation and can be mined from ancient burial sites. |
 
-> **Mining rarity summary**: 7 Common, 7 Uncommon, 5 Rare, 5 Epic, 4 Legendary, 3 Mythic = **31 mining raw resources**.
+> **Mining rarity summary**: 7 Common, 7 Uncommon, 5 Rare, 4 Epic, 4 Legendary, 3 Mythic = **30 mining raw resources**.
 >
 > **Rare Metals** is unique: it has no dedicated node. Instead, it is a low-chance roll from *any* mining activity regardless of the ore being mined. This makes it naturally rare without requiring specific biome placement.
 
@@ -123,27 +122,28 @@ Raw resources are gathered directly from the world through player actions. They 
 | # | Resource | Weight | Rarity | Refinement path | Notes |
 |---|---|---|---|---|---|
 | L01 | **Wood** | 3.0 | Common | Usable directly; Sawmill → Planks (refined) | Universal construction and crafting material. Also a Core Resource (C01). |
-| L02 | **Bark** | 1.0 | Common | Tanning agent; dry → Cork | Logging byproduct. |
-| L03 | **Resin** | 0.5 | Common | Refine → Pitch (waterproofing, fuel) | Sticky sap from conifers. |
-| L04 | **Sap** | 0.3 | Common | Refine → Syrup (food sweetener) | Tree sap (maple, birch). |
-| L05 | **Ironwood Logs** | 6.0 | Uncommon | Sawmill → Ironwood (core) | Dense, iron-hard wood. Specific forest biomes. |
-| L06 | **Hartwood Logs** | 5.5 | Rare | Sawmill → Hartwood (core) | Ancient heartwood, resonant. Rare old-growth forests. |
-| L07 | **Worldroot** | 4.0 | Epic | Specialized refinement → Refined Worldroot (refined) | Petrified wood from ancient magical trees. Resonates with life force. Found only in the oldest, deepest forests or special areas. |
+| L02 | **Resin** | 0.5 | Common | Refine → Pitch (waterproofing, fuel) | Sticky sap from conifers. |
+| L03 | **Ironwood Logs** | 6.0 | Uncommon | Sawmill → Ironwood (core) | Dense, iron-hard wood. Specific forest biomes. |
+| L04 | **Hartwood Logs** | 5.5 | Rare | Sawmill → Hartwood (core) | Ancient heartwood, resonant. Rare old-growth forests. |
+| L05 | **Worldroot** | 0.3 | Rare | No firm refinement path — valued for its raw properties | Gnarled root-like growths occasionally discovered when felling trees. Part of an ancient subterranean root network that connects trees across vast distances — some say across the entire world. Low-chance discovery from **any** logging activity. Potent cooking ingredient and future alchemy reagent. |
+| L06 | **Moonwood Logs** | 4.0 | Epic | Specialized Sawmill → Moonwood (refined) | Pale, silvery timber from ancient trees that have absorbed centuries of moonlight. Found only in the oldest forests where canopy gaps allow sustained direct moonlight. The wood has a faint luminescence and is cool to the touch. Prized for its light-aspected properties. |
 
-> **Logging rarity summary**: 4 Common, 1 Uncommon, 1 Rare, 1 Epic = **7 logging raw resources**.
+> **Logging rarity summary**: 2 Common, 1 Uncommon, 2 Rare, 1 Epic = **6 logging raw resources**.
+>
+> **Worldroot** mirrors **Rare Metals** in acquisition: no dedicated node, low-chance roll from any logging activity. This creates a parallel between mining and logging — both have rare "universal discovery" resources.
 
 ### 1c. Farming — Crops & Cultivated Plants
 
 | # | Resource | Weight | Rarity | Refinement path | Notes |
 |---|---|---|---|---|---|
-| F01 | **Wheat** | 0.5 | Common | Mill → Flour → Bread, Pastry | The staple grain. |
-| F02 | **Barley** | 0.5 | Common | Mill → Malt; animal feed | Grain, dual-use. |
+| F01 | **Wheat** | 0.5 | Common | Mill → Flour → Bread, Pastry | The staple grain. Stalks also used for Thatch. |
+| F02 | **Barley** | 0.5 | Common | Animal feed; cooking ingredient; brewing (future) | Grain, dual-use. |
 | F03 | **Vegetables** | 0.8 | Common | Cooking ingredient; usable raw (low nutrition) | Generic crop category. |
 | F04 | **Fruit** | 0.5 | Common | Cooking ingredient; usable raw; preserve → Jam | Orchard crops. |
 | F05 | **Tubers** | 0.8 | Common | Cooking ingredient; usable raw | Potatoes, turnips, etc. |
 | F06 | **Beans** | 0.4 | Common | Cooking ingredient; high protein | Legumes, dried for storage. |
 | F07 | **Flax** | 0.3 | Common | Spin → Linen Thread → Linen Cloth | Primary textile fiber. |
-| F08 | **Hemp** | 0.3 | Common | Twist → Rope; spin → Coarse Cloth | Cordage and textile. |
+| F08 | **Hemp** | 0.3 | Common | Twist → Rope; spin → Canvas | Cordage and textile. |
 | F09 | **Cotton** | 0.2 | Uncommon | Spin → Cotton Thread → Cotton Cloth | Finer textile, warmer biomes only. |
 | F10 | **Sugar Cane** | 0.6 | Uncommon | Press → Sugar | Tropical crop. |
 | F11 | **Spice Plants** | 0.2 | Uncommon | Dry/grind → Spices (cooking catalyst) | Pepper, cinnamon, cloves. |
@@ -159,17 +159,18 @@ Raw resources are gathered directly from the world through player actions. They 
 | G01 | **Wild Berries** | 0.3 | Common | Edible raw; cooking ingredient; preserve → Jam | Low nutrition but plentiful. |
 | G02 | **Roots** | 0.5 | Common | Cooking ingredient; some have medicinal properties | Food and medicine. |
 | G03 | **Mushrooms** | 0.2 | Common | Cooking ingredient; some poisonous | Risk of misidentification. |
-| G04 | **Wild Herbs** | 0.1 | Common | Cooking catalyst; dry → Dried Herbs | Sage, thyme, mint, rosemary. |
-| G05 | **Nuts** | 0.3 | Common | Edible; cooking ingredient; press → Nut Oil | Seasonal. |
-| G06 | **Seaweed** | 0.3 | Common | Cooking ingredient; fertilizer | Coastal foraging. |
+| G04 | **Wild Herbs** | 0.1 | Common | Cooking catalyst | Sage, thyme, mint, rosemary. |
+| G05 | **Seaweed** | 0.3 | Common | Cooking ingredient; fertilizer | Coastal foraging. |
+| G06 | **Nuts** | 0.3 | Uncommon | Edible; cooking ingredient; press → Oil | Seasonal. Specific woodland biomes. |
 | G07 | **Honey** | 0.5 | Uncommon | Cooking ingredient; preservative; sweetener | Wild hive foraging. |
 | G08 | **Medicinal Herbs** | 0.1 | Uncommon | Healing poultice ingredient; cooking | Healing applications. |
-| G09 | **Poisonous Plants** | 0.1 | Uncommon | Future alchemy reagent; weapon coating (future) | Dangerous but valuable. |
+| G09 | **Poisonous Plants** | 0.1 | Rare | Future alchemy reagent; weapon coating (future) | Dangerous but valuable. Requires knowledge to identify and handle safely. |
 | G10 | **Truffles** | 0.1 | Rare | Cooking luxury; high trade value | Rare forest find, prized. |
 | G11 | **Rare Herbs** | 0.1 | Rare | Future alchemy reagent (potent); high-value cooking | Powerful properties. |
 | G12 | **Spiritbloom** | 0.1 | Epic | Specialized refinement → Spiritbloom Essence (refined) | Luminous magical flower. Grows only in special areas with residual magical energy — near ruins, spawn nodes, or ancient sites. Petals glow faintly. |
+| G13 | **Sunsprout** | 0.1 | Epic | No firm refinement path — potent ingredient usable raw | A golden shoot that erupts from sun-baked earth in arid and high-altitude biomes. Thrives where other plants cannot — cracked stone, volcanic soil, desert hardpan. Radiates gentle warmth. Potent cooking ingredient and future alchemy reagent. |
 
-> **Foraging rarity summary**: 6 Common, 3 Uncommon, 2 Rare, 1 Epic = **12 foraging raw resources**.
+> **Foraging rarity summary**: 5 Common, 3 Uncommon, 3 Rare, 2 Epic = **13 foraging raw resources**.
 
 ### 1e. Hunting — Wild Fauna Products
 
@@ -181,22 +182,23 @@ Products from hunting wild animals. Some products are shared with herding (marke
 | H02 | **Raw Hide** † | 2.0 | Common | Tannery → Leather | Same resource from hunting or herding (butchered livestock). |
 | H03 | **Raw Bone** † | 1.0 | Common | Carve → Bone Tools; grind → Bone Meal (fertilizer) | Same resource from hunting or herding. |
 | H04 | **Raw Fat** † | 0.8 | Common | Render → Tallow (fuel, soap, candles) | Same resource from hunting or herding. |
-| H05 | **Sinew** | 0.3 | Common | Dry → Bowstring; thread → Sinew Thread | Natural cordage. |
-| H06 | **Feathers** | 0.1 | Common | Arrow fletching; stuffing | Bird hunting byproduct. Also from poultry herding. |
+| H05 | **Sinew** | 0.3 | Common | Dry → Sinew Thread | Natural cordage. Bowstrings, stitching, armour binding. |
+| H06 | **Feathers** † | 0.1 | Uncommon | Arrow fletching; stuffing | Bird hunting byproduct. Also from poultry herding. |
 | H07 | **Fur Pelt** | 1.5 | Uncommon | Furrier → Fur (refined) | Cold-climate gear, trade good. |
-| H08 | **Venom Sac** | 0.2 | Uncommon | Future alchemy reagent; weapon coating (future) | Snakes, spiders, etc. |
+| H08 | **Venom Sac** | 0.2 | Rare | Future alchemy reagent; weapon coating (future) | Snakes, spiders, scorpions. Requires careful extraction. |
 | H09 | **Ivory** | 1.0 | Rare | Carve → Ivory Components; decorative; trade | Large fauna only (tusked beasts). |
-| H10 | **Exotic Pelt** | 1.5 | Rare | Furrier → Exotic Fur (refined) | Pelts from rare or unusual fauna — spotted cats, white wolves, jungle serpents. Superior to standard fur pelts. Luxury trade good, high-tier cold-weather gear. |
+| H10 | **Exotic Pelt** | 1.5 | Epic | Furrier → Exotic Fur (refined) | Pelts from rare or unusual fauna — spotted cats, white wolves, jungle serpents. Superior to standard fur pelts. Luxury trade good, high-tier cold-weather gear. |
+| H11 | **Raw Demonhide** | 2.5 | Legendary | Specialized tannery → Demonhide (refined) | Hide stripped from slain demons. Tough, dark, and faintly warm to the touch. Demons are rare and dangerous prey — hunting one is an extreme feat. The hide retains residual infernal energy and must be carefully cured to be workable. |
 
-> **Hunting rarity summary**: 6 Common, 2 Uncommon, 2 Rare = **10 hunting raw resources**.
+> **Hunting rarity summary**: 5 Common, 2 Uncommon, 2 Rare, 1 Epic, 1 Legendary = **11 hunting raw resources**.
 >
-> † **Shared resources**: Raw Hide, Raw Bone, and Raw Fat are the same item regardless of whether they come from hunting wild fauna or butchering herded livestock. The distinction is in the source action, not the material.
+> † **Shared resources**: Raw Hide, Raw Bone, Raw Fat, and Feathers are the same item regardless of whether they come from hunting wild fauna or herding livestock. The distinction is in the source action, not the material. Four shared items total.
 
 ### 1f. Fishing — Aquatic Products
 
 | # | Resource | Weight | Rarity | Refinement path | Notes |
 |---|---|---|---|---|---|
-| W01 | **Fish** | 0.8 | Common | Cooking → Cooked Fish; cure → Dried Fish; press → Fish Oil (refined) | Core food resource. Eternum heritage. Requires water-adjacent hex. |
+| FI01 | **Fish** | 0.8 | Common | Cooking → Cooked Fish; cure → Dried Fish; press → Fish Oil (refined) | Core food resource. Eternum heritage. Requires water-adjacent hex. |
 
 > **Fishing rarity summary**: 1 Common = **1 fishing raw resource**.
 >
@@ -212,7 +214,7 @@ Herding produces products from four distinct livestock types. Some products are 
 |---|---|---|
 | **Cattle** | Beef, Milk | Raw Hide †, Raw Bone †, Raw Fat †, Manure |
 | **Sheep** | Mutton, Raw Wool | Raw Hide †, Raw Bone †, Raw Fat †, Manure |
-| **Poultry** | Poultry, Eggs | Feathers, Raw Bone †, Raw Fat †, Manure |
+| **Poultry** | Poultry, Eggs | Feathers †, Raw Bone †, Raw Fat †, Manure |
 | **Horses & Donkeys** | Horse (follower), Donkey (follower) | Horsemeat (low value), Raw Hide †, Raw Bone †, Raw Fat †, Manure |
 
 #### Herding Product Table
@@ -244,16 +246,16 @@ Herding produces products from four distinct livestock types. Some products are 
 
 | Category | Count | Common | Uncommon | Rare | Epic | Legendary | Mythic |
 |---|---|---|---|---|---|---|---|
-| Mining | 31 | 7 | 7 | 5 | 5 | 4 | 3 |
-| Logging | 7 | 4 | 1 | 1 | 1 | 0 | 0 |
+| Mining | 30 | 7 | 7 | 5 | 4 | 4 | 3 |
+| Logging | 6 | 2 | 1 | 2 | 1 | 0 | 0 |
 | Farming | 13 | 8 | 5 | 0 | 0 | 0 | 0 |
-| Foraging | 12 | 6 | 3 | 2 | 1 | 0 | 0 |
-| Hunting | 10 | 6 | 2 | 2 | 0 | 0 | 0 |
+| Foraging | 13 | 5 | 3 | 3 | 2 | 0 | 0 |
+| Hunting | 11 | 5 | 2 | 2 | 1 | 1 | 0 |
 | Fishing | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
 | Herding | 12 | 7 | 5 | 0 | 0 | 0 | 0 |
-| **Total** | **86** | **39** | **23** | **10** | **7** | **4** | **3** |
+| **Total** | **86** | **35** | **23** | **12** | **8** | **5** | **3** |
 
-> **Rarity distribution by tier**: 39 Common (45%), 23 Uncommon (27%), 10 Rare (12%), 7 Epic (8%), 4 Legendary (5%), 3 Mythic (3%). The distribution tapers sharply — most of the world is common materials, with fantastical resources becoming exponentially rarer.
+> **Rarity distribution by tier**: 35 Common (41%), 23 Uncommon (27%), 12 Rare (14%), 8 Epic (9%), 5 Legendary (6%), 3 Mythic (3%). The distribution tapers sharply — most of the world is common materials, with fantastical resources becoming exponentially rarer.
 
 ---
 
@@ -280,7 +282,7 @@ Require smelting or sawmill processing. Enable mid-game tools, weapons, and stru
 | C04 | **Copper** | 2.0 | Copper Ore (M08) | Smelter: Copper Ore + Coal → Copper | Base metal. Tools, weapons. Combine with Rare Metals → Bronze. |
 | C05 | **Obsidian** | 2.0 | Obsidian (M09) — same | None (usable directly); knap → blades | Volcanic glass. Sharp but brittle. |
 | C06 | **Silver** | 2.5 | Silver Ore (M10) | Smelter: Silver Ore + Coal → Silver | Precious metal. Jewelry, currency. Flagged: alchemy applications (future). |
-| C07 | **Ironwood** | 3.0 | Ironwood Logs (L05) | Sawmill: Ironwood Logs → Ironwood | Dense hardwood, iron-hard. Structural, weapon handles. |
+| C07 | **Ironwood** | 3.0 | Ironwood Logs (L03) | Sawmill: Ironwood Logs → Ironwood | Dense hardwood, iron-hard. Structural, weapon handles. |
 | C08 | **Cold Iron** | 3.0 | Iron Ore (M11) + Rare Metals (M18) | Smelter (special process): Iron Ore + Rare Metals + Coal → Cold Iron | Anti-beast properties. Superior to standard iron. |
 | C09 | **Gold** | 4.0 | Gold Ore (M12) | Smelter: Gold Ore + Coal → Gold | Precious. Jewelry, currency, decoration. |
 
@@ -290,7 +292,7 @@ Scarce, valuable. Enable advanced crafting and high-tier equipment.
 
 | # | Resource | Weight | Raw precursor | Refinement | Notes |
 |---|---|---|---|---|---|
-| C10 | **Hartwood** | 2.5 | Hartwood Logs (L06) | Sawmill: Hartwood Logs → Hartwood | Ancient heartwood. Resonant, semi-magical. |
+| C10 | **Hartwood** | 2.5 | Hartwood Logs (L04) | Sawmill: Hartwood Logs → Hartwood | Ancient heartwood. Resonant, semi-magical. |
 | C11 | **Diamonds** | 0.1 | Rough Diamond (M15) | Jeweler: Rough Diamond → Diamonds | Hardest gemstone. Cutting tools, jewelry. |
 | C12 | **Sapphire** | 0.1 | Rough Sapphire (M16) | Jeweler: Rough Sapphire → Sapphire | Blue gemstone. Jewelry, optics. |
 | C13 | **Ruby** | 0.1 | Rough Ruby (M17) | Jeweler: Rough Ruby → Ruby | Red gemstone. Jewelry, heat applications. |
@@ -311,9 +313,9 @@ Extremely rare, specific conditions. Endgame materials.
 
 | # | Resource | Weight | Raw precursor | Refinement | Notes |
 |---|---|---|---|---|---|
-| C17 | **True Ice** | 0.8 | True Ice Shard (M26) | Specialized: Cold forge (paradoxical — requires absence of heat) → True Ice | Never melts. Cold-based applications, preservation. |
-| C18 | **Twilight Quartz** | 0.2 | Rough Twilight Quartz (M27) | Specialized: Crystal Workshop → Twilight Quartz | Dimensional, shifts colour. Enchantment, optics. |
-| C19 | **Alchemical Silver** | 1.5 | Alchemical Silver Ore (M28) | Complex: Ore + reagents + Silver catalyst → Alchemical Silver | Reactive, dangerous. Anti-magical properties. |
+| C17 | **True Ice** | 0.8 | True Ice Shard (M24) | Specialized: Cold forge (paradoxical — requires absence of heat) → True Ice | Never melts. Cold-based applications, preservation. |
+| C18 | **Twilight Quartz** | 0.2 | Rough Twilight Quartz (M25) | Specialized: Crystal Workshop → Twilight Quartz | Dimensional, shifts colour. Enchantment, optics. |
+| C19 | **Alchemical Silver** | 1.5 | Alchemical Silver Ore (M26) | Complex: Ore + reagents + Silver catalyst → Alchemical Silver | Reactive, dangerous. Anti-magical properties. |
 
 ### Mythic (3)
 
@@ -321,9 +323,9 @@ Near-unique, endgame-defining. The rarest materials in existence.
 
 | # | Resource | Weight | Raw precursor | Refinement | Notes |
 |---|---|---|---|---|---|
-| C20 | **Adamantine** | 3.0 | Adamantine Ore (M30) | Master Forge: Ore → Adamantine (highest difficulty) | Hardest metal. Near-indestructible. |
-| C21 | **Mithral** | 1.0 | Mithral Ore (M31) | Master Forge: Ore → Mithral (highest difficulty) | Lightest strong metal. Legendary armour and weapons. |
-| C22 | **Dragonhide** | 1.5 | Raw Dragonhide (M32) | Curing process (specialized tannery) → Dragonhide | Fossilised dragon hide, mined from ancient remains. Rarest material in the game. |
+| C20 | **Adamantine** | 3.0 | Adamantine Ore (M28) | Master Forge + Voidsand heat + Starmetal equipment → Adamantine | Hardest metal. Near-indestructible. Requires endgame infrastructure to refine. |
+| C21 | **Mithral** | 1.0 | Mithral Ore (M29) | Master Forge + Voidsand heat + Starmetal equipment → Mithral | Lightest strong metal. Legendary armour and weapons. Requires endgame infrastructure to refine. |
+| C22 | **Dragonhide** | 1.5 | Unearthed Dragonhide (M30) | Specialized curing process (specialized tannery) → Dragonhide | Fossilised dragon hide, excavated from ancient burial sites. Rarest material in the game. |
 
 ### Core Resource Summary
 
@@ -353,9 +355,7 @@ Base metals, alloys, and fantastical metal refinements. All metal smelting requi
 | R02 | **Bronze Ingot** | 2.5 | Uncommon | Copper (C04) + Rare Metals (M18) | Smelter | Harder than copper. Early-mid tier weapons and armour. |
 | R03 | **Steel Ingot** | 2.5 | Uncommon | Iron Ingot (R01) + Coal (double fuel) | Smelter (higher temp) | Superior to iron. Mid-tier weapons and armour. Requires double coal. |
 | R04 | **Electrum Ingot** | 3.0 | Rare | Gold (C09) + Silver (C06) | Smelter | Gold-silver alloy. Decorative, coinage, jewelry settings. |
-| R05 | **Refined Voidstone** | 2.0 | Epic | Voidstone (M23) | Crystal Workshop | Dark, light-absorbing material. Enchantment substrate, stealth-aspected gear, dimensional tools. |
-| R06 | **Radiant Sunstone** | 0.4 | Epic | Sunstone (M24) | Crystal Workshop | Polished light-storing crystal. Light sources, warm gear, illumination tools. |
-| R07 | **Starmetal Ingot** | 2.0 | Legendary | Starmetal Fragment (M28) + Coal | Master Forge | Meteorite metal. Extremely heat-resistant. Endgame weapons and armour. |
+| R05 | **Starmetal Ingot** | 2.0 | Legendary | Starmetal Fragment (M27) + Coal | Master Forge | Meteorite metal. Extremely heat-resistant. Used to forge **top-tier smithing equipment** — anvils, crucibles, tongs, and tools that can withstand the extreme temperatures required for Mythic-tier metalwork. The key that unlocks Adamantine and Mithral production. |
 
 ### 3b. Textiles & Fibers
 
@@ -370,13 +370,14 @@ Spun, woven, and treated materials for clothing, armour, cordage, and utility it
 | T05 | **Rope** | 0.5 | Common | Hemp (F08) | Twist (no facility required) | Essential utility. Construction, binding, climbing, rigging. |
 | T06 | **Canvas** | 0.8 | Common | Hemp (F08) or Flax (F07) | Loom | Heavy cloth. Tents, bags, covers, sails (future). |
 | T07 | **Sinew Thread** | 0.2 | Common | Sinew (H05) | Dry + twist (no facility) | Strong natural binding. Bowstrings, stitching, armour binding. |
-| T08 | **Leather** | 1.5 | Common | Raw Hide (H02) + Bark (L02) as tanning agent | Tannery | Armour, bags, belts, straps, sheaths. The core animal product. |
+| T08 | **Leather** | 1.5 | Common | Raw Hide (H02) | Tannery | Armour, bags, belts, straps, sheaths. The core animal product. Tannery facility handles the tanning process. |
 | T09 | **Cotton Thread** | 0.1 | Uncommon | Cotton (F09) | Spinning Wheel | Fine fiber, intermediate. |
 | T10 | **Cotton Cloth** | 0.4 | Uncommon | Cotton Thread (T09) | Loom | Soft, comfortable. Clothing, fine garments. |
-| T11 | **Hardened Leather** | 1.8 | Uncommon | Leather (T08) + Resin (L03) or Tallow (U01) | Tannery | Boiled/treated leather. Better armour rating than standard leather. |
+| T11 | **Hardened Leather** | 1.8 | Uncommon | Leather (T08) + Resin (L02) or Tallow (U01) | Tannery | Boiled/treated leather. Better armour rating than standard leather. |
 | T12 | **Fur** | 1.0 | Uncommon | Fur Pelt (H07) | Furrier (Workshop) | Cold-weather gear, luxury trade good. Lining, cloaks, trim. |
-| T13 | **Exotic Fur** | 1.0 | Rare | Exotic Pelt (H10) | Furrier (Workshop) | Superior cold-weather gear, luxury trade. Spotted, white, or unusual pelts. |
+| T13 | **Exotic Fur** | 1.0 | Epic | Exotic Pelt (H10) | Furrier (Workshop) | Superior cold-weather gear, luxury trade. Spotted, white, or unusual pelts. |
 | T14 | **Silk** | 0.2 | Rare | Reserved (future: rare foraging or special area) | Specialized | Luxury textile. Fine garments, enchantment substrate. |
+| T15 | **Demonhide** | 2.0 | Legendary | Raw Demonhide (H11) | Specialized Tannery | Cured demon hide. Dark, tough, and faintly warm. Retains residual infernal energy that provides natural heat resistance. High-tier armour material, superior to any standard leather. The curing process requires skilled craftsmanship to neutralise the hide's latent hostility without destroying its properties. |
 
 ### 3c. Wood & Plant Refined Products
 
@@ -385,7 +386,7 @@ Processed wood and plant-derived refined materials beyond core resources.
 | # | Resource | Weight | Rarity | Refined from | Facility | Notes |
 |---|---|---|---|---|---|---|
 | W01 | **Planks** | 2.0 | Common | Wood (C01) | Sawmill | Shaped boards. Primary wooden construction material. |
-| W02 | **Refined Worldroot** | 3.0 | Epic | Worldroot (L07) | Crystal Workshop / Specialized Sawmill | Life-resonant processed wood. Living structures, healing items, nature-aspected gear. Retains a faint warmth. |
+| W02 | **Moonwood** | 3.0 | Epic | Moonwood Logs (L06) | Specialized Sawmill | Processed pale-silver timber. Retains its faint luminescence — structures and items made from Moonwood glow softly at night. Light-aspected. Used in high-tier construction, enchantment substrates, and prestige items. Cool to the touch; doesn't burn easily. |
 | W03 | **Spiritbloom Essence** | 0.1 | Epic | Spiritbloom (G12) | Workshop (distillation) | Concentrated magical flower extract. Enchantment catalyst, healing consumables, buff ingredients. Glows faintly. |
 
 ### 3d. Building Materials
@@ -401,7 +402,7 @@ Construction materials for buildings and settlement structures. Most buildings r
 | B05 | **Iron Fittings** | 0.5 | Common | Iron Ingot (R01) | Forge | Hinges, brackets, reinforcements, locks. |
 | B06 | **Glass** | 0.5 | Uncommon | Sand (M04) + Coal (fuel) | Furnace | Windows, containers, lenses, optics. |
 | B07 | **Thatch** | 0.5 | Common | Wheat stalks (F01 byproduct) or foraged reeds | None (gathered as byproduct) | Basic roofing. Cheapest but least durable. |
-| B08 | **Pitch** | 0.5 | Common | Resin (L03) | Kiln / distill | Waterproofing, caulking, torches, fire arrows. |
+| B08 | **Pitch** | 0.5 | Common | Resin (L02) | Kiln / distill | Waterproofing, caulking, torches, fire arrows. |
 
 ### 3e. Fuels, Chemicals & Utility
 
@@ -410,8 +411,8 @@ Processed substances used as fuel, in production, or as crafting catalysts.
 | # | Resource | Weight | Rarity | Refined from | Facility | Notes |
 |---|---|---|---|---|---|---|
 | U01 | **Tallow** | 0.5 | Common | Raw Fat (H04) | Render (Cookhouse or Workshop) | Candles, soap ingredient, waterproofing, lamp fuel. |
-| U02 | **Oil** | 0.4 | Common | Raw Fat (H04), Nuts (G05), or Fish (W01) | Press (Workshop) | Lamp fuel, cooking oil, lubrication, leather treatment. |
-| U03 | **Fish Oil** | 0.3 | Common | Fish (W01) | Press (Workshop) | Lamp fuel, waterproofing, leather treatment. Lower quality than nut/fat oil. |
+| U02 | **Oil** | 0.4 | Common | Raw Fat (H04), Nuts (G06), or Fish (FI01) | Press (Workshop) | Lamp fuel, cooking oil, lubrication, leather treatment. |
+| U03 | **Fish Oil** | 0.3 | Common | Fish (FI01) | Press (Workshop) | Lamp fuel, waterproofing, leather treatment. Lower quality than nut/fat oil. |
 | U04 | **Lye** | 0.3 | Uncommon | Wood ash (from burning Wood) + Water | Workshop | Soap-making, hide processing, cleaning agent. |
 | U05 | **Soap** | 0.2 | Uncommon | Tallow (U01) + Lye (U04) | Workshop | Cleaning, hide processing, textile finishing. |
 | U06 | **Lime** | 1.0 | Common | Limestone (M05) + Coal (fuel) | Kiln | Mortar base, plaster, whitewash, water purification. |
@@ -419,6 +420,7 @@ Processed substances used as fuel, in production, or as crafting catalysts.
 | U08 | **Dyes** | 0.2 | Uncommon | Dye Plants (F12), minerals (various) | Workshop | Colouring for textiles, leather, and items. Affects cosmetic appearance. |
 | U09 | **Vinegar** | 0.3 | Common | Fruit (F04) — fermented | Cookhouse | Preservation, cleaning, hide treatment. |
 | U10 | **Bone Meal** | 0.5 | Common | Raw Bone (H03) | Grind (Workshop) | Fertiliser. Accelerates farming fertility recovery when applied to soil. |
+| U11 | **Voidsand** | 1.5 | Epic | Voidstone (M23) | Crystal Workshop (grinding + stabilisation) | High-tier smelting reagent. When added to a forge fire, Voidsand produces unnaturally intense heat — far beyond what Coal alone can achieve. **Required for Mythic-tier metalwork**: smelting Adamantine Ore and Mithral Ore is impossible without it. Also enables advanced alloy processes. The sand absorbs ambient light when heated, causing the forge to darken even as temperatures soar. |
 
 ### 3f. Processed Food
 
@@ -430,11 +432,10 @@ Intermediate food products used as cooking ingredients or long-lasting provision
 | P02 | **Butter** | 0.3 | Common | Milk (K01) | Churn (Cookhouse) | Cooking ingredient, baking, flavouring. Trade good. |
 | P03 | **Cheese** | 0.4 | Common | Milk (K01) | Aging (Cookhouse) | Long-lasting food. High nutrition. Improves with age. |
 | P04 | **Dried Meat** | 0.5 | Common | Game Meat (H01) or Beef/Mutton (K05/K06) + Salt (M07) | Smoke/dry (Cookhouse) | Preserved protein. Long shelf life. Travel food. |
-| P05 | **Dried Fish** | 0.4 | Common | Fish (W01) + Salt (M07) | Smoke/dry (Cookhouse) | Preserved. Compact travel food. |
-| P06 | **Jam** | 0.3 | Common | Fruit (F04) or Wild Berries (G01) + Sugar (P09) or Honey (G07) | Cookhouse | Preserved fruit. Energy-dense. |
+| P05 | **Dried Fish** | 0.4 | Common | Fish (FI01) + Salt (M07) | Smoke/dry (Cookhouse) | Preserved. Compact travel food. |
+| P06 | **Jam** | 0.3 | Common | Fruit (F04) or Wild Berries (G01) + Sugar (P08) or Honey (G07) | Cookhouse | Preserved fruit. Energy-dense. |
 | P07 | **Spices** | 0.1 | Uncommon | Spice Plants (F11) | Dry/grind (no facility) | Cooking catalyst. Increases food buff quality when added to recipes. |
-| P08 | **Syrup** | 0.3 | Common | Sap (L04) | Cookhouse (boil/reduce) | Sweetener, cooking ingredient. |
-| P09 | **Sugar** | 0.3 | Uncommon | Sugar Cane (F10) | Press + refine (Workshop) | Sweetener, preservation, jam-making, baking. |
+| P08 | **Sugar** | 0.3 | Uncommon | Sugar Cane (F10) | Press + refine (Workshop) | Sweetener, preservation, jam-making, baking. |
 
 ---
 
@@ -442,15 +443,17 @@ Intermediate food products used as cooking ingredients or long-lasting provision
 
 | Sub-category | Count | Common | Uncommon | Rare | Epic | Legendary |
 |---|---|---|---|---|---|---|
-| Metals & Alloys | 7 | 1 | 2 | 1 | 2 | 1 |
-| Textiles & Fibers | 14 | 7 | 4 | 2 | 0 | 0 |
+| Metals & Alloys | 5 | 1 | 2 | 1 | 0 | 1 |
+| Textiles & Fibers | 15 | 7 | 4 | 1 | 1 | 2 |
 | Wood & Plant Refined | 3 | 1 | 0 | 0 | 2 | 0 |
 | Building Materials | 8 | 7 | 1 | 0 | 0 | 0 |
-| Fuels, Chemicals & Utility | 10 | 6 | 3 | 0 | 0 | 0 |
-| Processed Food | 9 | 7 | 2 | 0 | 0 | 0 |
-| **Total Refined** | **51** | **29** | **12** | **3** | **4** | **1** |
+| Fuels, Chemicals & Utility | 11 | 6 | 3 | 0 | 1 | 0 |
+| Processed Food | 8 | 6 | 2 | 0 | 0 | 0 |
+| **Total Refined** | **50** | **28** | **12** | **2** | **4** | **3** |
 
-> **Rarity observation**: Refined resources skew heavily Common/Uncommon because they are produced from raw materials that are themselves common or uncommon. The high-rarity refined items (Epic/Legendary) derive from the fantastical raw resources and serve as endgame crafting components.
+> **Rarity observation**: Refined resources skew heavily Common/Uncommon because they are produced from raw materials that are themselves common or uncommon. The high-rarity refined items (Epic/Legendary) derive from fantastical raw resources and serve as endgame crafting components.
+>
+> **Endgame crafting chain**: Voidstone → Voidsand (the heat) + Starmetal Fragment → Starmetal Ingot (the equipment) = the two prerequisites for refining Adamantine and Mithral. This creates a natural endgame bottleneck requiring both Epic and Legendary resources.
 
 ---
 
@@ -489,7 +492,9 @@ Each beast drops 1–3 part types depending on its lore/physiology (defined in B
 
 > **Naming convention**: Displayed with quality prefix: "Fine Beast Fang", "Superior Beast Hide", "Legendary Beast Bone", etc.
 >
-> **Dragonhide** is NOT a beast part — it is a Core Resource (C22) obtained by mining fossilised dragon remains, not from beast encounters.
+> **Dragonhide** is NOT a beast part — it is a Core Resource (C22) obtained by mining fossilised dragon remains (Unearthed Dragonhide, M30), not from beast encounters.
+>
+> **Demonhide** is NOT a beast part — it is a Hunting product (Raw Demonhide, H11) obtained from hunting demons, refined via a specialized tannery into Demonhide (T15).
 
 ---
 
@@ -515,7 +520,7 @@ Produced via the Cooking action at a Campfire or Cookhouse. Cooked food provides
 | MF03 | **Bread** | Standard | Flour + Water + fuel | +10% energy regen; long shelf life |
 | MF04 | **Stew** | Standard | Game Meat + Vegetables + Water + fuel | +10% energy regen; +5% health regen |
 | MF05 | **Fish Pie** | Standard | Fish + Flour + Butter + fuel | +10% energy regen |
-| MF06 | **Hunter's Feast** | Fine | Game Meat + Mushrooms + Herbs + Spices + Butter | +15% energy regen; +5% max energy |
+| MF06 | **Hunter's Feast** | Fine | Game Meat + Mushrooms + Wild Herbs + Spices + Butter | +15% energy regen; +5% max energy |
 | MF07 | **Honeyed Pastry** | Fine | Flour + Honey + Eggs + Butter + Fruit | +15% energy regen; +25% food buff duration |
 | MF08 | **Grand Banquet** | Feast | Multiple meats + Vegetables + Spices + Truffles + Honey + Cheese | +20% energy regen; +10% max energy; +1 to random attribute for duration |
 
@@ -527,11 +532,11 @@ Produced via the Cooking action at a Campfire or Cookhouse. Cooked food provides
 
 | Category | Count | Weight range (kg) | Rarity range |
 |---|---|---|---|
-| Raw — Mining | 31 | 0.2–5.0 | Common–Mythic |
-| Raw — Logging | 7 | 0.3–6.0 | Common–Epic |
+| Raw — Mining | 30 | 0.2–5.0 | Common–Mythic |
+| Raw — Logging | 6 | 0.3–6.0 | Common–Epic |
 | Raw — Farming | 13 | 0.2–0.8 | Common–Uncommon |
-| Raw — Foraging | 12 | 0.1–0.5 | Common–Epic |
-| Raw — Hunting | 10 | 0.1–2.0 | Common–Rare |
+| Raw — Foraging | 13 | 0.1–0.5 | Common–Epic |
+| Raw — Hunting | 11 | 0.1–2.5 | Common–Legendary |
 | Raw — Fishing | 1 | 0.8 | Common |
 | Raw — Herding | 12 | 0.2–1.5 | Common–Uncommon |
 | **Subtotal Raw** | **86** | | |
@@ -542,15 +547,67 @@ Produced via the Cooking action at a Campfire or Cookhouse. Cooked food provides
 | Core T5 (Legendary) | 3 | 0.2–1.5 | Legendary |
 | Core T6 (Mythic) | 3 | 1.0–3.0 | Mythic |
 | **Subtotal Core** | **22** | | |
-| Beast Parts | 12 (×5 quality tiers = 60 effective) | 0.1–1.5 | Common–Legendary |
-| Refined — Metals & Alloys | 7 | 0.4–3.0 | Common–Legendary |
-| Refined — Textiles & Fibers | 14 | 0.1–1.8 | Common–Rare |
+| Refined — Metals & Alloys | 5 | 2.0–3.0 | Common–Legendary |
+| Refined — Textiles & Fibers | 15 | 0.1–2.0 | Common–Legendary |
 | Refined — Wood & Plant | 3 | 0.1–3.0 | Common–Epic |
 | Refined — Building Materials | 8 | 0.1–4.0 | Common–Uncommon |
-| Refined — Fuels/Chemicals/Utility | 10 | 0.2–1.0 | Common–Uncommon |
-| Refined — Processed Food | 9 | 0.1–0.5 | Common–Uncommon |
-| **Subtotal Refined** | **51** | | |
+| Refined — Fuels/Chemicals/Utility | 11 | 0.2–1.5 | Common–Epic |
+| Refined — Processed Food | 8 | 0.1–0.5 | Common–Uncommon |
+| **Subtotal Refined** | **50** | | |
+| Beast Parts | 12 (×5 quality tiers = 60 effective) | 0.1–1.5 | Common–Legendary |
 | Cooked Meals | 8 examples (full list Phase 7c) | — | — |
+
+---
+
+## Cross-Reference: Supply Chain Validation
+
+Every refined resource traces back to at least one raw resource. Every raw resource with a named refinement path has a corresponding entry in Sections 2 or 3.
+
+### Endgame Crafting Chain
+
+```
+Voidstone (M23, Epic) ──→ Voidsand (U11, Epic)
+                              │  [unnaturally hot forge fire]
+                              ▼
+Starmetal Fragment (M27, Leg) → Starmetal Ingot (R05, Leg)
+                              │  [heat-resistant forging equipment]
+                              ▼
+                    ┌─────────┴─────────┐
+                    ▼                   ▼
+Adamantine Ore (M28, Mythic)    Mithral Ore (M29, Mythic)
+         → Adamantine (C20)            → Mithral (C21)
+```
+
+Both Mythic-tier core resources require **Voidsand** (for heat) and **Starmetal equipment** (for durability) to refine. This creates a natural endgame bottleneck: players must acquire Epic + Legendary materials before they can process Mythic ores.
+
+### Universal Discovery Resources
+
+Two "universal discovery" resources exist — low-chance drops from any activity within their category, requiring no dedicated node:
+
+| Resource | Category | Rarity | Drops from |
+|---|---|---|---|
+| **Rare Metals** (M18) | Mining | Rare | Any mining activity |
+| **Worldroot** (L05) | Logging | Rare | Any logging activity |
+
+### Shared Resources Between Actions
+
+Four resources are identical regardless of source action:
+
+| Resource | Hunting source | Herding source |
+|---|---|---|
+| **Raw Hide** (H02) | Wild fauna | Butchered cattle, sheep, horses |
+| **Raw Bone** (H03) | Wild fauna | Butchered livestock (all types) |
+| **Raw Fat** (H04) | Wild fauna | Butchered livestock (all types) |
+| **Feathers** (H06) | Bird hunting | Poultry herding |
+
+### Resources With No Firm Refinement Path
+
+These raw resources are valued for their raw properties and serve as ingredients rather than feedstock for named refined products:
+
+| Resource | Rarity | Use case |
+|---|---|---|
+| **Worldroot** (L05) | Rare | Cooking ingredient, future alchemy reagent |
+| **Sunsprout** (G13) | Epic | Cooking ingredient, future alchemy reagent |
 
 ---
 
@@ -560,23 +617,29 @@ Produced via the Cooking action at a Campfire or Cookhouse. Cooked food provides
 
 2. **Raw-first principle**: Every core and refined resource traces back to a raw precursor gathered through a player action. Base-level development uses common raw resources directly (Wood, Stone, Coal) — no refinement required to get started.
 
-3. **Supply chain depth**: Higher-tier materials require progressively more complex refinement. Common: use directly. Uncommon: basic smelter/sawmill. Rare: jeweler + specialized tools. Epic: specialized workshops. Legendary: extreme conditions. Mythic: master-level facilities + rare catalysts.
+3. **Supply chain depth**: Higher-tier materials require progressively more complex refinement. Common: use directly. Uncommon: basic smelter/sawmill. Rare: jeweler + specialized tools. Epic: specialized workshops. Legendary: extreme conditions. Mythic: master-level facilities + Voidsand heat + Starmetal equipment.
 
 4. **Rare Metals as universal alloy**: Instead of multiple real-world alloy metals (tin, nickel, etc.), a single "Rare Metals" resource represents trace metals found at low probability during any mining activity. This keeps the resource list clean while enabling alloys (Bronze = Copper + Rare Metals; Cold Iron = Iron + Rare Metals).
 
-5. **Dragonhide lore**: Dragons once ruled the land in a manner similar to dinosaurs. A cataclysm reduced them to endangered levels. Their indestructible hide can be mined from long-fossilised corpses — making Raw Dragonhide a mining resource, not a beast drop.
+5. **Worldroot as universal logging discovery**: Mirrors the Rare Metals pattern — a rare resource with no dedicated node, discoverable from any logging activity. Gnarled root growths from an ancient subterranean network.
 
-6. **Fantastical raw resources**: Epic resources (Voidstone, Sunstone, Worldroot, Spiritbloom) and Legendary resources (Starmetal Fragment) fill the upper rarity tiers alongside core resource precursors, enabling advanced crafting beyond the 22 core Eternum resources.
+6. **Dragonhide lore**: Dragons once ruled the land in a prehistoric age. A cataclysm drove them to extinction. Their indestructible hide survives fossilisation and can be excavated from ancient burial sites — making Unearthed Dragonhide a mining resource, not a beast drop.
 
-7. **Livestock as followers**: Horses and Donkeys are unique herding products — the product IS the living animal, used as a follower. They can be butchered for horsemeat in desperation, but this destroys a high-value transport asset.
+7. **Demonhide lore**: Demons are rare, dangerous prey. Their hide retains residual infernal energy and must be carefully cured at a specialized tannery. Raw Demonhide is the only Legendary hunting product — reflecting the extreme difficulty of killing a demon.
 
-8. **Shared animal products**: Raw Hide, Raw Bone, Raw Fat, and Feathers are the same resource regardless of hunting or herding source. This avoids duplicate entries while supporting multiple acquisition paths.
+8. **Moonwood lore**: Pale, silvery timber from trees that have absorbed centuries of moonlight. Found in the oldest forests where canopy gaps allow sustained direct moonlight. Retains faint luminescence after processing — items and structures made from Moonwood glow softly at night.
 
-9. **Coal as universal fuel**: Coal is the essential, common fuel for all smelting and production. This keeps the fuel economy simple and makes coal a high-demand trade resource. Steel requires double coal (reflecting higher-temperature smelting).
+9. **Voidsand + Starmetal synergy**: The endgame crafting chain requires two non-core fantastical resources working in tandem. Voidsand (from Voidstone, Epic) provides unnaturally intense heat. Starmetal equipment (from Starmetal Fragment, Legendary) can withstand that heat. Together they unlock Mythic-tier metalwork. This creates meaningful endgame progression without gating behind a single bottleneck.
 
-10. **Future-proofing**: Alchemy, Essence, and magical material IDs are registered but have no base-module source. Future modules activate them.
+10. **Livestock as followers**: Horses and Donkeys are unique herding products — the product IS the living animal, used as a follower. They can be butchered for horsemeat in desperation, but this destroys a high-value transport asset.
+
+11. **Shared animal products**: Raw Hide, Raw Bone, Raw Fat, and Feathers are the same resource regardless of hunting or herding source. This avoids duplicate entries while supporting multiple acquisition paths.
+
+12. **Coal as universal fuel**: Coal is the essential, common fuel for all smelting and production. Steel requires double coal (reflecting higher-temperature smelting). Voidsand supplements coal for Mythic-tier work — it doesn't replace it.
+
+13. **Future-proofing**: Alchemy, Essence, and magical material IDs are registered but have no base-module source. Future modules activate them. Silk (T14) is registered but has no base-module source.
 
 ---
 
 *Appendix F — March 2026*
-*Phase 3 — Sections 1–3 complete. 86 raw + 22 core + 51 refined = 159 defined resources + 60 effective beast part variants.*
+*Phase 3 — Sections 1–3 complete. 86 raw + 22 core + 50 refined = 158 defined resources + 60 effective beast part variants.*
