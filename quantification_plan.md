@@ -157,25 +157,25 @@ Dependencies: Phase 1 (attribute formulas), Phase 2 (action catalog — biome mo
 
 ### 4a. Biome Properties ✅
 
-25 biomes fully quantified: movement cost/time modifiers, explore cost/time modifiers, decay rate modifiers, base hazard chances (4%–18%), encounter type distributions (beast/combat/social/special), fauna tier caps (T1–T5), fertility ratings (None–Very High). Biome clustering algorithm defined (4-layer simplex noise: Temperature, Moisture, Elevation, Variation). Distribution targets and Nexus region override specified.
+27 biomes fully quantified across 6 categories (Temperate 7, Arid 5, Wet 5, Cold 3, Extreme 3, Water 4). Each biome has: unique narrative profile, movement cost/time modifiers, explore cost/time modifiers, decay rate modifiers, base hazard chances (5%–18%), encounter type distributions (beast/combat/social/special), fauna tier caps (T2–T5), fertility ratings (None–High). Biome clustering algorithm defined (5-layer simplex noise: Temperature, Moisture, Elevation, Variation, Anomaly). Anomaly layer governs Extreme biome placement. Distribution targets and Nexus region override specified.
 → Output: **Appendix D: Biome Table** (`Appendix_D_Biome_Table.md`)
 
 ### 4b. Biome–Resource Affinity ✅
 
-Full affinity matrix for all 87 raw resources × 25 biomes. Three-tier system: ✓ (standard, 1×), ◆ (primary, 2×), ★ (signature, 3×). Covers mining (30 resources), logging (6), farming (13), foraging (14), hunting (11), fishing (1), herding (4 livestock types). Universal discovery resources (Rare Metals, Worldroot, Unicorn Hair) confirmed biome-independent.
+Full affinity matrix for all 87 raw resources × 27 biomes. Three-tier system: ✓ (standard, 1×), ◆ (primary, 2×), ★ (signature, 3×). Covers mining (30 resources), logging (6), farming (13), foraging (14), hunting (11), fishing (1), herding (4 livestock types). Key signature assignments: Glassfields (gems, deep crystal), Blight (alchemical silver, spiritbloom, poisonous plants), Scorched (obsidian, sulfur, ignium, demonhide), Rainforest (moonwood, rare herbs), Scrubland (wild herbs, dye plants), Mangrove (seaweed, fishing). Universal discovery resources (Rare Metals, Worldroot, Unicorn Hair) confirmed biome-independent.
 → Output: **Appendix E: Biome–Resource Affinity Matrix** (`Appendix_E_Biome_Resource_Affinity.md`)
 
 ### 4c. Area Generation ✅
 
-Area count rarity distribution: 35% (3) → 25% (4) → 18% (5) → 10% (6) → 6% (7) → 4% (8) → 2% (9). Area type weights: 45% Materials, 40% Bare, 10% Underworld, 5% Special (capped at 1 each per hex). Materials sub-type weights defined per biome (fertile/mining/forestry). Building slot counts quantified per area type and hex rarity (Control 2–6, Materials 2–3, Bare 2–5, Underworld/Special always 1).
+Area count rarity distribution: 35% (3) → 25% (4) → 18% (5) → 10% (6) → 6% (7) → 4% (8) → 2% (9). Area type weights: 45% Materials, 40% Bare, 10% Underworld, 5% Special (capped at 1 each per hex). Materials sub-type weights defined for all 25 traversable biomes (fertile/mining/forestry). Key sub-type extremes: Glassfields 100% mining, Mangrove 100% forestry, Rainforest 80% forestry. Building slot counts quantified per area type and hex rarity (Control 2–6, Materials 2–3, Bare 2–5, Underworld/Special always 1).
 → Output: Integrated into **Eternal_Game_Base.md §6** (Area generation tables)
 
 ### 4d. Resource Node Seeding ✅
 
-Node counts per materials sub-type: Fertile 2–4, Mining 1–3, Forestry 2–4 (with biome bonuses). Node properties: resource type (weighted from affinity matrix), yield multiplier (0.5×–2.0×), regrowth rate (0.3×–1.5×), depletion threshold (50–200 harvests), special flag (5% chance). Regrowth cooldowns: Fertile 2 in-game days, Mining 6, Forestry 4 (modified by regrowth rate). Universal discovery resources confirmed as action-layer rolls, not node-seeded.
+Node counts per materials sub-type: Fertile 2–4, Mining 1–3, Forestry 2–4 (with biome bonuses — +1 in Forest/Rainforest/Taiga/Jungle). Node properties: resource type (weighted from affinity matrix), yield multiplier (0.5×–2.0×), regrowth rate (0.3×–1.5×), depletion threshold (50–200 harvests), special flag (5% chance). Regrowth cooldowns: Fertile 2 in-game days, Mining 6, Forestry 4 (modified by regrowth rate). Universal discovery resources confirmed as action-layer rolls, not node-seeded.
 → Output: Integrated into **Eternal_Game_Base.md §6** (Resource node seeding tables)
 
-> **Phase 4 summary**: 25 biomes × 87 raw resources fully mapped. 2 new appendices (D, E). Base module §6 expanded with quantified area generation and node seeding parameters. All values are base-module defaults subject to autoregulator bounds and Game Master adjustment (§27).
+> **Phase 4 summary**: 27 biomes × 87 raw resources fully mapped. 2 appendices (D, E) rewritten at v0.2.0. Base module §6 updated with 27-biome materials sub-type weights and node seeding parameters. Biome list expanded from 25 to 27: added Woodland, Rainforest, Scrubland, Mangrove, Glassfields, Blight; renamed Wetlands→Marsh, Volcanic→Scorched; removed Beach, Oasis, Deep Ocean. All values are base-module defaults subject to autoregulator bounds and Game Master adjustment (§27).
 
 ---
 
@@ -207,7 +207,7 @@ Energy cost, time-lock, hazard multiplier, reward scaling. Distinct from explore
 
 ### 5e. Water Traversal
 
-Which water biomes are passable (Coast, Beach, Lake, Coastal Waters)? Which are impassable without future module (Ocean, Deep Ocean)? Energy multiplier for passable water.
+Which water biomes are passable (Coast, Lake)? Which are impassable without future module (Ocean, Coastal Waters)? Energy multiplier for passable water.
 → Output: Water rules
 
 ---

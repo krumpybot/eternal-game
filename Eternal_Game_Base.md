@@ -198,10 +198,10 @@ Area types, slot counts, and resource profiles are **finalized on first survey**
 
 ### Biome determination
 
-- `biome = noise_function(global_seed, x, y, z)` → one of 25 biome types.
+- `biome = noise_function(global_seed, x, y, z)` → one of 27 biome types.
 - Biomes are **deterministic and permanent**. No biome ever changes.
-- Noise uses four domain-separated layers: Temperature, Moisture, Elevation, Variation (see Appendix D §4 for full generation algorithm).
-- The Nexus `(0,0,0)` is forced to Plains; first ring is biased temperate.
+- Noise uses five domain-separated layers: Temperature, Moisture, Elevation, Variation, and Anomaly (see Appendix D §4 for full generation algorithm).
+- The Nexus `(0,0,0)` is forced to Plains; first ring is biased temperate. Extreme biomes cannot generate within 3 hexes of the Nexus.
 
 ### Biome list (base module)
 
@@ -209,25 +209,25 @@ The full biome set must be defined at deployment because biome-specific logic (m
 
 | Category | Biomes | Count |
 |---|---|---|
-| **Temperate** | Plains, Grassland, Forest, Highlands | 4 |
+| **Temperate** | Plains, Grassland, Forest, Woodland, Rainforest, Highlands, Scrubland | 7 |
 | **Arid** | Desert, Savanna, Steppe, Badlands, Canyon | 5 |
-| **Wet** | Swamp, Wetlands, Mire, Jungle | 4 |
+| **Wet** | Swamp, Marsh, Mire, Jungle, Mangrove | 5 |
 | **Cold** | Tundra, Taiga, Glacier | 3 |
-| **Extreme** | Volcanic, Oasis | 2 |
-| **Water** | Coast, Beach, Coastal Waters, Lake, Ocean, Deep Ocean | 6 |
-| | **Total** | **25** |
+| **Extreme** | Scorched, Glassfields, Blight | 3 |
+| **Water** | Coast, Coastal Waters, Lake, Ocean | 4 |
+| | **Total** | **27** |
 
 Each biome defines (quantified in Appendix D):
 - Movement energy cost modifier (0.8×–1.8×)
 - Exploration time modifier (0.8×–1.6×)
-- Decay rate modifier (0.7×–2.0×)
-- Base hazard chance (4%–18%)
+- Decay rate modifier (0.8×–2.0×)
+- Base hazard chance (5%–18%)
 - Encounter type distribution (beast / combat / social / special)
-- Fauna tier cap (T1–T5)
-- Fertility rating (None / Low / Medium / High / Very High)
+- Fauna tier cap (T2–T5)
+- Fertility rating (None / Low / Medium / High)
 - Native resource affinities (quantified in Appendix E)
 
-> **Impassable biomes**: Ocean, Deep Ocean, and Coastal Waters are impassable in the base module. Traversal requires a future Maritime module. Coast, Beach, and Lake are land-accessible.
+> **Impassable biomes**: Ocean and Coastal Waters are impassable in the base module. Traversal requires a future Maritime module. Coast and Lake are land-accessible.
 
 ### Area generation
 
@@ -264,23 +264,27 @@ On first survey of a hex:
 | Plains | 60% | 15% | 25% |
 | Grassland | 55% | 15% | 30% |
 | Forest | 15% | 15% | 70% |
+| Woodland | 35% | 15% | 50% |
+| Rainforest | 10% | 10% | 80% |
 | Highlands | 25% | 50% | 25% |
+| Scrubland | 40% | 25% | 35% |
 | Desert | 5% | 80% | 15% |
 | Savanna | 40% | 15% | 45% |
 | Steppe | 35% | 25% | 40% |
 | Badlands | 0% | 90% | 10% |
 | Canyon | 0% | 85% | 15% |
 | Swamp | 45% | 15% | 40% |
-| Wetlands | 50% | 10% | 40% |
+| Marsh | 55% | 10% | 35% |
 | Mire | 10% | 30% | 60% |
 | Jungle | 30% | 10% | 60% |
+| Mangrove | 0% | 0% | 100% |
 | Tundra | 5% | 55% | 40% |
 | Taiga | 10% | 30% | 60% |
 | Glacier | 0% | 70% | 30% |
-| Volcanic | 0% | 95% | 5% |
-| Oasis | 70% | 5% | 25% |
+| Scorched | 0% | 95% | 5% |
+| Glassfields | 0% | 100% | 0% |
+| Blight | 0% | 20% | 80% |
 | Coast | 25% | 20% | 55% |
-| Beach | 15% | 10% | 75% |
 | Lake | 30% | 20% | 50% |
 
 > For biomes where a sub-type has 0% weight (e.g., Badlands fertile), no fertile areas can generate. The percentages are applied per materials-area roll.
@@ -313,7 +317,7 @@ Within materials areas, resource nodes are seeded deterministically on first sur
 |---|---|---|
 | Fertile | 2–4 | +1 in High/Very High fertility biomes |
 | Mining | 1–3 | +1 in primary/signature mining biomes |
-| Forestry | 2–4 | +1 in Forest/Taiga/Jungle |
+| Forestry | 2–4 | +1 in Forest/Rainforest/Taiga/Jungle |
 
 **Node properties** (each seeded individually):
 
@@ -568,7 +572,7 @@ This is the core starvation mechanic. It is base-module because it ties energy (
 - Adjacent hexes only. No skipping.
 - Cannot move while activity-locked.
 - Cannot move if inventory weight exceeds carry capacity.
-- Water biomes (Ocean, Deep Ocean, Coastal Waters) require specific traversal conditions (TBD — may require a boat building or mount type; at minimum, higher energy cost + hazard lethality).
+- Water biomes (Ocean, Coastal Waters) require specific traversal conditions (TBD — may require a boat building or mount type; at minimum, higher energy cost + hazard lethality).
 
 ---
 
@@ -616,11 +620,11 @@ Raw food items gathered from fertile areas, forestry, or (future) hunting:
 | Eggs | Plains, Forest, any temperate | Livestock yield (§17) |
 | Meat (generic) | Any with livestock or hunting | Butchered product |
 | Honey | Forest, Jungle | Rare fertile node |
-| Fish | Coast, Lake, Beach, Coastal Waters | Requires adjacent water hex or fishing area |
+| Fish | Coast, Lake, Mangrove, Marsh | Requires adjacent water hex or fishing area |
 | Herbs | Multiple biomes | Dual-use: food ingredient + alchemical |
 | Grain | Plains, Grassland, Steppe | Crop (sowable on fertile areas) |
 | Vegetables | Plains, Forest, Highlands | Crop |
-| Fruit | Jungle, Oasis, Forest | Tree-based, seasonal yield |
+| Fruit | Jungle, Woodland, Forest | Tree-based, seasonal yield |
 
 #### Core Resources (the canonical 22)
 
@@ -646,19 +650,19 @@ Non-core materials that extend the crafting supply chain:
 | Bone | Forestry (fauna) | Byproduct |
 | Tallow | Forestry (fauna) | Rendered fat; fuel, crafting |
 | Salt | Desert, Coast, Mining | Preservation, trade good |
-| Clay | Wetlands, Coast, Lake | Pottery, construction |
-| Sand | Desert, Beach, Coast | Glass production |
+| Clay | Marsh, Coast, Lake | Pottery, construction |
+| Sand | Desert, Coast | Glass production |
 | Pitch | Forest, Taiga | Waterproofing, fuel |
-| Sulfur | Volcanic, Mining | Alchemical, future module |
+| Sulfur | Scorched, Mining | Alchemical, future module |
 | Saltpeter | Desert, Canyon | Alchemical, future module |
 | Dyes | Jungle, Swamp, Mire | Crafting modifier |
 | Silkworms | Forest (caves, deep forest) | Textile (Silk precursor) |
 | Flax | Plains, Grassland | Textile |
 | Wool | Grassland, Highlands | Textile; primary source is livestock (§17) |
 | Furs | Taiga, Tundra, Forest | Gear crafting (cold protection) |
-| Pearls | Coast, Deep Ocean | Rare, jewelry |
+| Pearls | Coast, Ocean | Rare, jewelry |
 | Amber | Forest, Taiga | Rare, jewelry/alchemy |
-| Obsidian Shards | Volcanic, Mining | Weapon crafting |
+| Obsidian Shards | Scorched, Mining | Weapon crafting |
 | Alchemical Reagents | Multiple (rare nodes) | Reserved for future Alchemy & Essence module |
 
 #### Essence
@@ -1135,8 +1139,8 @@ The base module uses the **Loot Survivor beast taxonomy** (75 beast types across
 |---|---|---|
 | T1 (Common) | Wolf, Rat, Spider, Snake | Most temperate/wet |
 | T2 (Uncommon) | Bear, Boar, Giant Spider, Scorpion | Forest, Desert, Swamp |
-| T3 (Rare) | Yeti, Wyvern, Basilisk | Tundra, Mountain, Volcanic |
-| T4 (Epic) | Dragon, Kraken, Behemoth | Deep Ocean, Volcanic, Underworld |
+| T3 (Rare) | Yeti, Wyvern, Basilisk | Tundra, Highlands, Scorched |
+| T4 (Epic) | Dragon, Kraken, Behemoth | Ocean, Scorched, Underworld |
 | T5 (Legendary) | Phoenix, Leviathan, Titan | Extreme biomes, Underworld |
 
 Each biome has a **hazard table**: weighted probability distribution of beast types that can appear.

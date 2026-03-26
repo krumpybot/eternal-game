@@ -107,7 +107,7 @@ This is intentionally conservative - Starknet has had periods of halted block pr
 - **Area count, area types, and slot counts** are **finalized on discovery** using a per-hex discovery seed (commit-reveal salt + global seed + coordinate).
 - Domain-separated seed derivation prevents cross-stage leakage (`HEX_V1`, `AREA_V1`, `PLANT_V1`).
 - Once a hex/area/plant is materialized (discovered), its properties are immutable - no balance patches, no retroactive nerfs.
-- **Expanded biome set** (examples): Plains, Forest, Mountain, Desert, Swamp, Tundra, Taiga, Jungle, Savanna, Grassland, Canyon, Badlands, Volcanic, Glacier, Wetlands, Steppe, Oasis, Mire, Highlands, Coast, **Lake**, **Beach**, **Coastal Waters**, **Ocean**, **Deep Ocean**.
+- **27 biomes** across 6 categories: **Temperate** (Plains, Grassland, Forest, Woodland, Rainforest, Highlands, Scrubland), **Arid** (Desert, Savanna, Steppe, Badlands, Canyon), **Wet** (Swamp, Marsh, Mire, Jungle, Mangrove), **Cold** (Tundra, Taiga, Glacier), **Extreme** (Scorched, Glassfields, Blight), **Water** (Coast, Coastal Waters, Lake, Ocean).
 - Biome clustering is coherent (simplex noise produces natural terrain transitions), but contents within hexes are seed-derived and unique.
 
 ### 3.4 Energy

@@ -8,7 +8,7 @@
 
 ## How to Read This Matrix
 
-- **✓** = Resource can appear in this biome (standard chance)
+- **✓** = Resource can appear in this biome (standard chance, 1× node frequency)
 - **◆** = Primary biome — resource is common here (2× node frequency)
 - **★** = Signature biome — resource strongly associated with this biome (3× node frequency, higher yield multiplier)
 - **—** = Resource cannot appear in this biome
@@ -23,165 +23,162 @@
 Universal mining resources (appear wherever mining areas exist): **Coal, Flint, Limestone, Salt, Sand, Stone, Clay**.
 Universal rare drop (any mining activity): **Rare Metals**.
 
-| Resource | Rarity | Plains | Grass | Forest | High | Desert | Sav | Steppe | Bad | Canyon | Swamp | Wet | Mire | Jungle | Tundra | Taiga | Glacier | Volc | Oasis | Coast | Beach | Lake |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Cold Iron Ore** | U | ✓ | ✓ | ✓ | ◆ | ✓ | ✓ | ✓ | ◆ | ◆ | — | — | — | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | — |
-| **Copper Ore** | U | ✓ | ✓ | ✓ | ◆ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | ✓ | ✓ | ✓ | — | ✓ | — | — | — | — |
-| **Gold Ore** | U | — | — | — | ✓ | ✓ | — | — | ✓ | ◆ | — | — | — | ✓ | — | — | — | ✓ | — | — | — | — |
-| **Obsidian** | U | — | — | — | ✓ | — | — | — | ✓ | ✓ | — | — | — | — | — | — | — | ★ | — | — | — | — |
-| **Saltpeter** | U | — | — | — | — | ◆ | — | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | ✓ | — | — | — | — |
-| **Silver Ore** | U | — | — | — | ◆ | — | — | — | ✓ | ◆ | — | — | — | — | ✓ | ✓ | — | — | — | — | — | — |
-| **Sulfur** | U | — | — | — | — | — | — | — | ✓ | ✓ | ✓ | — | — | — | — | — | — | ★ | — | — | — | — |
-| **Amber** | R | — | — | ✓ | — | — | — | — | — | — | ✓ | ✓ | — | ◆ | ✓ | ◆ | — | — | — | ✓ | — | — |
-| **Rough Diamond** | R | — | — | — | ✓ | — | — | — | — | ◆ | — | — | — | — | ✓ | — | ✓ | ◆ | — | — | — | — |
-| **Rough Ruby** | R | — | — | — | ✓ | ◆ | — | — | ✓ | ✓ | — | — | — | — | — | — | — | ◆ | — | — | — | — |
-| **Rough Sapphire** | R | — | — | — | ◆ | — | — | — | — | ✓ | — | — | — | — | ✓ | — | ◆ | — | — | — | — | — |
-| **Ethereal Silica Sand** | E | — | — | — | — | ★ | — | — | ✓ | — | — | — | — | — | — | — | — | — | ✓ | — | — | — |
-| **Ignium Ore** | E | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | ★ | — | — | — | — |
-| **Rough Deep Crystal** | E | — | — | — | ✓ | — | — | — | — | ◆ | — | — | — | — | — | — | ◆ | — | — | — | — | — |
-| **Voidstone** | E | — | — | — | — | — | — | — | ✓ | ◆ | ✓ | — | ◆ | — | — | — | — | ✓ | — | — | — | — |
-| **Alchemical Silver Ore** | L | — | — | — | ✓ | — | — | — | — | ✓ | ✓ | — | ◆ | — | — | — | — | — | — | — | — | — |
-| **Rough Twilight Quartz** | L | — | — | — | — | — | — | — | — | ✓ | — | — | — | — | — | — | ◆ | — | — | — | — | — |
-| **Starmetal Fragment** | L | — | — | — | ✓ | ✓ | — | — | ◆ | ✓ | — | — | — | — | ✓ | — | — | ✓ | — | — | — | — |
-| **True Ice Shard** | L | — | — | — | ✓ | — | — | — | — | — | — | — | — | — | ◆ | — | ★ | — | — | — | — | — |
-| **Adamantine Ore** | M | — | — | — | ✓ | — | — | — | — | ◆ | — | — | — | — | — | — | ✓ | ✓ | — | — | — | — |
-| **Mithral Ore** | M | — | — | — | ✓ | — | — | — | — | ✓ | — | — | — | — | ✓ | — | ◆ | — | — | — | — | — |
-| **Unearthed Dragonhide** | M | — | — | — | — | ✓ | — | — | ◆ | ✓ | — | — | — | — | — | — | — | ◆ | — | — | — | — |
+| Resource | Rar | Plns | Grs | For | Wdl | Rnf | Hgh | Scr | Dst | Sav | Stp | Bad | Can | Swp | Msh | Mre | Jun | Mgr | Tun | Tai | Glc | Sco | Gls | Blt | Cst | Lke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Cold Iron Ore** | U | ✓ | ✓ | ✓ | ✓ | — | ◆ | ✓ | ✓ | ✓ | ✓ | ◆ | ◆ | — | — | — | ✓ | — | ✓ | ✓ | ✓ | ✓ | — | — | — | — |
+| **Copper Ore** | U | ✓ | ✓ | ✓ | ✓ | — | ◆ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | ✓ | — | ✓ | ✓ | — | ✓ | — | — | — | — |
+| **Gold Ore** | U | — | — | — | — | — | ✓ | — | ✓ | — | — | ✓ | ◆ | — | — | — | ✓ | — | — | — | — | ✓ | — | — | — | — |
+| **Obsidian** | U | — | — | — | — | — | ✓ | — | — | — | — | ✓ | ✓ | — | — | — | — | — | — | — | — | ★ | ✓ | — | — | — |
+| **Saltpeter** | U | — | — | — | — | — | — | — | ◆ | — | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | ✓ | — | — | — | — |
+| **Silver Ore** | U | — | — | — | — | — | ◆ | — | — | — | — | ✓ | ◆ | — | — | — | — | — | ✓ | ✓ | — | — | — | — | — | — |
+| **Sulfur** | U | — | — | — | — | — | — | — | — | — | — | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | ★ | — | ✓ | — | — |
+| **Amber** | R | — | — | ✓ | ✓ | ◆ | — | — | — | — | — | — | — | ✓ | — | — | ◆ | — | ✓ | ◆ | — | — | — | — | ✓ | — |
+| **Rough Diamond** | R | — | — | — | — | — | ✓ | — | — | — | — | — | ◆ | — | — | — | — | — | ✓ | — | ✓ | ◆ | ★ | — | — | — |
+| **Rough Ruby** | R | — | — | — | — | — | ✓ | — | ◆ | — | — | ✓ | ✓ | — | — | — | — | — | — | — | — | ◆ | ★ | — | — | — |
+| **Rough Sapphire** | R | — | — | — | — | — | ◆ | — | — | — | — | — | ✓ | — | — | — | — | — | ✓ | — | ◆ | — | ★ | — | — | — |
+| **Eth. Silica Sand** | E | — | — | — | — | — | — | — | ★ | — | — | ✓ | — | — | — | — | — | — | — | — | — | — | ◆ | — | — | — |
+| **Ignium Ore** | E | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | ★ | — | — | — | — |
+| **Rough Deep Crystal** | E | — | — | — | — | — | ✓ | — | — | — | — | — | ◆ | — | — | — | — | — | — | — | ◆ | — | ★ | — | — | — |
+| **Voidstone** | E | — | — | — | — | — | — | — | — | — | — | ✓ | ◆ | ✓ | — | ◆ | — | — | — | — | — | ✓ | — | ◆ | — | — |
+| **Alch. Silver Ore** | L | — | — | — | — | — | ✓ | — | — | — | — | — | ✓ | ✓ | — | ◆ | — | — | — | — | — | — | — | ★ | — | — |
+| **Rough Twi. Quartz** | L | — | — | — | — | — | — | — | — | — | — | — | ✓ | — | — | — | — | — | — | — | ◆ | — | ✓ | — | — | — |
+| **Starmetal Frag.** | L | — | — | — | — | — | ✓ | — | ✓ | — | — | ◆ | ✓ | — | — | — | — | — | ✓ | — | — | ✓ | — | — | — | — |
+| **True Ice Shard** | L | — | — | — | — | — | ✓ | — | — | — | — | — | — | — | — | — | — | — | ◆ | — | ★ | — | — | — | — | — |
+| **Adamantine Ore** | M | — | — | — | — | — | ✓ | — | — | — | — | — | ◆ | — | — | — | — | — | — | — | ✓ | ✓ | — | — | — | — |
+| **Mithral Ore** | M | — | — | — | — | — | ✓ | — | — | — | — | — | ✓ | — | — | — | — | — | ✓ | — | ◆ | — | — | — | — | — |
+| **Unearth. Dragonhide** | M | — | — | — | — | — | — | — | ✓ | — | — | ◆ | ✓ | — | — | — | — | — | — | — | — | ◆ | — | — | — | — |
 
-> **Rarity codes**: C=Common, U=Uncommon, R=Rare, E=Epic, L=Legendary, M=Mythic.
->
-> **Design logic**:
-> - Common ores (coal, stone, clay, etc.) are universal — they appear wherever mining areas exist.
-> - Gem precursors concentrate in hard terrain: Highlands, Canyon, Glacier, Volcanic.
-> - Volcanic is the signature biome for Obsidian, Sulfur, and Ignium — the fire-aspected minerals.
-> - Glacier is the signature biome for True Ice and a primary for Twilight Quartz and Sapphire — cold preserves ancient crystals.
-> - Desert is the signature biome for Ethereal Silica Sand — magical sand formations.
-> - Canyon and Badlands are the richest mining biomes overall — deep cuts expose rare veins.
-> - Mythic ores (Adamantine, Mithral, Dragonhide) appear only in the most extreme/deep biomes.
-> - Unearthed Dragonhide is found in Badlands, Canyon, Desert, and Volcanic — ancient dragon burial sites in harsh, preserved terrain.
+> **Key changes from v0.1:**
+> - **Glassfields** is the new signature biome for Rough Diamond, Rough Ruby, Rough Sapphire, and Rough Deep Crystal. Also primary for Ethereal Silica Sand.
+> - **Blight** is the new signature biome for Alchemical Silver Ore (anti-magical metal forms in corrupted terrain). Also primary for Voidstone.
+> - **Scorched** absorbs all former Volcanic affinities (Obsidian, Sulfur, Ignium signature).
+> - **Rainforest** gets Amber (primary — resin-rich ancient trees produce fossilised amber).
+> - **Woodland** gets standard access to common ores and Amber.
+> - **Mangrove** has no mining areas.
+> - Oasis, Beach, Deep Ocean columns removed.
 
 ---
 
 ## 2. Logging Resources by Biome
 
-Logging requires forestry areas. Biomes with no trees (Desert, Badlands, Canyon, Glacier, Volcanic, Beach, Ocean, etc.) cannot generate forestry areas.
+Logging requires forestry areas. Biomes with no trees cannot generate forestry areas.
 
 Universal rare drop (any logging activity): **Worldroot**.
 
-| Resource | Rarity | Plains | Grass | Forest | High | Sav | Steppe | Swamp | Wet | Jungle | Tundra | Taiga | Oasis | Coast | Lake |
+| Resource | Rar | Plns | Grs | For | Wdl | Rnf | Hgh | Scr | Sav | Swp | Msh | Jun | Mgr | Tai | Blt |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Resin** | C | — | — | ◆ | ✓ | ✓ | — | ✓ | ✓ | ◆ | — | ★ | ✓ | — | — |
-| **Wood** | C | ✓ | ✓ | ★ | ✓ | ✓ | — | ✓ | ✓ | ◆ | — | ◆ | ✓ | ✓ | ✓ |
-| **Ironwood** | U | — | — | ◆ | ✓ | — | — | — | — | ✓ | — | ◆ | — | — | — |
-| **Hartwood** | R | — | — | ★ | ✓ | — | — | — | — | ✓ | — | ✓ | — | — | — |
-| **Moonwood** | E | — | — | ◆ | — | — | — | — | — | ✓ | — | ✓ | — | — | — |
+| **Resin** | C | — | — | ◆ | ✓ | ◆ | ✓ | — | ✓ | ✓ | — | ◆ | ✓ | ★ | ✓ |
+| **Wood** | C | ✓ | ✓ | ★ | ◆ | ◆ | ✓ | ✓ | ✓ | ✓ | — | ◆ | ✓ | ◆ | ✓ |
+| **Ironwood** | U | — | — | ◆ | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | ◆ | — |
+| **Hartwood** | R | — | — | ★ | ✓ | ◆ | ✓ | — | — | — | — | ✓ | — | ✓ | — |
+| **Moonwood** | E | — | — | ✓ | — | ★ | — | — | — | — | — | ✓ | — | ✓ | — |
 
-> **Design logic**:
-> - Wood is nearly universal where trees grow — Forest is its signature biome.
-> - Resin is most common in coniferous forests — Taiga is the signature biome.
-> - Ironwood grows in dense temperate and northern forests — Forest and Taiga are primary.
-> - Hartwood is ancient heartwood — only the oldest forests (Forest signature, some Highlands and Jungle).
-> - Moonwood requires centuries of moonlight exposure — only the oldest, most open forests. Forest is primary; sparse Jungle and Taiga have rare specimens.
+> **Key changes from v0.1:**
+> - **Rainforest** is the new signature biome for Moonwood (ancient temperate forests with centuries of moonlight exposure).
+> - **Forest** drops from Moonwood primary to standard — Rainforest is older and wetter, better for moonlight-soaked timber.
+> - **Woodland** gets standard Wood (primary), Ironwood, and Hartwood access — open-canopy timber.
+> - **Blight** has distorted logging — Wood (standard), Resin (standard). Twisted trees yield usable but unsettling timber.
+> - **Mangrove** has logging — dense salt-resistant wood, Resin from mangrove sap.
+> - **Scrubland** has minimal logging — scrubby trees yield standard Wood only.
+> - **Marsh** has no logging — reeds and grasses, no trees.
 
 ---
 
 ## 3. Farming Resources by Biome
 
-Farming requires fertile areas with fertility > 0. The fertility modifier (Appendix D §5) directly affects yield. Crops listed below are what **can grow** in each biome; actual node seeding uses these affinities.
+Farming requires fertile areas with fertility > 0. Biomes with None fertility cannot farm.
 
 Universal farming resources (appear in any fertile area with fertility ≥ Low): **Wheat, Barley, Beans, Vegetables, Tubers**.
 
-| Resource | Rarity | Plains | Grass | Forest | High | Sav | Steppe | Swamp | Wet | Jungle | Taiga | Oasis | Coast | Lake |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Flax** | C | ◆ | ◆ | ✓ | ✓ | — | — | — | ✓ | — | — | ✓ | — | ✓ |
-| **Fruit** | C | ✓ | ✓ | ◆ | — | ✓ | — | — | — | ★ | — | ★ | — | — |
-| **Hemp** | C | ◆ | ✓ | ✓ | — | — | ✓ | — | ✓ | — | — | ✓ | — | — |
-| **Raw Cotton** | U | — | — | — | — | ◆ | — | — | — | ★ | — | ◆ | — | — |
-| **Dye Plants** | U | ✓ | ✓ | ✓ | — | ✓ | — | — | ✓ | ◆ | — | ✓ | — | — |
-| **Hops** | U | ✓ | ◆ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
-| **Spice Plants** | U | — | — | — | — | ✓ | — | — | — | ★ | — | ◆ | — | — |
-| **Sugar Cane** | U | — | — | — | — | ✓ | — | ✓ | ✓ | ★ | — | ◆ | — | — |
+| Resource | Rar | Plns | Grs | For | Wdl | Rnf | Hgh | Scr | Sav | Stp | Swp | Msh | Jun | Tai | Cst | Lke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Flax** | C | ◆ | ◆ | ✓ | ◆ | — | ✓ | — | — | — | — | ✓ | — | — | — | ✓ |
+| **Fruit** | C | ✓ | ✓ | ◆ | ◆ | — | — | ✓ | ✓ | — | — | — | ★ | — | — | — |
+| **Hemp** | C | ◆ | ✓ | ✓ | ✓ | — | — | — | — | ✓ | — | ✓ | — | — | — | — |
+| **Raw Cotton** | U | — | — | — | — | — | — | — | ◆ | — | — | — | ★ | — | — | — |
+| **Dye Plants** | U | ✓ | ✓ | ✓ | ✓ | — | — | ★ | ✓ | — | — | ✓ | ◆ | — | — | — |
+| **Hops** | U | ✓ | ◆ | ✓ | ◆ | — | ✓ | — | — | — | — | — | — | — | — | — |
+| **Spice Plants** | U | — | — | — | — | — | — | ✓ | ✓ | — | — | — | ★ | — | — | — |
+| **Sugar Cane** | U | — | — | — | — | — | — | — | ✓ | — | ✓ | ✓ | ★ | — | — | — |
 
-> **Design logic**:
-> - Universal crops (wheat, barley, beans, vegetables, tubers) grow anywhere fertile — they're the staples.
-> - Tropical crops (sugar cane, spice plants, raw cotton, fruit) concentrate in Jungle and Oasis with some Savanna spillover.
-> - Temperate textile crops (flax, hemp) concentrate in Plains and Grassland.
-> - Hops favour cool-temperate Grassland.
-> - Biomes with None fertility cannot farm at all — no farming rows exist for Desert, Badlands, Canyon, Mire, Tundra, Glacier, Volcanic, Beach.
+> **Key changes from v0.1:**
+> - **Woodland** gets primary Flax, Hops, and Fruit — open-canopy clearings allow more crop variety than dense Forest.
+> - **Scrubland** is the new signature biome for Dye Plants (indigo, woad, madder thrive in Mediterranean climates).
+> - **Rainforest** has no farming — too wet, too dense, too much shade. Foraging compensates.
+> - Oasis column removed (biome removed). Jungle inherits its tropical crop signatures.
 
 ---
 
 ## 4. Foraging Resources by Biome
 
-Foraging gathers wild-growing resources. Some foraging is possible even in biomes with no fertility (mushrooms in caves, lichen on rocks), but yields are minimal.
+Foraging gathers wild-growing resources. Some foraging is possible even in biomes with no fertility (mushrooms, lichen), but yields are minimal.
 
 Universal rare drop (any foraging activity): **Unicorn Hair**.
 
-| Resource | Rarity | Plains | Grass | Forest | High | Desert | Sav | Steppe | Bad | Canyon | Swamp | Wet | Mire | Jungle | Tundra | Taiga | Glacier | Volc | Oasis | Coast | Beach | Lake |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Mushrooms** | C | ✓ | ✓ | ★ | ✓ | — | — | — | — | — | ◆ | ✓ | — | ◆ | — | ◆ | — | ✓ | — | — | — | — |
-| **Roots** | C | ✓ | ✓ | ◆ | ✓ | — | ✓ | ✓ | — | — | ✓ | ✓ | — | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — |
-| **Seaweed** | C | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | ★ | ◆ | ✓ |
-| **Wild Berries** | C | ✓ | ◆ | ★ | ✓ | — | — | ✓ | — | — | — | ✓ | — | ✓ | — | ◆ | — | — | ✓ | — | — | — |
-| **Wild Herbs** | C | ◆ | ◆ | ✓ | ✓ | — | ✓ | ✓ | — | — | ✓ | ✓ | — | ✓ | — | ✓ | — | — | ◆ | ✓ | — | ✓ |
-| **Honey** | U | ✓ | ◆ | ★ | ✓ | — | ✓ | — | — | — | — | ✓ | — | ✓ | — | ✓ | — | — | ◆ | — | — | — |
-| **Medicinal Herbs** | U | ✓ | ✓ | ◆ | ✓ | — | ✓ | — | ◆ | — | — | ✓ | — | ◆ | — | ✓ | — | — | ✓ | — | — | — |
-| **Nuts** | U | — | ✓ | ★ | ✓ | — | — | — | — | — | — | — | — | ✓ | — | ✓ | — | — | ✓ | — | — | — |
-| **Poisonous Plants** | R | — | — | ✓ | — | — | — | — | — | — | ◆ | ✓ | ★ | ◆ | — | — | — | — | — | — | — | — |
-| **Rare Herbs** | R | — | — | ◆ | ✓ | — | — | — | — | — | ✓ | — | — | ◆ | — | — | — | — | ★ | — | — | — |
-| **Silkworms** | R | — | — | ◆ | — | — | — | — | — | ✓ | ✓ | — | — | ★ | — | — | — | — | — | — | — | — |
-| **Truffles** | R | — | — | ★ | — | — | — | — | — | — | — | — | — | ✓ | — | ✓ | — | — | — | — | — | — |
-| **Spiritbloom** | E | — | — | ✓ | ✓ | — | — | — | — | ✓ | ✓ | — | ✓ | ✓ | — | — | — | ✓ | — | — | — | — |
+| Resource | Rar | Plns | Grs | For | Wdl | Rnf | Hgh | Scr | Dst | Sav | Stp | Bad | Swp | Msh | Mre | Jun | Mgr | Tun | Tai | Sco | Gls | Blt | Cst | Lke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Mushrooms** | C | ✓ | ✓ | ★ | ✓ | ◆ | ✓ | — | — | — | — | — | ◆ | ✓ | — | ◆ | — | — | ◆ | ✓ | — | ✓ | — | — |
+| **Roots** | C | ✓ | ✓ | ◆ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | ✓ | ✓ | — | ✓ | — | ✓ | ✓ | — | — | ✓ | — | — |
+| **Seaweed** | C | — | — | — | — | — | — | — | — | — | — | — | — | — | — | — | ★ | — | — | — | — | — | ◆ | ✓ |
+| **Wild Berries** | C | ✓ | ◆ | ★ | ◆ | ✓ | ✓ | ✓ | — | — | ✓ | — | — | ✓ | — | ✓ | — | — | ◆ | — | — | — | — | — |
+| **Wild Herbs** | C | ◆ | ◆ | ✓ | ✓ | ✓ | ✓ | ★ | — | ✓ | ✓ | — | ✓ | ✓ | — | ✓ | ✓ | — | ✓ | — | — | ✓ | ✓ | ✓ |
+| **Honey** | U | ✓ | ◆ | ★ | ◆ | ✓ | ✓ | ◆ | — | ✓ | — | — | — | ✓ | — | ✓ | — | — | ✓ | — | — | — | — | — |
+| **Med. Herbs** | U | ✓ | ✓ | ◆ | ✓ | ★ | ✓ | ✓ | — | ✓ | — | — | ◆ | ✓ | — | ◆ | ✓ | — | ✓ | — | — | ✓ | — | — |
+| **Nuts** | U | — | ✓ | ★ | ◆ | ✓ | ✓ | — | — | — | — | — | — | — | — | ✓ | — | — | ✓ | — | — | — | — | — |
+| **Poisonous Plants** | R | — | — | ✓ | — | — | — | — | — | — | — | — | ◆ | ✓ | ★ | ◆ | — | — | — | — | — | ★ | — | — |
+| **Rare Herbs** | R | — | — | ◆ | — | ★ | ✓ | ✓ | — | — | — | — | ✓ | — | — | ◆ | — | — | — | — | — | ✓ | — | — |
+| **Silkworms** | R | — | — | ◆ | — | ✓ | — | — | — | — | — | — | ✓ | — | — | ★ | — | — | — | — | — | — | — | — |
+| **Truffles** | R | — | — | ★ | ✓ | ✓ | — | — | — | — | — | — | — | — | — | ✓ | — | — | ✓ | — | — | — | — | — |
+| **Spiritbloom** | E | — | — | ✓ | — | ✓ | ✓ | — | — | — | — | — | ✓ | — | ✓ | ✓ | — | — | — | ✓ | — | ★ | — | — |
 
-> **Design logic**:
-> - Forest is the richest foraging biome — berries, mushrooms, honey, nuts, truffles, herbs, silkworms.
-> - Jungle is second — tropical foraging with silkworms, poisonous plants, and rare herbs.
-> - Mire is the signature biome for Poisonous Plants — toxic wetland flora.
-> - Truffles are Forest signature — rare underground fungi found by experienced foragers.
-> - Spiritbloom appears near magical sites — distributed across several biomes at low rates, not tied to one.
-> - Seaweed is coastal only — Coast signature, with Beach and Lake access.
-> - Oasis is the rare herbs signature — concentrated magical biodiversity in tiny desert pockets.
+> **Key changes from v0.1:**
+> - **Scrubland** is the new signature biome for Wild Herbs — aromatic Mediterranean herbs are the defining feature.
+> - **Rainforest** is the new signature biome for Rare Herbs and Medicinal Herbs — ancient, wet, biodiverse forests harbour potent plants.
+> - **Blight** is the new signature biome for Spiritbloom (feeds on residual magical corruption) and co-signature for Poisonous Plants (alongside Mire).
+> - **Woodland** gets primary Wild Berries, Honey, and Nuts — open canopy allows flowering and fruiting.
+> - **Mangrove** gets signature Seaweed and standard Medicinal Herbs and Wild Herbs.
+> - **Glassfields** has no foraging — crystal terrain, no organic growth.
 
 ---
 
 ## 5. Hunting Fauna by Biome
 
-Hunting targets wild fauna in forestry areas and some other area types. Fauna type and density vary by biome. Beast parts yielded depend on beast tier (see Appendix D §3: Fauna Tier and Appendix F §4: Beast Parts).
+Hunting targets wild fauna. Fauna type and density vary by biome. Beast parts yielded depend on beast tier (see Appendix D §3 and Appendix F §4).
 
-| Resource | Rarity | Plains | Grass | Forest | High | Desert | Sav | Steppe | Bad | Canyon | Swamp | Wet | Mire | Jungle | Tundra | Taiga | Glacier | Volc | Oasis | Coast | Beach | Lake |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Game Meat** | C | ◆ | ◆ | ★ | ✓ | ✓ | ★ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ★ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | ✓ |
-| **Raw Bone** | C | ◆ | ✓ | ✓ | ✓ | ✓ | ◆ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | ✓ |
-| **Raw Fat** | C | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | ✓ |
-| **Raw Hide** | C | ◆ | ✓ | ✓ | ✓ | ✓ | ★ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ◆ | ✓ | ✓ | — | ✓ | — | — | — |
-| **Sinew** | C | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | — | — | — |
-| **Feathers** | U | ✓ | ◆ | ✓ | ◆ | — | ✓ | ◆ | — | ✓ | ✓ | ◆ | — | ✓ | — | ✓ | — | — | ✓ | ✓ | ✓ | ✓ |
-| **Fur Pelt** | U | — | — | ◆ | ◆ | — | — | — | — | — | — | — | — | — | ★ | ★ | ✓ | — | — | — | — | — |
-| **Ivory** | R | — | — | — | — | — | ★ | — | — | — | — | — | — | ◆ | ✓ | — | — | — | — | — | — | — |
-| **Venom Sac** | R | — | — | ✓ | — | ◆ | — | — | ◆ | ✓ | ★ | ✓ | ◆ | ◆ | — | — | — | — | — | — | — | — |
-| **Exotic Pelt** | E | — | — | ✓ | — | — | ✓ | — | — | — | — | — | — | ★ | ✓ | ✓ | — | — | — | — | — | — |
-| **Raw Demonhide** | L | — | — | — | — | — | — | — | ✓ | ✓ | ✓ | — | ◆ | — | — | — | — | ★ | — | — | — | — |
+| Resource | Rar | Plns | Grs | For | Wdl | Rnf | Hgh | Scr | Dst | Sav | Stp | Bad | Can | Swp | Msh | Mre | Jun | Mgr | Tun | Tai | Glc | Sco | Gls | Blt | Cst | Lke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Game Meat** | C | ◆ | ◆ | ★ | ◆ | ✓ | ✓ | ✓ | ✓ | ★ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ★ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | ✓ |
+| **Raw Bone** | C | ◆ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ◆ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | ✓ |
+| **Raw Fat** | C | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | ✓ | ✓ |
+| **Raw Hide** | C | ◆ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ★ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ◆ | ✓ | ✓ | — | ✓ | ✓ | — | — |
+| **Sinew** | C | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — |
+| **Feathers** | U | ✓ | ◆ | ✓ | ◆ | ✓ | ◆ | ✓ | — | ✓ | ◆ | — | ✓ | ✓ | ◆ | — | ✓ | ✓ | — | ✓ | — | — | — | ✓ | ✓ | ✓ |
+| **Fur Pelt** | U | — | — | ◆ | ✓ | ✓ | ◆ | — | — | — | — | — | — | — | — | — | — | — | ★ | ★ | ✓ | — | — | — | — | — |
+| **Ivory** | R | — | — | — | — | — | — | — | — | ★ | — | — | — | — | — | — | ◆ | — | ✓ | — | — | — | — | — | — | — |
+| **Venom Sac** | R | — | — | ✓ | — | ✓ | — | ✓ | ◆ | — | — | ◆ | ✓ | ★ | ✓ | ◆ | ◆ | ✓ | — | — | — | — | — | ◆ | — | — |
+| **Exotic Pelt** | E | — | — | ✓ | — | ✓ | — | — | — | ✓ | — | — | — | — | — | — | ★ | — | ✓ | ✓ | — | — | — | — | — | — |
+| **Raw Demonhide** | L | — | — | — | — | — | — | — | — | — | — | ✓ | ✓ | ✓ | — | ◆ | — | — | — | — | — | ★ | — | ✓ | — | — |
 
-> **Design logic**:
-> - Common hunting products (meat, bone, fat, hide, sinew) are universal where fauna exist.
-> - Fur Pelt concentrates in cold biomes — Tundra and Taiga are signature.
-> - Ivory comes from large-tusked savanna and jungle megafauna.
-> - Venom Sac concentrates in Swamp (signature), Desert, Badlands, Jungle — poisonous creature habitat.
-> - Exotic Pelt is Jungle signature — rare jungle cats, serpents, and unique creatures.
-> - Raw Demonhide is Volcanic signature — demons lurk near fire and brimstone. Also found in Mire (primary), Badlands, Canyon, and Swamp where dark creatures dwell.
-> - Beach has no hunting (minimal fauna). Volcanic has no standard hunting (fire fauna handled by encounters, not hunting action).
+> **Key changes from v0.1:**
+> - **Woodland** gets hunting across all common products + Feathers (primary) — open canopy means good visibility for hunting.
+> - **Rainforest** gets standard hunting access — ancient forest fauna, some Fur Pelt (wet-climate variants), Venom Sac.
+> - **Scrubland** gets Venom Sac (standard) — vipers and scorpions in the scrub.
+> - **Mangrove** gets standard hunting — crocodiles, sea snakes, crabs. Also Venom Sac (standard).
+> - **Blight** gets Venom Sac (primary) — mutated venomous fauna. Also Raw Demonhide (standard) — corruption attracts dark creatures.
+> - **Glassfields** gets standard common hunting products — crystal-adapted fauna.
+> - **Scorched** has no standard hunting — fire fauna handled via encounters only. Raw Demonhide signature.
 
 ---
 
 ## 6. Fishing by Biome
 
-Fishing requires a water-adjacent hex or a water biome. Only Coast, Beach, Lake, Swamp, and Wetlands support fishing in the base module.
+Fishing requires a water biome or water-adjacent hex. Only Coast, Lake, Mangrove, Swamp, and Marsh support fishing in the base module.
 
-| Resource | Rarity | Coast | Beach | Lake | Swamp | Wetlands |
+| Resource | Rarity | Coast | Lake | Mangrove | Swamp | Marsh |
 |---|---|---|---|---|---|---|
-| **Fish** | C | ★ | ◆ | ★ | ✓ | ✓ |
+| **Fish** | C | ★ | ★ | ★ | ✓ | ✓ |
 
-> Fishing currently produces only Fish. Coast and Lake are signature biomes. Future Maritime module may expand aquatic resources.
+> **Mangrove** is the third signature fishing biome — tidal root systems create sheltered nurseries that concentrate fish.
 
 ---
 
@@ -189,23 +186,21 @@ Fishing requires a water-adjacent hex or a water biome. Only Coast, Beach, Lake,
 
 Herding requires fertile areas converted from native vegetation. Biome determines which livestock types are viable and their productivity multiplier.
 
-| Livestock | Plains | Grass | Forest | High | Sav | Steppe | Wet | Jungle | Taiga | Oasis | Coast | Lake |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Cattle** | ★ | ★ | ☆ | ✓ | ◆ | ✓ | ☆ | — | — | ✓ | — | — |
-| **Sheep** | ✓ | ◆ | ☆ | ★ | ✓ | ◆ | — | — | — | ✓ | — | — |
-| **Poultry** | ◆ | ◆ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ◆ | ✓ | ✓ |
-| **Horses/Donkeys** | ★ | ★ | ☆ | ✓ | ◆ | ◆ | — | — | — | ✓ | — | — |
+| Livestock | Plns | Grs | For | Wdl | Hgh | Scr | Sav | Stp | Msh | Jun | Tai | Cst | Lke |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Cattle** | ★ | ★ | ☆ | ✓ | ✓ | ☆ | ◆ | ✓ | ☆ | — | — | — | — |
+| **Sheep** | ✓ | ◆ | ☆ | ✓ | ★ | ✓ | ✓ | ◆ | — | — | — | — | — |
+| **Poultry** | ◆ | ◆ | ✓ | ◆ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **Horses/Donkeys** | ★ | ★ | ☆ | ✓ | ✓ | ☆ | ◆ | ◆ | — | — | — | — | — |
 
 > **Legend**: ★ = ideal, ◆ = good, ✓ = viable, ☆ = marginal (50% yield penalty), — = not viable.
 >
-> **Design logic**:
-> - Cattle and horses need open grassland — Plains and Grassland are ideal.
-> - Sheep favour high-altitude grazing — Highlands signature, with Grassland and Steppe.
-> - Poultry are the most adaptable — viable almost anywhere with fertility.
-> - No herding in infertile biomes (Desert, Badlands, Canyon, Mire, Tundra, Glacier, Volcanic, Beach).
-> - Forest herding is marginal — dense trees restrict grazing.
+> **Key changes from v0.1:**
+> - **Woodland** gets viable herding for all livestock types — open canopy allows some grazing.
+> - **Scrubland** gets marginal Cattle/Horses (rocky terrain limits grazing) and viable Sheep/Poultry.
+> - No herding in infertile biomes (Desert, Badlands, Canyon, Mire, Tundra, Glacier, Scorched, Glassfields, Blight, Mangrove).
 
 ---
 
 *Phase 4b of the Eternal Game Base Module Quantification Plan.*
-*v0.1.0 — March 2026*
+*v0.2.0 — March 2026*
