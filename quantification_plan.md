@@ -122,18 +122,19 @@ Dependencies: Phase 1 (weight unit, attribute formulas for yield calculations). 
 For every resource: name, category (food / raw material / refined material / special), weight per unit (kg), rarity tier, base nutrition value (food only), base trade value (relative index).
 
 Categories:
-- **Food**: raw food (wheat, fish, meat, berries, etc.), cooked food (meals, bread, stew)
-- **Raw materials**: ores (copper, iron, gold, silver, etc.), stone, wood, hides, wool, herbs
-- **Refined materials**: ingots, planks, leather, cloth, bricks, nails, rope
-- **Special**: rare drops, quest items, seeds
+- **Food**: raw food (wheat, fish, meat, berries, etc.) and processed intermediates (flour, butter, cheese)
+- **Raw materials**: ores (copper ore, cold iron ore, gold ore, etc.), stone, wood, hides, wool, herbs
+- **Refined materials**: planks, leather, cloth, bricks, nails, rope, voidsand, starmetal
+- **Core resources**: the 22 Eternum-heritage resources (immutable set)
+- **Beast parts**: generic drops from beast encounters, tiered by beast level
 
-> Eternum carries 22 core resources + food types. These should be mapped and extended as needed for the base module.
+> Eternum carries 22 core resources (immutable). These are mapped to a 6-tier rarity system (Common–Mythic) and extended with raw and refined resources for the base module.
 
 → Output: **Appendix F: Resource Catalog**
 
 ### 3b. Food & Nutrition
 
-Nutrition values for each food type. Raw vs cooked multiplier. How nutrition maps to food-reserve deposit amounts (deposit X food → Y% bar). Energy buff values for cooked food tiers.
+Nutrition values for each food type. Raw vs cooked multiplier (cooking recipes defined in Phase 7c). How nutrition maps to food-reserve deposit amounts (deposit X food → Y% bar). Energy buff values for cooked food tiers.
 → Output: Food mechanics table
 
 ### 3c. Core Resource Tiers
@@ -263,10 +264,10 @@ Full recipe list: input resources + quantities → output + quantities. Facility
 Full recipe list: inputs → output item type. Facility, min craftsmanship, base properties, mutation range, greatness range.
 → Output: Appendix H: Crafting Recipe Table
 
-### 7c. Food Recipes
+### 7c. Food & Cooking Recipes
 
-Campfire and Cookhouse recipes. Input food + fuel → cooked food. Energy buff values + duration.
-→ Output: Food recipe table
+Cooking is part of the crafting system. Campfire and Cookhouse recipes: input food + fuel → cooked food. Energy buff values, durations, meal tiers (Basic → Standard → Fine → Feast). Chef trait interaction. Recipe discovery mechanics.
+→ Output: Food & Cooking recipe table (within Appendix H)
 
 ### 7d. Salvaging
 

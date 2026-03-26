@@ -554,7 +554,7 @@ Non-core materials that extend the crafting supply chain:
 | Sulfur | Volcanic, Mining | Alchemical, future module |
 | Saltpeter | Desert, Canyon | Alchemical, future module |
 | Dyes | Jungle, Swamp, Mire | Crafting modifier |
-| Charcoal | Forest, Taiga | Fuel, smelting catalyst |
+| Silkworms | Forest (caves, deep forest) | Textile (Silk precursor) |
 | Flax | Plains, Grassland | Textile |
 | Wool | Grassland, Highlands | Textile; primary source is livestock (§17) |
 | Furs | Taiga, Tundra, Forest | Gear crafting (cold protection) |
@@ -753,7 +753,7 @@ Most extracted materials require processing before use:
 | Smelting | Ore → Bar (Copper, Cold Iron, Gold, Silver, etc.) | Smelter |
 | Gem cutting | Rough gem → Cut gem (Diamonds, Sapphire, Ruby) | Workshop |
 | Tanning | Raw hide → Leather | Workshop |
-| Charcoal burning | Wood → Charcoal | None (campfire-level) |
+| Sawmilling | Wood/Ironwood/Hartwood/Moonwood → Planks | Sawmill |
 
 - Refinery yield depends on **building tier** (higher tier = less waste) and **adventurer Intelligence** (higher INT = bonus yield via `yield = base × (1 + INT × 0.025)`).
 - Quality tiers: dirty / clean / pure. Higher-tier facilities + higher skill produce cleaner output.
@@ -774,7 +774,7 @@ new_properties = f(input_properties, craft_seed)
 
 | Facility | Produces | Key inputs |
 |---|---|---|
-| **Campfire** | Basic cooked food (raw → edible) | Food + Wood/Charcoal |
+| **Campfire** | Basic cooked food (raw → edible) | Food + Wood (fuel) |
 | **Cookhouse** | Quality food consumables (energy buffs) | Food + herbs + fuel |
 | **Smelter** | Bars, alloys | Ores + fuel |
 | **Workshop** | Cut gems, leather, basic tools, repairs | Various raw materials |
