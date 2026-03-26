@@ -6,7 +6,7 @@
 
 ---
 
-## Biome Categories
+## Biome Categories 🔒
 
 The Eternal World contains **27 biomes** grouped into 6 categories. Biomes are determined at world generation via `biome = noise_function(global_seed, x, y, z)` and are **permanent and immutable** — no biome ever changes after deployment.
 
@@ -22,24 +22,32 @@ The Eternal World contains **27 biomes** grouped into 6 categories. Biomes are d
 
 > **Impassable biomes**: Ocean and Coastal Waters cannot be entered in the base module. Traversal requires a future Maritime module. Coast and Lake are land-accessible.
 
+### Lock Status Legend
+
+| Symbol | Meaning |
+|---|---|
+| 🔒 | **Locked** — immutable after deployment. Cannot be changed by Game Masters or the autoregulator. |
+| 🔓 | **Unlocked** — starting values only. Modifiable by Game Masters via consensus (§19 of Design Scope) and/or the autoregulator within bounded ranges. |
+| ⚠️ | **Flagged for contracts specialist review** — section contains implementation-critical logic that must be validated before deployment. |
+
 ---
 
-## 1. Biome Profiles
+## 1. Biome Profiles 🔒
 
 Each biome is described with its theme, gameplay identity, and quantified properties. All modifiers are multiplicative against the base action costs defined in Phase 2. A modifier of `1.0×` means no change from base cost.
 
 ### Column Definitions
 
-| Column | Description |
-|---|---|
-| **Move Cost** | Energy multiplier for the Travel action (base: 25–45 energy). Higher = harder to cross. |
-| **Move Time** | Time-lock multiplier for Travel (base: 72–216 ticks). Higher = slower traversal. |
-| **Explore Cost** | Energy multiplier for the Explore action (base: 40–60 energy). |
-| **Explore Time** | Time-lock multiplier for Explore (base: 108–324 ticks). |
-| **Decay Rate** | Multiplier on territorial decay (upkeep cost). Higher = more expensive to hold. |
-| **Base Hazard** | Base encounter chance per action (%). Modified by hex development, time of day, action type. |
-| **Fertility** | Base soil quality for farming/foraging. 0 = infertile. |
-| **Traversable** | Whether adventurers can enter this hex in the base module. |
+| Column | Lock | Description |
+|---|---|---|
+| **Move Cost** | 🔒 | Energy multiplier for the Travel action (base: 25–45 energy). Higher = harder to cross. |
+| **Move Time** | 🔒 | Time-lock multiplier for Travel (base: 72–216 ticks). Higher = slower traversal. |
+| **Survey Cost** | 🔒 | Energy multiplier for the Survey action (base: 30–50 energy). Biome is already known when surveying. |
+| **Survey Time** | 🔒 | Time-lock multiplier for Survey (base: 108–324 ticks). Applied after hex exploration reveals the biome. |
+| **Decay Rate** | 🔓 | Multiplier on territorial decay (upkeep cost). Higher = more expensive to hold. Autoregulator-tunable within bounds. |
+| **Base Hazard** | 🔓 | Base encounter chance per action (%). Modified by hex development, time of day, action type. GM-adjustable. |
+| **Fertility** | 🔒 | Base soil quality for farming/foraging. 0 = infertile. |
+| **Traversable** | 🔒 | Whether adventurers can enter this hex in the base module. |
 
 ---
 
@@ -53,9 +61,9 @@ The most hospitable biome. Easiest movement, lowest decay, highest farming yield
 
 **Gameplay identity**: Safe, fertile, settlement-friendly. The place you build your home.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 0.8× | 0.8× | 0.9× | 0.9× | 0.8× | 5% | High (1.2×) | ✓ |
+| 0.8× | 0.8× | 0.9× | 0.9× | 0.8× | 2% | High (1.2×) | ✓ |
 
 #### Grassland
 
@@ -65,9 +73,9 @@ Similar to Plains but with a pastoral character. Slightly higher hazard from roa
 
 **Gameplay identity**: Herding heartland. Rolling pasture with better foraging than Plains.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 0.9× | 0.9× | 0.9× | 0.9× | 0.9× | 6% | High (1.2×) | ✓ |
+| 0.9× | 0.9× | 0.9× | 0.9× | 0.9× | 3% | High (1.2×) | ✓ |
 
 #### Forest
 
@@ -77,9 +85,9 @@ The richest foraging biome in the game — mushrooms, berries, honey, nuts, truf
 
 **Gameplay identity**: Forager's paradise. Dense, biodiverse, dangerous. Best logging.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.2× | 1.2× | 1.1× | 1.2× | 1.0× | 12% | Medium (1.0×) | ✓ |
+| 1.2× | 1.2× | 1.1× | 1.2× | 1.0× | 8% | Medium (1.0×) | ✓ |
 
 #### Woodland
 
@@ -89,9 +97,9 @@ The bridge between Forest and Grassland. Open canopy means better visibility (lo
 
 **Gameplay identity**: Balanced, versatile. Forest-lite with farming viability.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.0× | 1.0× | 1.0× | 1.0× | 0.9× | 8% | Medium (1.0×) | ✓ |
+| 1.0× | 1.0× | 1.0× | 1.0× | 0.9× | 5% | Medium (1.0×) | ✓ |
 
 #### Rainforest
 
@@ -101,9 +109,9 @@ Distinct from both Forest (drier, deciduous) and Jungle (tropical, hot). Rainfor
 
 **Gameplay identity**: Ancient timber, rare foraging. Slow, wet, and rewarding for the patient.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.4× | 1.3× | 1.3× | 1.3× | 1.2× | 11% | Medium (1.0×) | ✓ |
+| 1.4× | 1.3× | 1.3× | 1.3× | 1.2× | 9% | Medium (1.0×) | ✓ |
 
 #### Highlands
 
@@ -113,9 +121,9 @@ The premier mining biome among habitable terrain. Exposed rock faces yield iron,
 
 **Gameplay identity**: Mining heartland. Elevated, exposed, mineral-rich.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.3× | 1.3× | 1.2× | 1.3× | 1.1× | 10% | Medium (1.0×) | ✓ |
+| 1.3× | 1.3× | 1.2× | 1.3× | 1.1× | 6% | Medium (1.0×) | ✓ |
 
 #### Scrubland
 
@@ -125,9 +133,9 @@ The Mediterranean biome. Low rainfall but not barren — the plants that survive
 
 **Gameplay identity**: Herb garden of the world. Aromatic foraging, moderate farming, fire hazard.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.1× | 1.0× | 1.0× | 1.0× | 1.0× | 7% | Low (0.6×) | ✓ |
+| 1.1× | 1.0× | 1.0× | 1.0× | 1.0× | 4% | Low (0.6×) | ✓ |
 
 ---
 
@@ -141,9 +149,9 @@ Extreme dehydration environment. No farming, minimal foraging (desert lichen, ra
 
 **Gameplay identity**: Harsh mineral extraction. High risk, high reward mining. Survival territory.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.5× | 1.4× | 1.4× | 1.3× | 1.5× | 8% | None (0.0×) | ✓ |
+| 1.5× | 1.4× | 1.4× | 1.3× | 1.5× | 6% | None (0.0×) | ✓ |
 
 #### Savanna
 
@@ -153,9 +161,9 @@ The premier hunting biome. High fauna density, large and dangerous animals. Sign
 
 **Gameplay identity**: Big-game hunting. Open, dangerous fauna, trade corridor.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.0× | 1.0× | 1.0× | 1.0× | 1.0× | 9% | Medium (1.0×) | ✓ |
+| 1.0× | 1.0× | 1.0× | 1.0× | 1.0× | 6% | Medium (1.0×) | ✓ |
 
 #### Steppe
 
@@ -165,9 +173,9 @@ The continental interior grassland. Drier and harsher than Grassland, with bruta
 
 **Gameplay identity**: Nomad country. Fast movement, horse-herding, harsh winters.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 0.9× | 0.9× | 1.0× | 1.0× | 1.0× | 7% | Low (0.6×) | ✓ |
+| 0.9× | 0.9× | 1.0× | 1.0× | 1.0× | 4% | Low (0.6×) | ✓ |
 
 #### Badlands
 
@@ -177,9 +185,9 @@ One of the two premier deep-mining biomes (alongside Canyon). Almost entirely in
 
 **Gameplay identity**: Exposed geology. Deep mining, extreme terrain, no life support.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.4× | 1.3× | 1.3× | 1.3× | 1.4× | 11% | None (0.0×) | ✓ |
+| 1.4× | 1.3× | 1.3× | 1.3× | 1.4× | 8% | None (0.0×) | ✓ |
 
 #### Canyon
 
@@ -189,9 +197,9 @@ The richest mining biome in the game. Deep vertical cuts expose the widest varie
 
 **Gameplay identity**: The deepest mine. Vertical terrain, maximum mineral variety, lair encounters.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.6× | 1.5× | 1.5× | 1.5× | 1.3× | 13% | None (0.0×) | ✓ |
+| 1.6× | 1.5× | 1.5× | 1.5× | 1.3× | 9% | None (0.0×) | ✓ |
 
 ---
 
@@ -205,9 +213,9 @@ A forested wetland — trees standing in water. Rich foraging (mushrooms, medici
 
 **Gameplay identity**: Treacherous wetland. Rich foraging, dangerous hunting, punishing decay.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.5× | 1.5× | 1.3× | 1.4× | 1.6× | 15% | Low (0.6×) | ✓ |
+| 1.5× | 1.5× | 1.3× | 1.4× | 1.6× | 13% | Low (0.6×) | ✓ |
 
 #### Marsh
 
@@ -217,9 +225,9 @@ A freshwater emergent wetland — reeds and grasses, no trees. More productive f
 
 **Gameplay identity**: Productive wetland. Reed-beds, rice paddies, wading birds. Swamp's friendlier cousin.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.3× | 1.3× | 1.2× | 1.2× | 1.4× | 10% | Medium (1.0×) | ✓ |
+| 1.3× | 1.3× | 1.2× | 1.2× | 1.4× | 7% | Medium (1.0×) | ✓ |
 
 #### Mire
 
@@ -229,9 +237,9 @@ The most hostile wetland. Covers bog, peatland, and fen terrain. Highest movemen
 
 **Gameplay identity**: Toxic wasteland. Poisonous foraging, dark creatures, avoid unless you need what's here.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.7× | 1.6× | 1.5× | 1.5× | 1.8× | 18% | None (0.0×) | ✓ |
+| 1.7× | 1.6× | 1.5× | 1.5× | 1.8× | 15% | None (0.0×) | ✓ |
 
 #### Jungle
 
@@ -241,9 +249,9 @@ The tropical rainforest. Second-richest foraging biome after Forest (rare herbs,
 
 **Gameplay identity**: Tropical abundance. Silkworms, spices, exotic pelts. Rich but dangerous.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.4× | 1.4× | 1.3× | 1.4× | 1.3× | 16% | High (1.2×) | ✓ |
+| 1.4× | 1.4× | 1.3× | 1.4× | 1.3× | 11% | High (1.2×) | ✓ |
 
 #### Mangrove
 
@@ -253,9 +261,9 @@ The tidal coastal forest. A unique hybrid: fishing access (sheltered waters betw
 
 **Gameplay identity**: Tidal borderland. Fishing, salt-wood logging, coastal access. Impractical to settle.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.5× | 1.4× | 1.3× | 1.3× | 1.7× | 12% | None (0.0×) | ✓ |
+| 1.5× | 1.4× | 1.3× | 1.3× | 1.7× | 8% | None (0.0×) | ✓ |
 
 ---
 
@@ -269,9 +277,9 @@ Treeless, flat, frozen. No farming, minimal foraging (lichen, hardy roots). Good
 
 **Gameplay identity**: Frozen mining frontier. Fur pelts, True Ice, dire fauna.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.3× | 1.3× | 1.2× | 1.3× | 1.2× | 8% | None (0.0×) | ✓ |
+| 1.3× | 1.3× | 1.2× | 1.3× | 1.2× | 5% | None (0.0×) | ✓ |
 
 #### Taiga
 
@@ -281,9 +289,9 @@ The boreal forest. Signature biome for Resin. Excellent logging (Ironwood primar
 
 **Gameplay identity**: Northern timber country. Resin, ironwood, fur pelts, cold but workable.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.2× | 1.2× | 1.1× | 1.2× | 1.1× | 10% | Low (0.6×) | ✓ |
+| 1.2× | 1.2× | 1.1× | 1.2× | 1.1× | 6% | Low (0.6×) | ✓ |
 
 #### Glacier
 
@@ -293,9 +301,9 @@ The most extreme traversable biome. Highest movement cost, highest decay rate (i
 
 **Gameplay identity**: Mythic endgame territory. T5 fauna, legendary minerals, extreme survival.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.8× | 1.7× | 1.6× | 1.6× | 2.0× | 6% | None (0.0×) | ✓ |
+| 1.8× | 1.7× | 1.6× | 1.6× | 2.0× | 13% | None (0.0×) | ✓ |
 
 ---
 
@@ -309,9 +317,9 @@ Covers both active volcanic terrain and the vast ash-covered wastelands that sur
 
 **Gameplay identity**: Fire and ash. Ignium, obsidian, dragonhide, demons. The forge of the world.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.6× | 1.5× | 1.5× | 1.5× | 1.7× | 14% | None (0.0×) | ✓ |
+| 1.6× | 1.5× | 1.5× | 1.5× | 1.7× | 17% | None (0.0×) | ✓ |
 
 #### Glassfields
 
@@ -321,9 +329,9 @@ A fantastical biome: vast natural crystal formations covering the terrain. Signa
 
 **Gameplay identity**: Crystal mining paradise. Gems, deep crystal, silica. Beautiful and dangerous.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.5× | 1.4× | 1.4× | 1.4× | 1.5× | 10% | None (0.0×) | ✓ |
+| 1.5× | 1.4× | 1.4× | 1.4× | 1.5× | 15% | None (0.0×) | ✓ |
 
 #### Blight
 
@@ -333,9 +341,9 @@ Magically corrupted terrain. The source of the corruption is ancient and unknown
 
 **Gameplay identity**: Corrupted wilderness. Alchemy reagents, venom, alchemical silver. Toxic but invaluable for future magic systems.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.4× | 1.3× | 1.3× | 1.3× | 1.5× | 15% | None (0.0×) | ✓ |
+| 1.4× | 1.3× | 1.3× | 1.3× | 1.5× | 20% | None (0.0×) | ✓ |
 
 ---
 
@@ -349,21 +357,21 @@ Encompasses all coastal terrain — rocky shores, sandy beaches, harbour coves, 
 
 **Gameplay identity**: Maritime gateway. Fishing, trade, coastal foraging. The edge of the known world.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.1× | 1.1× | 1.0× | 1.0× | 1.1× | 7% | Low (0.6×) | ✓ |
+| 1.1× | 1.1× | 1.0× | 1.0× | 1.1× | 4% | Low (0.6×) | ✓ |
 
 #### Lake
 
 > *Still water reflecting sky. Reeds fringe the shallows. Fish jump at dawn. The lakeshore is a natural gathering point — freshwater, fishing, and a defensible position with water on at least one side.*
 
-Freshwater body. Fishing signature (alongside Coast). Some lakeside farming (limited crops in fertile shore areas), moderate foraging (reeds, wild herbs). Fishing is the primary draw. Lower hazard than Coast (freshwater fauna is milder). Good settlement potential — lakeside towns have water access, fishing, and natural defence.
+Freshwater body. Fishing signature (alongside Coast). Moderate lakeside farming (fertile shore areas support a range of crops), moderate foraging (reeds, wild herbs). Fishing is the primary draw. Lower hazard than Coast (freshwater fauna is milder). Good settlement potential — lakeside towns have water access, fishing, and natural defence.
 
 **Gameplay identity**: Freshwater fishing. Lakeside settlement, natural defence, calm.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.2× | 1.2× | 1.1× | 1.1× | 1.0× | 6% | Low (0.6×) | ✓ |
+| 1.2× | 1.2× | 1.1× | 1.1× | 1.0× | 3% | Medium (1.0×) | ✓ |
 
 #### Coastal Waters
 
@@ -371,7 +379,7 @@ Freshwater body. Fishing signature (alongside Coast). Some lakeside farming (lim
 
 Impassable in the base module. Exists on the map as a visible barrier. Future Maritime module will enable traversal, fishing, and resource extraction (coral, pearls, deep-sea resources).
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
 | — | — | — | — | — | — | None | ✗ |
 
@@ -381,13 +389,13 @@ Impassable in the base module. Exists on the map as a visible barrier. Future Ma
 
 Impassable in the base module. Covers all open water — shallow seas, deep ocean, and everything between. The ocean separates landmasses and creates the geography that makes coastal territory valuable.
 
-| Move Cost | Move Time | Explore Cost | Explore Time | Decay Rate | Base Hazard | Fertility | Traversable |
+| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
 | — | — | — | — | — | — | None | ✗ |
 
 ---
 
-## 2. Encounter Type Distribution
+## 2. Encounter Type Distribution 🔓
 
 Each biome has a weighted distribution of encounter types when an encounter triggers. Weights sum to 100%.
 
@@ -436,7 +444,7 @@ Each biome has a weighted distribution of encounter types when an encounter trig
 
 ---
 
-## 3. Fauna Tier by Biome
+## 3. Fauna Tier by Biome 🔓
 
 Defines the maximum beast tier that can appear in each biome. Beast tiers range from T1 (common nuisance) to T5 (mythic apex predator). Higher tiers yield better beast parts (see Appendix F §4: Beast Parts).
 
@@ -472,7 +480,9 @@ Defines the maximum beast tier that can appear in each biome. Beast tiers range 
 
 ---
 
-## 4. Biome Clustering & Generation
+## 4. Biome Clustering & Generation 🔒 ⚠️
+
+> ⚠️ **Contracts specialist review required.** This section defines the on-chain noise functions, seed derivation, domain separation, and deterministic biome assignment logic. All algorithms must be validated for gas efficiency, determinism, and collision resistance before deployment. Particular attention needed for the Anomaly layer override logic and the Mangrove post-pass rule.
 
 Biome placement uses **simplex noise** with domain-separated layers to produce natural terrain transitions. This section defines the generation rules.
 
@@ -592,7 +602,7 @@ Beyond the first ring, the noise function operates normally with no overrides (e
 
 ---
 
-## 5. Fertility Ratings
+## 5. Fertility Ratings 🔒
 
 Fertility determines base farming and foraging yields. Each biome has a fertility classification that translates to a numerical modifier.
 
@@ -631,11 +641,11 @@ Fertility determines base farming and foraging yields. Each biome has a fertilit
 | **Glassfields** | None (0.0×) | None | None — crystal terrain, no organic growth |
 | **Blight** | None (0.0×) | None (corrupted soil) | Moderate — poisonous plants, rare herbs, spiritbloom |
 | **Coast** | Low (0.6×) | Salt-tolerant crops (limited) | Good — seaweed (signature), wild herbs |
-| **Lake** | Low (0.6×) | Lakeside crops (limited) | Moderate — reeds, wild herbs |
+| **Lake** | Medium (1.0×) | Lakeside crops | Moderate — reeds, wild herbs |
 
 ---
 
-## 6. Biome Suitability Summaries
+## 6. Biome Suitability Summaries 🔓
 
 A quick-reference for each biome's overall suitability for different activities.
 
@@ -675,8 +685,8 @@ A quick-reference for each biome's overall suitability for different activities.
 | **Scorched** | ★★★ | ☆☆☆ | ☆☆☆ | ☆☆☆ | ★☆☆ | ☆☆☆ | ☆☆☆ | ☆☆☆ |
 | **Glassfields** | ★★★ | ☆☆☆ | ☆☆☆ | ☆☆☆ | ★☆☆ | ☆☆☆ | ☆☆☆ | ☆☆☆ |
 | **Blight** | ★☆☆ | ★☆☆ | ☆☆☆ | ★★☆ | ★★☆ | ☆☆☆ | ☆☆☆ | ☆☆☆ |
-| **Coast** | ★☆☆ | ☆☆☆ | ★☆☆ | ★★☆ | ★☆☆ | ★★★ | ☆☆☆ | ★★☆ |
-| **Lake** | ★☆☆ | ☆☆☆ | ★☆☆ | ★★☆ | ★☆☆ | ★★★ | ☆☆☆ | ★★☆ |
+| **Coast** | ★☆☆ | ☆☆☆ | ★★☆ | ★★☆ | ★☆☆ | ★★★ | ☆☆☆ | ★★☆ |
+| **Lake** | ★☆☆ | ☆☆☆ | ★★☆ | ★★☆ | ★☆☆ | ★★★ | ☆☆☆ | ★★☆ |
 
 ### Design Notes
 

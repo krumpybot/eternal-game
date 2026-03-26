@@ -157,7 +157,7 @@ Dependencies: Phase 1 (attribute formulas), Phase 2 (action catalog — biome mo
 
 ### 4a. Biome Properties ✅
 
-27 biomes fully quantified across 6 categories (Temperate 7, Arid 5, Wet 5, Cold 3, Extreme 3, Water 4). Each biome has: unique narrative profile, movement cost/time modifiers, explore cost/time modifiers, decay rate modifiers, base hazard chances (5%–18%), encounter type distributions (beast/combat/social/special), fauna tier caps (T2–T5), fertility ratings (None–High). Biome clustering algorithm defined (5-layer simplex noise: Temperature, Moisture, Elevation, Variation, Anomaly). Anomaly layer governs Extreme biome placement. Distribution targets and Nexus region override specified.
+27 biomes fully quantified across 6 categories (Temperate 7, Arid 5, Wet 5, Cold 3, Extreme 3, Water 4). Each biome has: unique narrative profile, movement cost/time modifiers, survey cost/time modifiers, decay rate modifiers, base hazard chances (2%–20%), encounter type distributions (beast/combat/social/special), fauna tier caps (T2–T5), fertility ratings (None–Medium–High). Biome clustering algorithm defined (5-layer simplex noise: Temperature, Moisture, Elevation, Variation, Anomaly). Anomaly layer governs Extreme biome placement. Distribution targets and Nexus region override specified.
 → Output: **Appendix D: Biome Table** (`Appendix_D_Biome_Table.md`)
 
 ### 4b. Biome–Resource Affinity ✅

@@ -218,14 +218,14 @@ The full biome set must be defined at deployment because biome-specific logic (m
 | | **Total** | **27** |
 
 Each biome defines (quantified in Appendix D):
-- Movement energy cost modifier (0.8×–1.8×)
-- Exploration time modifier (0.8×–1.6×)
-- Decay rate modifier (0.8×–2.0×)
-- Base hazard chance (5%–18%)
-- Encounter type distribution (beast / combat / social / special)
-- Fauna tier cap (T2–T5)
-- Fertility rating (None / Low / Medium / High)
-- Native resource affinities (quantified in Appendix E)
+- 🔒 Movement energy cost modifier (0.8×–1.8×)
+- 🔒 Survey cost/time modifiers (0.9×–1.6×)
+- 🔓 Decay rate modifier (0.8×–2.0×) — autoregulator-tunable
+- 🔓 Base hazard chance (2%–20%) — GM-adjustable
+- 🔓 Encounter type distribution (beast / combat / social / special) — GM-adjustable
+- 🔓 Fauna tier cap (T2–T5) — GM-adjustable
+- 🔒 Fertility rating (None / Low / Medium / High)
+- 🔓 Native resource affinities (quantified in Appendix E) — GM-adjustable
 
 > **Impassable biomes**: Ocean and Coastal Waters are impassable in the base module. Traversal requires a future Maritime module. Coast and Lake are land-accessible.
 
