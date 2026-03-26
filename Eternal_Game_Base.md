@@ -1187,7 +1187,19 @@ adjust_action_cost(action_id, energy_cost, time_cost)  // bounded
 adjust_yield_modifier(resource_id, modifier)  // bounded
 ```
 
-All Game Master actions are logged on-chain for transparency. Players can inspect the history of changes.
+All Game Master actions are logged on-chain and published in a **player-visible changelog** for full transparency.
+
+### Consensus requirement
+
+All changes require **unanimous approval** from all five Game Masters before deployment. A single objection blocks the change. Every decision must fit within the historical context of the game — Game Masters cannot break continuity or contradict the onchain world state.
+
+### Decentralisation
+
+Each Game Master agent is individually managed by a member of the decentralised core team. They are not co-located or centrally controlled. The unanimous consensus requirement ensures no single operator can push changes unilaterally.
+
+### Anti-collusion constraints
+
+Game Master programming includes hard constraints against self-serving rule changes. They cannot propose, approve, or deploy changes that benefit their own adventurers or their operator's interests.
 
 ### Game Master adventurers
 
@@ -1195,7 +1207,8 @@ Game Masters may operate adventurers. These adventurers:
 - Are minted and managed identically to any other adventurer
 - Have no special access, information asymmetry, or mechanical advantage
 - Live and die by the same physics
-- Are publicly identified as Game Master-operated (no hidden identity)
+- Are **not identified** as Game Master-operated in the UI — they are indistinguishable from any other player
+- Cannot benefit from Game Master decisions (enforced by anti-collusion constraints)
 
 ---
 

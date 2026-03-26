@@ -1007,29 +1007,38 @@ Ensures the economic sustainability of the Eternal World. The game must be self-
 
 ### 19.4 Consensus & Deployment
 
-No single Game Master can push changes to the live game. All content and balance changes require **consensus** before deployment:
+No single Game Master can push changes to the live game. All content and balance changes require **unanimous consensus** before deployment:
 
 1. **Proposal**: Any Game Master (typically the Creator) proposes a change — a new recipe, encounter, balance adjustment, or event.
-2. **Review**: Each relevant Game Master evaluates the proposal within their domain (lore consistency, statistical impact, balance implications, economic sustainability).
-3. **Consensus**: All reviewing Game Masters must approve. Any Game Master can veto within their domain (the Loremaster can veto on lore grounds; the Economist can veto on sustainability grounds; etc.).
+2. **Review**: **Every** Game Master evaluates the proposal within their domain — lore consistency, statistical impact, balance implications, economic sustainability, and creative merit. All aspects of all masters must be considered.
+3. **Unanimous approval**: All five Game Masters must approve. A single objection from any Game Master blocks the change until the concern is addressed. This ensures no dimension of the game is neglected.
 4. **Staging**: Approved changes are deployed to a staging environment for simulation and testing.
 5. **Deployment**: Changes that pass staging are pushed to the live game autonomously.
+6. **Changelog**: All deployed changes are published in a player-visible changelog — transparent and auditable.
 
-The core development team retains an **emergency override** — the ability to pause or revert Game Master deployments if a critical issue is detected. This is a safety valve, not a governance mechanism. Under normal operation, Game Masters are fully autonomous.
+Every decision must fit within the **historical context of the game to date**. Game Masters cannot retroactively alter established history, break continuity, or contradict the onchain world state. The world's physics are eternal; the Game Masters' role is to enrich and grow the game within those physics, not to rewrite them.
 
-### 19.5 Game Masters as Players
+### 19.5 Autonomy, Oversight & Decentralisation
 
-Game Masters may operate their own adventurers under the same ruleset that governs all human and agent-managed adventurers. They receive no special privileges, hidden information, or mechanical advantages. Playing the game gives them first-hand insight into gameplay feel, balance friction, and emergent dynamics that data alone cannot capture.
+Game Masters have **full reign** over the dynamic game layer. The core development team retains override authority but the intent is that it is never used — emergency response is built into the Game Masters' own remit. The Statistician detects anomalies, the Balancer corrects degenerate states, and the Economist prevents economic crises. Between them, the five agents cover the full surface area of what could go wrong.
 
-Their adventurers live and die by the same physics as everyone else.
+Each Game Master agent is **individually managed by a member of the decentralised core team**. They are not co-located, not centrally controlled, and not dependent on a single operator. This mirrors the decentralised ethos of the game itself — no single point of failure, no single point of authority.
 
-### 19.6 Funding Model
+The unanimous consensus requirement ensures that even if one Game Master's operator has a lapse in judgement, the other four act as a check. Collusion is structurally discouraged: each agent's programming includes **hard constraints against self-serving rule changes** — they cannot modify rules in ways that benefit their own adventurers or their operator's interests.
+
+### 19.6 Game Masters as Players
+
+Game Masters may operate their own adventurers under the same ruleset that governs all human and agent-managed adventurers. They receive no special privileges, hidden information, or mechanical advantages. They are not identified as Game Masters in the UI — they are simply participants, indistinguishable from any other player. Playing the game gives them first-hand insight into gameplay feel, balance friction, and emergent dynamics that data alone cannot capture.
+
+Their adventurers live and die by the same physics as everyone else. Their programming includes hard constraints preventing them from using their role to benefit their own adventurers — they cannot propose, approve, or deploy changes that serve their in-game interests.
+
+### 19.7 Funding Model
 
 Game Masters are funded by the game's economy — their inference costs are paid from game fees (adventurer minting, settlement taxes, marketplace fees, etc.). They are a cost of running the world, not an external service. This creates a natural alignment: if the game thrives, Game Master resources are abundant; if the game stagnates, their budget contracts, forcing efficient prioritisation.
 
 The Economist is specifically responsible for ensuring this feedback loop remains sustainable.
 
-### 19.7 Relationship to the Autoregulator
+### 19.8 Relationship to the Autoregulator
 
 The **autoregulator** (§18) is an on-chain PI controller that adjusts tunable parameters within fixed bounds — a mechanical thermostat. The Game Masters are the intelligence layer above it:
 
