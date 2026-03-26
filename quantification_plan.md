@@ -162,7 +162,7 @@ Dependencies: Phase 1 (attribute formulas), Phase 2 (action catalog — biome mo
 
 ### 4b. Biome–Resource Affinity ✅
 
-Full affinity matrix for all 87 raw resources × 27 biomes. Three-tier system: ✓ (standard, 1×), ◆ (primary, 2×), ★ (signature, 3×). Covers mining (30 resources), logging (6), farming (13), foraging (14), hunting (11), fishing (1), herding (4 livestock types). Key signature assignments: Glassfields (gems, deep crystal), Blight (alchemical silver, spiritbloom, poisonous plants), Scorched (obsidian, sulfur, ignium, demonhide), Rainforest (moonwood, rare herbs), Scrubland (wild herbs, dye plants), Mangrove (seaweed, fishing). Universal discovery resources (Rare Metals, Worldroot, Unicorn Hair) confirmed biome-independent.
+Full affinity matrix for all 87 raw resources × 27 biomes. Three-tier system: ✓ (standard, 1×), ◆ (primary, 2×), ★ (signature, 3×). Covers mining (30 resources), logging (6), farming (13), foraging (14), hunting (11), fishing (1), herding (12 products across 4 livestock types). Key signature assignments: Glassfields (gems, deep crystal), Blight (alchemical silver, spiritbloom, poisonous plants), Scorched (obsidian, sulfur, ignium, demonhide), Rainforest (moonwood, rare herbs), Scrubland (wild herbs, dye plants), Mangrove (seaweed, fishing). Universal discovery resources (Rare Metals, Worldroot, Unicorn Hair) confirmed biome-independent.
 → Output: **Appendix E: Biome–Resource Affinity Matrix** (`Appendix_E_Biome_Resource_Affinity.md`)
 
 ### 4c. Area Generation ✅
@@ -519,21 +519,21 @@ Phase 1 (Units/Attributes)
 
 ## Appendices
 
-| Appendix | Phase | Estimated rows |
-|---|---|---|
-| C: Trait Catalog | 1c | ~120 rows |
-| D: Biome Table | 4a | 25 rows × 6 cols |
-| E: Biome–Resource Affinity | 4b | 25 × ~50 (sparse) |
-| F: Resource Catalog | 3a | ~60 rows |
-| G: Refining Recipes | 7a | ~20–30 rows |
-| H: Crafting Recipes | 7b | ~30–50 rows |
-| I: Item Catalog | 8a | ~25–40 rows |
-| J: Building Catalog | 9a | 12 rows (dense) |
-| K: Beast Catalog | 12a | 75 rows |
-| L: Biome Hazard Tables | 12b | 25 biomes × variable |
-| M: Action Catalog | 2 | 23 actions + 4 encounter types |
+| Appendix | Phase | Status | Estimated rows |
+|---|---|---|---|
+| C: Trait Catalog 🔒 | 1c | ✅ v1.0 | 120 traits (38+23+36+13+10) |
+| D: Biome Table 🔒 | 4a | ✅ v0.2.1 | 27 biomes × 8 properties |
+| E: Biome–Resource Affinity ⚠️ | 4b | ✅ v0.2.0 — flagged for review | 87 resources × 27 biomes (sparse) |
+| F: Resource Catalog 🔒 | 3a | ✅ v1.0 | 153 resources + 60 beast parts |
+| G: Refining Recipes | 7a | ⏳ | ~20–30 rows |
+| H: Crafting Recipes | 7b | ⏳ | ~30–50 rows |
+| I: Item Catalog | 8a | ⏳ | ~25–40 rows |
+| J: Building Catalog | 9a | ⏳ | 12 rows (dense) |
+| K: Beast Catalog | 12a | ⏳ | 75 rows |
+| L: Biome Hazard Tables | 12b | ⏳ | 27 biomes × variable |
+| M: Action Catalog ⚠️ | 2 | ✅ draft — flagged for review | 23 actions + 4 encounter types |
 
 ---
 
-*Quantification plan v0.5 — March 2026*
-*Phases 1–2 complete. Phase 3 (Resources) next.*
+*Quantification plan v0.6 — March 2026*
+*Phases 1–4 complete. Lock status system introduced. Phase 3b (Food & Nutrition) next.*

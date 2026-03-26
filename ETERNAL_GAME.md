@@ -32,6 +32,17 @@
 
 ---
 
+## Lock Status Convention
+
+| Symbol | Meaning |
+|---|---|
+| 🔒 | **Locked** — immutable after deployment. Part of the permanent world physics. |
+| ⚠️ | **Flagged for review** — requires specialist validation before deployment. |
+
+All features and values without a lock symbol are starting values, modifiable by Game Masters (§19), the autoregulator, or future modules.
+
+---
+
 ## 1. Thesis
 
 **Eternal Game is a fully onchain MMORPG built on an immutable physics substrate, designed to run forever.**
@@ -119,7 +130,7 @@ This is intentionally conservative - Starknet has had periods of halted block pr
 
 ---
 
-## 4. World Topology & Hex Grid
+## 4. World Topology & Hex Grid 🔒
 
 ```
 Origin (0,0,0) - The Nexus
@@ -175,7 +186,7 @@ Each area has a deterministic number of **building slots**, based on type and ra
 
 ---
 
-## 5. The Adventurer
+## 5. The Adventurer 🔒
 
 The adventurer is the player's avatar in the world. It is an NFT-like entity (model parity, with ERC-721 wrapping planned) with the following properties:
 
@@ -404,7 +415,7 @@ The explored world grows organically:
 
 ---
 
-## 8. Resource Systems
+## 8. Resource Systems 🔒
 
 ### 8.0 Materials List (Raw Yield)
 
@@ -694,7 +705,7 @@ This creates **natural territorial limits** - players can only hold as much terr
 
 ---
 
-## 12. The Energy Economy
+## 12. The Energy Economy 🔒
 
 ### 12.1 Sources
 

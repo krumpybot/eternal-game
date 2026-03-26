@@ -3,7 +3,7 @@
 > All traits listed with name, type, group (exclusivity), attribute modifier, and special effect.
 > Inspired by CK3's trait system — personality pairs, congenital physical traits, lifestyle skills, and injury/disability progression.
 >
-> **Attribute modifier shapes**: `[+1]`, `[−1]`, `[+2]`, `[−2]`, `[+1, +1]`, `[+1, −1]`, `[−1, −1]`.
+> **Attribute modifier shapes**: `[+1]`, `[−1]`, `[+2]`, `[−2]`, `[+1, +1]`, `[+1, −1]`, `[−1, +1]`, `[−1, −1]`.
 > Dual-modifier shapes (`[+1, +1]`, `[+1, −1]`, `[−1, −1]`) are rarer than single-modifier traits.
 >
 > **No-doubling rule**: attribute modifier must not amplify the same stat as the special effect.
@@ -13,7 +13,7 @@
 
 ---
 
-## Progression System: Chance-Based (No XP Tracking)
+## Progression System: Chance-Based (No XP Tracking) 🔒
 
 All attribute and trait progression uses **per-action chance rolls** — no experience points, no historical data to track on-chain. This keeps the contract system simple: each action resolution includes a small chance calculation for attribute gain and trait gain.
 
@@ -59,7 +59,7 @@ Some traits modify the **chance of attribute or trait gain** rather than (or in 
 
 ---
 
-## Trait Types
+## Trait Types 🔒
 
 | Type | Slots at mint | Can be lost? | Notes |
 |---|---|---|---|
@@ -73,7 +73,7 @@ Some traits modify the **chance of attribute or trait gain** rather than (or in 
 
 ---
 
-## 1. Personality Traits
+## 1. Personality Traits 🔒
 
 Personality traits define an adventurer's disposition. Almost all come in exclusive pairs. Gained at mint (2 traits); very rarely gained/replaced through major life events (chance-based — e.g., surviving a near-death encounter may have a small chance to grant Brave or replace Craven).
 
@@ -127,14 +127,11 @@ Personality traits can affect **all attributes**, but are slightly more heavily 
 > - P17 Tenacious uses `[+1, +1]` (END/CRA — tenacity sustains both stamina and perseverance in craft).
 > - P18 Fickle uses `[−1, −1]` (END/CRA — fickleness saps both stamina and patience for careful work).
 > - P27 Fierce uses the `[+1, −1]` shape (STR/WIS trade-off).
-> - P29–P32 are CK3-inspired additions (Forthright/Sly, Merciful/Ruthless).
-> - P33–P36 are pairs added for attribute balance (Shrewd/Naive, Ambitious/Content).
 > - Some traits share CK3 names where no comfortable alternative exists (Brave/Craven, Generous/Greedy, Diligent, Patient/Impulsive).
-> - Renamed from CK3 originals: Gregarious→Sociable, Wrathful→Fierce, Calm→Composed, Honest→Forthright, Deceitful→Sly, Compassionate→Merciful, Callous→Ruthless.
 
 ---
 
-## 2. Physical Traits
+## 2. Physical Traits 🔒
 
 Physical traits describe an adventurer's bodily characteristics. Most come in exclusive pairs. Gained at mint (1 trait); very rarely gained/replaced through major physical events.
 
@@ -167,20 +164,13 @@ Physical traits **never affect INT or WIS** — they represent bodily characteri
 | H23 | **Ambidextrous** | — | handedness | +1 DEX, +1 CRA | +10% all personal yields, +10 success chance |
 
 > **Notes:**
-> - H01 Brawny (renamed from Strong-backed).
-> - H04 Clumsy: simplified special effect to −25% hazard avoidance only.
-> - H05/H06 Perceptive/Oblivious (renamed from Eagle-eyed/Dim-sighted).
 > - H08 Ailing has a single `[−1]` modifier with −25% health regen rate.
 > - H09 Tall uses `[+1]` (LEA — tall stature commands natural authority in a medieval world). Logging yield at +25%.
 > - H10 Short uses `[−1, −1]` (DEX/LEA — short stature means less reach and less imposing presence). Mining yield at +25%.
-> - H11/H12 Lean/Broad (renamed from Fleet-footed/Heavy-footed). Lean's effect covers both travel and explore energy. Broad's special effect covers production yields + encounter damage.
-> - H15/H16 Voracious/Squeamish (renamed from Iron-stomached/Weak-stomached).
-> - H17/H18 Resilient/Sensitive (renamed from Thick-skinned/Thin-skinned).
-> - H19/H20 Stocky/Wiry (renamed from Towering/Stunted) — group remains 'size'. CK3-inspired congenital traits with `[+1, +1]` and `[+1, −1]` shapes.
-> - H21/H22 Comely/Ugly (renamed Plain→Ugly). Ugly's special effect includes +10% positive skill trait gain and −25% social encounter success.
-> - H23 Ambidextrous remains the sole trait with no opposite. Special effect: +10% to all personal yields and +10 success chance.
+> - H11/H12 Lean/Broad: Lean's effect covers both travel and survey energy. Broad's special effect covers production yields + encounter damage.
+> - H19/H20 Stocky/Wiry: CK3-inspired congenital traits with `[+1, +1]` and `[+1, −1]` shapes.
+> - H23 Ambidextrous is the sole trait with no opposite. Special effect: +10% to all personal yields and +10 success chance.
 > - **Physical traits never modify INT or WIS.** Mental attributes are exclusively the domain of personality traits.
-> - Renamed from CK3/previous originals: Strong-backed→Brawny, Eagle-eyed→Perceptive, Dim-sighted→Oblivious, Fleet-footed→Lean, Heavy-footed→Broad, Iron-stomached→Voracious, Weak-stomached→Squeamish, Thick-skinned→Resilient, Thin-skinned→Sensitive, Towering→Stocky, Stunted→Wiry, Plain→Ugly.
 
 ---
 
@@ -236,15 +226,12 @@ All skill traits are organized in exclusive pairs grouped by activity domain. Ea
 > **Notes:**
 > - S05/S06 Prospector/Jinxed Miner, S09/S10 Trailblazer/Lost, and S25/S26 Cartographer/Disoriented have **no attribute modifier** — their special effects are sufficient value.
 > - Quarrier and Prospector are separate pairs (Quarrier ↔ Cave-in Survivor; Prospector ↔ Jinxed Miner) — mining discovery and mining safety are distinct skill domains.
-> - S13 Artificer (renamed from Forgeborn). S15 Refined Taste (renamed from Alchemist's Touch). S18 Prey (renamed from Beast-shy). S27 Chef (renamed from Cook).
 > - S29 Tamer grants +1 max **animal** follower (not general follower).
-> - S35/S36 Herbalist/Rash Forager domain changed from "herb gathering" to "foraging" — reflects broader foraging activity scope.
-> - S37/S38 Marksman/Shaky Hands removed.
 > - Additional skill traits can be introduced by future modules.
 
 ---
 
-## 5. Injury Traits
+## 4. Injury Traits
 
 Injury traits are temporary debuffs gained from encounter damage or activity mishaps. They persist until the adventurer **returns to >75% of maximum health and completes any action**, at which point the injury either:
 - **Heals completely** (trait removed), or
@@ -279,7 +266,7 @@ Conversion probabilities are autoregulator-tunable.
 
 ---
 
-## 6. Disability Traits
+## 5. Disability Traits
 
 Disability traits are permanent. They are converted from severe injury traits when an injury resolves poorly. They cannot be lost. Disability trait modifiers **suppress** attributes (they reduce the effective value but the underlying attribute points remain — if the disability were hypothetically removed by a future module, the points would return).
 
@@ -415,11 +402,11 @@ The following tables show the distribution of attribute modifiers across all per
 | `[−1]` | ~36 | Most common (negative) |
 | `[+2]` | 0 | — |
 | `[−2]` | 1 | I10 Blinded (temporary) has −2 DEX |
-| `[+1, +1]` | 4 | P17 Tenacious, H19 Stocky, H23 Ambidextrous |
+| `[+1, +1]` | 3 | P17 Tenacious, H19 Stocky, H23 Ambidextrous |
 | `[+1, −1]` | 4 | P08 Reckless, P27 Fierce, P37 Zoophilist, H20 Wiry |
 | `[−1, +1]` | 1 | D01 One-eyed |
-| `[−1, −1]` | 7 | P06 Idle, P18 Fickle, H10 Short, I03 Fractured, D08 Deaf, D09 Missing Fingers |
-| No modifier | 10 | S05, S06, S09, S10, S25, S26, D04, and others — special effect only |
+| `[−1, −1]` | 6 | P06 Idle, P18 Fickle, H10 Short, I03 Fractured, D08 Deaf, D09 Missing Fingers |
+| No modifier | 7 | S05, S06, S09, S10, S25, S26, D04 — special effect only |
 
 ---
 

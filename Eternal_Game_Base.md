@@ -40,6 +40,19 @@
 
 ---
 
+## Lock Status Convention
+
+Throughout this document and all appendices, the following symbols indicate whether a feature or value is immutable after deployment:
+
+| Symbol | Meaning |
+|---|---|
+| 🔒 | **Locked** — immutable after deployment. Cannot be changed by Game Masters, the autoregulator, or any future module. Part of the permanent world physics. |
+| ⚠️ | **Flagged for review** — section contains implementation-critical logic requiring specialist validation before deployment. |
+
+All features and values **without** a lock symbol are assumed to be **starting values only** — modifiable by Game Masters via consensus (§19 of the Design Scope), the autoregulator within bounded ranges, or future modules.
+
+---
+
 ## 1. Design Intent
 
 The base module must satisfy three constraints simultaneously:
@@ -120,7 +133,7 @@ What *can* change:
 
 ---
 
-## 4. Time
+## 4. Time 🔒
 
 ### Tick system
 
@@ -149,7 +162,7 @@ Lazy evaluation: time only advances when an entity is touched by a transaction.
 
 ---
 
-## 5. Space
+## 5. Space 🔒
 
 ### Coordinate system
 
@@ -194,7 +207,7 @@ Area types, slot counts, and resource profiles are **finalized on first survey**
 
 ---
 
-## 6. World Generation
+## 6. World Generation 🔒
 
 ### Biome determination
 
@@ -218,14 +231,14 @@ The full biome set must be defined at deployment because biome-specific logic (m
 | | **Total** | **27** |
 
 Each biome defines (quantified in Appendix D):
-- 🔒 Movement energy cost modifier (0.8×–1.8×)
-- 🔒 Survey cost/time modifiers (0.9×–1.6×)
-- 🔓 Decay rate modifier (0.8×–2.0×) — autoregulator-tunable
-- 🔓 Base hazard chance (2%–20%) — GM-adjustable
-- 🔓 Encounter type distribution (beast / combat / social / special) — GM-adjustable
-- 🔓 Fauna tier cap (T2–T5) — GM-adjustable
-- 🔒 Fertility rating (None / Low / Medium / High)
-- 🔓 Native resource affinities (quantified in Appendix E) — GM-adjustable
+- Movement energy cost modifier (0.8×–1.8×) 🔒
+- Survey cost/time modifiers (0.9×–1.6×) 🔒
+- Decay rate modifier (0.8×–2.0×)
+- Base hazard chance (2%–20%)
+- Encounter type distribution (beast / combat / social / special)
+- Fauna tier cap (T2–T5)
+- Fertility rating (None / Low / Medium / High) 🔒
+- Native resource affinities (quantified in Appendix E)
 
 > **Impassable biomes**: Ocean and Coastal Waters are impassable in the base module. Traversal requires a future Maritime module. Coast and Lake are land-accessible.
 
@@ -340,7 +353,7 @@ Within materials areas, resource nodes are seeded deterministically on first sur
 
 ---
 
-## 7. The Adventurer
+## 7. The Adventurer 🔒
 
 ### Creation
 
@@ -505,7 +518,7 @@ follower_types: Map<FollowerType, u8>  // laborers, donkeys, mounts
 
 ---
 
-## 9. Energy
+## 9. Energy 🔒
 
 ### Pool
 
@@ -538,7 +551,7 @@ This is the core starvation mechanic. It is base-module because it ties energy (
 
 | Action | Energy cost |
 |---|---|
-| Explore (unknown hex) | High (biome-modified) |
+| Explore (unknown hex) | High (flat — biome unknown) |
 | Travel (known hex) | Low-medium (biome-modified, survey-reduced) |
 | Survey (reveal area) | Medium |
 | Harvest/Mine/Log/Hunt | Per-action (skill-modified) |
@@ -594,7 +607,7 @@ Exploration discovers the hex (biome, existence). Surveying reveals what's insid
 
 ---
 
-## 12. Resource Definitions
+## 12. Resource Definitions 🔒
 
 The base module must define **every resource type** at deployment because resource IDs are referenced by crafting recipes, building costs, and world generation tables. Adding new resource types later would require base module changes (which is forbidden).
 

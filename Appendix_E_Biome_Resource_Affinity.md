@@ -1,6 +1,8 @@
-# Appendix E: Biome–Resource Affinity Matrix
+# Appendix E: Biome–Resource Affinity Matrix ⚠️
 
 > Phase 4b of the Eternal Game Base Module Quantification Plan.
+
+> ⚠️ **Flagged for full review.** All affinity values are starting estimates pending validation against yield rates (Phase 6) and crafting recipes (Phase 7). Resource-biome relationships may need adjustment once production chains are quantified.
 > Dependencies: Phase 3 (resource catalog — Appendix F), Phase 4a (biome properties — Appendix D).
 > This matrix defines which raw resources can appear in each biome. It drives world generation (resource node seeding) and production yields.
 
@@ -16,11 +18,11 @@
 
 > Node frequency multipliers affect how often a resource node is seeded during world generation. Yield multipliers affect how much is gathered per action. Both are further modified by area rarity and individual node seed.
 
-> 🔓 **All affinity matrices are unlocked** — these are starting values. Game Masters may adjust resource-biome affinities via consensus. The resource catalog itself (Appendix F) and the biome list (Appendix D) are 🔒 locked.
+> **All affinity matrices are unlocked** — these are starting values. Game Masters may adjust resource-biome affinities via consensus. The resource catalog itself (Appendix F) and the biome list (Appendix D) are 🔒 locked.
 
 ---
 
-## 1. Mining Resources by Biome 🔓
+## 1. Mining Resources by Biome
 
 Universal mining resources (appear wherever mining areas exist): **Coal, Flint, Limestone, Salt, Sand, Stone, Clay**.
 Universal rare drop (any mining activity): **Rare Metals**.
@@ -61,7 +63,7 @@ Universal rare drop (any mining activity): **Rare Metals**.
 
 ---
 
-## 2. Logging Resources by Biome 🔓
+## 2. Logging Resources by Biome
 
 Logging requires forestry areas. Biomes with no trees cannot generate forestry areas.
 
@@ -86,7 +88,7 @@ Universal rare drop (any logging activity): **Worldroot**.
 
 ---
 
-## 3. Farming Resources by Biome 🔓
+## 3. Farming Resources by Biome
 
 Farming requires fertile areas with fertility > 0. Biomes with None fertility cannot farm.
 
@@ -111,7 +113,7 @@ Universal farming resources (appear in any fertile area with fertility ≥ Low):
 
 ---
 
-## 4. Foraging Resources by Biome 🔓
+## 4. Foraging Resources by Biome
 
 Foraging gathers wild-growing resources. Some foraging is possible even in biomes with no fertility (mushrooms, lichen), but yields are minimal.
 
@@ -143,7 +145,7 @@ Universal rare drop (any foraging activity): **Unicorn Hair**.
 
 ---
 
-## 5. Hunting Fauna by Biome 🔓
+## 5. Hunting Fauna by Biome
 
 Hunting targets wild fauna. Fauna type and density vary by biome. Beast parts yielded depend on beast tier (see Appendix D §3 and Appendix F §4).
 
@@ -172,7 +174,7 @@ Hunting targets wild fauna. Fauna type and density vary by biome. Beast parts yi
 
 ---
 
-## 6. Fishing by Biome 🔓
+## 6. Fishing by Biome
 
 Fishing requires a water biome or water-adjacent hex. Only Coast, Lake, Mangrove, Swamp, and Marsh support fishing in the base module.
 
@@ -184,7 +186,7 @@ Fishing requires a water biome or water-adjacent hex. Only Coast, Lake, Mangrove
 
 ---
 
-## 7. Herding by Biome 🔓
+## 7. Herding by Biome
 
 Herding requires fertile areas converted from native vegetation. Biome determines which livestock types are viable and their productivity multiplier.
 

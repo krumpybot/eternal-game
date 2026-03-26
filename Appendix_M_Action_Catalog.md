@@ -1,5 +1,7 @@
-# Appendix M: Action Catalog
+# Appendix M: Action Catalog ⚠️
 
+
+> ⚠️ **Flagged for full review.** Action costs, time-locks, and energy values are base estimates. All values require validation against the biome modifier system (Phase 4), production chains (Phase 6), and the time budget analysis (Phase 13). Cost tier assignments should be re-evaluated once movement and exploration mechanics are quantified (Phase 5).
 > Complete catalog of player-initiated actions in the base module. Each entry defines the action's properties using the standard template (Phase 2b). Energy costs and time-locks are **draft ranges** — exact values to be locked in their respective quantification phases.
 >
 > **Energy budget reference** (Phase 1a): Base regen = 0.1/tick (~864/in-game day). Base max = 100. An adventurer regenerates enough energy for many light actions or a handful of heavy ones per in-game day. Time-locks prevent action spam — even with energy, the adventurer is occupied.

@@ -22,32 +22,22 @@ The Eternal World contains **27 biomes** grouped into 6 categories. Biomes are d
 
 > **Impassable biomes**: Ocean and Coastal Waters cannot be entered in the base module. Traversal requires a future Maritime module. Coast and Lake are land-accessible.
 
-### Lock Status Legend
-
-| Symbol | Meaning |
-|---|---|
-| 🔒 | **Locked** — immutable after deployment. Cannot be changed by Game Masters or the autoregulator. |
-| 🔓 | **Unlocked** — starting values only. Modifiable by Game Masters via consensus (§19 of Design Scope) and/or the autoregulator within bounded ranges. |
-| ⚠️ | **Flagged for contracts specialist review** — section contains implementation-critical logic that must be validated before deployment. |
-
----
-
 ## 1. Biome Profiles 🔒
 
 Each biome is described with its theme, gameplay identity, and quantified properties. All modifiers are multiplicative against the base action costs defined in Phase 2. A modifier of `1.0×` means no change from base cost.
 
 ### Column Definitions
 
-| Column | Lock | Description |
-|---|---|---|
-| **Move Cost** | 🔒 | Energy multiplier for the Travel action (base: 25–45 energy). Higher = harder to cross. |
-| **Move Time** | 🔒 | Time-lock multiplier for Travel (base: 72–216 ticks). Higher = slower traversal. |
-| **Survey Cost** | 🔒 | Energy multiplier for the Survey action (base: 30–50 energy). Biome is already known when surveying. |
-| **Survey Time** | 🔒 | Time-lock multiplier for Survey (base: 108–324 ticks). Applied after hex exploration reveals the biome. |
-| **Decay Rate** | 🔓 | Multiplier on territorial decay (upkeep cost). Higher = more expensive to hold. Autoregulator-tunable within bounds. |
-| **Base Hazard** | 🔓 | Base encounter chance per action (%). Modified by hex development, time of day, action type. GM-adjustable. |
-| **Fertility** | 🔒 | Base soil quality for farming/foraging. 0 = infertile. |
-| **Traversable** | 🔒 | Whether adventurers can enter this hex in the base module. |
+| Column | Description |
+|---|---|
+| **Move Cost** 🔒 | Energy multiplier for the Travel action (base: 25–45 energy). Higher = harder to cross. |
+| **Move Time** 🔒 | Time-lock multiplier for Travel (base: 72–216 ticks). Higher = slower traversal. |
+| **Survey Cost** 🔒 | Energy multiplier for the Survey action (base: 30–50 energy). Biome is already known when surveying. |
+| **Survey Time** 🔒 | Time-lock multiplier for Survey (base: 108–324 ticks). Applied after hex exploration reveals the biome. |
+| **Decay Rate** | Multiplier on territorial decay (upkeep cost). Higher = more expensive to hold. Autoregulator-tunable within bounds. |
+| **Base Hazard** | Base encounter chance per action (%). Modified by hex development, time of day, action type. GM-adjustable. |
+| **Fertility** 🔒 | Base soil quality for farming/foraging. 0 = infertile. |
+| **Traversable** 🔒 | Whether adventurers can enter this hex in the base module. |
 
 ---
 
@@ -395,7 +385,7 @@ Impassable in the base module. Covers all open water — shallow seas, deep ocea
 
 ---
 
-## 2. Encounter Type Distribution 🔓
+## 2. Encounter Type Distribution
 
 Each biome has a weighted distribution of encounter types when an encounter triggers. Weights sum to 100%.
 
@@ -444,7 +434,7 @@ Each biome has a weighted distribution of encounter types when an encounter trig
 
 ---
 
-## 3. Fauna Tier by Biome 🔓
+## 3. Fauna Tier by Biome
 
 Defines the maximum beast tier that can appear in each biome. Beast tiers range from T1 (common nuisance) to T5 (mythic apex predator). Higher tiers yield better beast parts (see Appendix F §4: Beast Parts).
 
@@ -645,7 +635,7 @@ Fertility determines base farming and foraging yields. Each biome has a fertilit
 
 ---
 
-## 6. Biome Suitability Summaries 🔓
+## 6. Biome Suitability Summaries
 
 A quick-reference for each biome's overall suitability for different activities.
 

@@ -13,7 +13,7 @@
 
 ---
 
-## Rarity System
+## Rarity System 🔒
 
 Six tiers, applied consistently across all resource types.
 
@@ -274,7 +274,7 @@ Herding produces products from four distinct livestock types. Some products are 
 
 ---
 
-## 2. Core Resources (The Canonical 22)
+## 2. Core Resources (The Canonical 22) 🔒
 
 The 22 Eternum-heritage resources, native to this world. Some are raw resources usable directly (Wood, Stone, Coal, Obsidian, Ironwood, Hartwood); most are refined from raw precursors listed in Section 1.
 
