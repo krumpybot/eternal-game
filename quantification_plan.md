@@ -149,31 +149,33 @@ T1/T2/T3 yield rates relative to each other. Refinement ratios (e.g., 3 copper o
 
 ---
 
-## PHASE 4 — Biomes & World Generation
+## PHASE 4 — Biomes & World Generation ✅ COMPLETE
 
 The terrain layer. Defines the environment that all actions operate in and determines where resources appear.
 
 Dependencies: Phase 1 (attribute formulas), Phase 2 (action catalog — biome modifiers reference specific actions), **Phase 3 (resource catalog — biome affinity and node seeding need to know what resources exist)**.
 
-### 4a. Biome Properties
+### 4a. Biome Properties ✅
 
-For each of 25 biomes: movement energy cost modifier, explore time modifier, travel time modifier, decay rate modifier (territorial upkeep), base hazard chance, encounter type distribution weights.
-→ Output: Appendix D: Biome Table
+25 biomes fully quantified: movement cost/time modifiers, explore cost/time modifiers, decay rate modifiers, base hazard chances (4%–18%), encounter type distributions (beast/combat/social/special), fauna tier caps (T1–T5), fertility ratings (None–Very High). Biome clustering algorithm defined (4-layer simplex noise: Temperature, Moisture, Elevation, Variation). Distribution targets and Nexus region override specified.
+→ Output: **Appendix D: Biome Table** (`Appendix_D_Biome_Table.md`)
 
-### 4b. Biome–Resource Affinity
+### 4b. Biome–Resource Affinity ✅
 
-For each biome: which resource nodes can appear (food, ores, trees, special). Probability weights for each. World-gen lookup table. References the resource catalog (Phase 3a) for resource IDs.
-→ Output: Appendix E: Biome–Resource Affinity Matrix
+Full affinity matrix for all 87 raw resources × 25 biomes. Three-tier system: ✓ (standard, 1×), ◆ (primary, 2×), ★ (signature, 3×). Covers mining (30 resources), logging (6), farming (13), foraging (14), hunting (11), fishing (1), herding (4 livestock types). Universal discovery resources (Rare Metals, Worldroot, Unicorn Hair) confirmed biome-independent.
+→ Output: **Appendix E: Biome–Resource Affinity Matrix** (`Appendix_E_Biome_Resource_Affinity.md`)
 
-### 4c. Area Generation
+### 4c. Area Generation ✅
 
-Rarity distribution for area counts (3–9): exact percentages. Per-area-type slot count distributions. Per-rarity building slot counts.
-→ Output: Area rarity table
+Area count rarity distribution: 35% (3) → 25% (4) → 18% (5) → 10% (6) → 6% (7) → 4% (8) → 2% (9). Area type weights: 45% Materials, 40% Bare, 10% Underworld, 5% Special (capped at 1 each per hex). Materials sub-type weights defined per biome (fertile/mining/forestry). Building slot counts quantified per area type and hex rarity (Control 2–6, Materials 2–3, Bare 2–5, Underworld/Special always 1).
+→ Output: Integrated into **Eternal_Game_Base.md §6** (Area generation tables)
 
-### 4d. Resource Node Seeding
+### 4d. Resource Node Seeding ✅
 
-Per materials area: how many nodes, node type distribution (weighted by biome affinity from 4b), yield multiplier range, regrowth rate range. References the resource catalog (Phase 3a) for resource types and tiers.
-→ Output: Node generation parameters
+Node counts per materials sub-type: Fertile 2–4, Mining 1–3, Forestry 2–4 (with biome bonuses). Node properties: resource type (weighted from affinity matrix), yield multiplier (0.5×–2.0×), regrowth rate (0.3×–1.5×), depletion threshold (50–200 harvests), special flag (5% chance). Regrowth cooldowns: Fertile 2 in-game days, Mining 6, Forestry 4 (modified by regrowth rate). Universal discovery resources confirmed as action-layer rolls, not node-seeded.
+→ Output: Integrated into **Eternal_Game_Base.md §6** (Resource node seeding tables)
+
+> **Phase 4 summary**: 25 biomes × 87 raw resources fully mapped. 2 new appendices (D, E). Base module §6 expanded with quantified area generation and node seeding parameters. All values are base-module defaults subject to autoregulator bounds and Game Master adjustment (§27).
 
 ---
 

@@ -200,42 +200,139 @@ Area types, slot counts, and resource profiles are **finalized on first survey**
 
 - `biome = noise_function(global_seed, x, y, z)` → one of 25 biome types.
 - Biomes are **deterministic and permanent**. No biome ever changes.
+- Noise uses four domain-separated layers: Temperature, Moisture, Elevation, Variation (see Appendix D §4 for full generation algorithm).
+- The Nexus `(0,0,0)` is forced to Plains; first ring is biased temperate.
 
 ### Biome list (base module)
 
 The full biome set must be defined at deployment because biome-specific logic (movement costs, hazard tables, resource affinities) is baked into the base module:
 
-| Category | Biomes |
-|---|---|
-| **Temperate** | Plains, Grassland, Forest, Highlands |
-| **Arid** | Desert, Savanna, Steppe, Badlands, Canyon |
-| **Wet** | Swamp, Wetlands, Mire, Jungle |
-| **Cold** | Tundra, Taiga, Glacier |
-| **Extreme** | Volcanic, Oasis |
-| **Water** | Coast, Beach, Coastal Waters, Lake, Ocean, Deep Ocean |
+| Category | Biomes | Count |
+|---|---|---|
+| **Temperate** | Plains, Grassland, Forest, Highlands | 4 |
+| **Arid** | Desert, Savanna, Steppe, Badlands, Canyon | 5 |
+| **Wet** | Swamp, Wetlands, Mire, Jungle | 4 |
+| **Cold** | Tundra, Taiga, Glacier | 3 |
+| **Extreme** | Volcanic, Oasis | 2 |
+| **Water** | Coast, Beach, Coastal Waters, Lake, Ocean, Deep Ocean | 6 |
+| | **Total** | **25** |
 
-Each biome defines:
-- Movement energy cost modifier
-- Exploration time modifier
-- Hazard table (beast types + lethality curve)
-- Native resource affinities (which plants/ores/trees appear)
-- Decay rate modifier (base upkeep cost)
+Each biome defines (quantified in Appendix D):
+- Movement energy cost modifier (0.8×–1.8×)
+- Exploration time modifier (0.8×–1.6×)
+- Decay rate modifier (0.7×–2.0×)
+- Base hazard chance (4%–18%)
+- Encounter type distribution (beast / combat / social / special)
+- Fauna tier cap (T1–T5)
+- Fertility rating (None / Low / Medium / High / Very High)
+- Native resource affinities (quantified in Appendix E)
+
+> **Impassable biomes**: Ocean, Deep Ocean, and Coastal Waters are impassable in the base module. Traversal requires a future Maritime module. Coast, Beach, and Lake are land-accessible.
 
 ### Area generation
 
 On first survey of a hex:
 
 1. `discovery_seed = hash(global_seed, x, y, z, discoverer_salt)` (commit-reveal)
-2. `area_count` drawn from rarity-weighted distribution (3 common → 9 near-impossible)
-3. For each area: type, slot count, and resource nodes derived from `hash(discovery_seed, area_index)` with domain separation (`AREA_V1`)
-4. Results are **stored permanently**. No re-rolls.
+2. `area_count` drawn from rarity-weighted distribution:
+
+| Area Count | Rarity | Probability | Cumulative |
+|---|---|---|---|
+| 3 | Common | 35% | 35% |
+| 4 | Common | 25% | 60% |
+| 5 | Uncommon | 18% | 78% |
+| 6 | Rare | 10% | 88% |
+| 7 | Epic | 6% | 94% |
+| 8 | Legendary | 4% | 98% |
+| 9 | Mythic | 2% | 100% |
+
+3. **Area type assignment**: Area index 0 is always the Control area. Remaining areas are drawn from a weighted distribution:
+
+| Area Type | Weight | Notes |
+|---|---|---|
+| **Materials** | 45% | Fertile, mining, or forestry (sub-type determined by biome) |
+| **Bare** | 40% | Buildable, no resources |
+| **Underworld** | 10% | Rare, future dungeon hook |
+| **Special** | 5% | Rarest, future spawn nodes / unique sites |
+
+> Underworld and Special areas are capped at 1 each per hex. If the roll produces a duplicate, it is re-rolled as Materials or Bare (50/50).
+
+4. **Materials area sub-type** is determined by biome suitability:
+
+| Biome | Fertile Weight | Mining Weight | Forestry Weight |
+|---|---|---|---|
+| Plains | 60% | 15% | 25% |
+| Grassland | 55% | 15% | 30% |
+| Forest | 15% | 15% | 70% |
+| Highlands | 25% | 50% | 25% |
+| Desert | 5% | 80% | 15% |
+| Savanna | 40% | 15% | 45% |
+| Steppe | 35% | 25% | 40% |
+| Badlands | 0% | 90% | 10% |
+| Canyon | 0% | 85% | 15% |
+| Swamp | 45% | 15% | 40% |
+| Wetlands | 50% | 10% | 40% |
+| Mire | 10% | 30% | 60% |
+| Jungle | 30% | 10% | 60% |
+| Tundra | 5% | 55% | 40% |
+| Taiga | 10% | 30% | 60% |
+| Glacier | 0% | 70% | 30% |
+| Volcanic | 0% | 95% | 5% |
+| Oasis | 70% | 5% | 25% |
+| Coast | 25% | 20% | 55% |
+| Beach | 15% | 10% | 75% |
+| Lake | 30% | 20% | 50% |
+
+> For biomes where a sub-type has 0% weight (e.g., Badlands fertile), no fertile areas can generate. The percentages are applied per materials-area roll.
+
+5. **Building slot count** per area type and hex rarity:
+
+| Hex Area Count | Control Slots | Materials Slots | Bare Slots | Underworld Slots | Special Slots |
+|---|---|---|---|---|---|
+| 3 (Common) | 2 | 2 | 2 | 1 | 1 |
+| 4 (Common) | 2 | 2 | 2 | 1 | 1 |
+| 5 (Uncommon) | 3 | 2 | 3 | 1 | 1 |
+| 6 (Rare) | 3 | 3 | 3 | 1 | 1 |
+| 7 (Epic) | 4 | 3 | 4 | 1 | 1 |
+| 8 (Legendary) | 5 | 3 | 4 | 1 | 1 |
+| 9 (Mythic) | 6 | 3 | 5 | 1 | 1 |
+
+> Slot counts scale with hex rarity primarily for Control and Bare areas — these represent development capacity. Materials areas cap at 3 slots to prevent over-industrialisation of single nodes. Underworld and Special areas always have 1 slot (reserved for future module hooks).
+
+6. Results are **stored permanently**. No re-rolls.
 
 ### Resource node seeding
 
-Within materials areas, resource nodes (plants, ores, trees) are seeded deterministically:
+Within materials areas, resource nodes are seeded deterministically on first survey:
 
 - `node_seed = hash(discovery_seed, area_index, node_index)` with domain separation (`PLANT_V1`, `ORE_V1`, `TREE_V1`)
-- Species, yield multiplier, regrowth rate, and special properties derived from seed + biome affinity table.
+
+**Node count per materials area:**
+
+| Materials Sub-type | Base Node Count | Modifier |
+|---|---|---|
+| Fertile | 2–4 | +1 in High/Very High fertility biomes |
+| Mining | 1–3 | +1 in primary/signature mining biomes |
+| Forestry | 2–4 | +1 in Forest/Taiga/Jungle |
+
+**Node properties** (each seeded individually):
+
+| Property | Range | Derivation |
+|---|---|---|
+| **Resource type** | From biome affinity table | Weighted roll using Appendix E affinity weights (★=3×, ◆=2×, ✓=1×) |
+| **Yield multiplier** | 0.5×–2.0× | Uniform from node seed; higher-rarity resources skew lower |
+| **Regrowth rate** | 0.3×–1.5× | How fast the node regenerates after depletion. Fertile areas regrow faster. |
+| **Depletion threshold** | 50–200 harvests | Total extractions before temporary exhaustion |
+| **Special flag** | 0 or 1 | 5% chance — node has a unique property (e.g., higher rare-drop chance, unusual species mix) |
+
+> **Universal discovery resources** (Rare Metals from mining, Worldroot from logging, Unicorn Hair from foraging) are **not** tied to nodes. They are low-chance rolls on every action of their type, regardless of biome or node. This is handled at the action resolution layer, not during node seeding.
+
+**Regrowth mechanics:**
+
+- Depleted nodes enter a cooldown period: `regrowth_ticks = base_cooldown × (1 / regrowth_rate)`.
+- Base cooldown: Fertile = 2,880 ticks (2 in-game days), Mining = 8,640 ticks (6 in-game days), Forestry = 5,760 ticks (4 in-game days).
+- Mining nodes may collapse instead of depleting (see §13: Production: Mining).
+- Fertility-based nodes degrade gradually rather than binary depletion — each harvest reduces current fertility, which regenerates over time at the regrowth rate.
 
 ---
 
