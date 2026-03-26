@@ -183,7 +183,7 @@ Wood resources are named simply: Wood, Ironwood, Hartwood, Moonwood. All are usa
 | G11 | **Silkworms** | 0.1 | Rare | Process → Silk (refined) | Silk-spinning larvae harvested from cocoons in caves and deep forests. The creatures are reclusive and their nests well-hidden. Raw material for the finest textile. |
 | G12 | **Truffles** | 0.1 | Rare | Cooking luxury; high trade value | Rare forest find, prized. |
 | G13 | **Spiritbloom** | 0.1 | Epic | Specialized refinement → Spiritbloom Essence (refined) | Luminous magical flower. Grows only in special areas with residual magical energy — near ruins, spawn nodes, or ancient sites. Petals glow faintly. |
-| G14 | **Unicorn Hair** | 0.1 | Epic | Process → Goldenthread (refined) | Golden threads shed from the tails and manes of unicorns — creatures no mortal has ever seen. Found as a rare discovery when foraging in deep forests, meadows, and special areas. The hairs shimmer faintly and are impossibly strong. |
+| G14 | **Unicorn Hair** | 0.1 | Epic | Process → Goldenthread (refined) | Golden threads shed from the tails and manes of unicorns — creatures no mortal has ever seen. Low-chance discovery from **any** foraging activity. The hairs shimmer faintly and are impossibly strong. |
 
 > **Foraging rarity summary**: 5 Common, 3 Uncommon, 4 Rare, 2 Epic = **14 foraging raw resources**.
 
@@ -578,12 +578,13 @@ This approach keeps the **resource layer clean** (fewer fungible items to track 
 
 ### Universal Discovery Resources
 
-Two "universal discovery" resources exist — low-chance drops from any activity within their category, requiring no dedicated node:
+Three "universal discovery" resources exist — low-chance drops from any activity within their category, requiring no dedicated node:
 
 | Resource | Category | Rarity | Drops from |
 |---|---|---|---|
 | **Rare Metals** (M16) | Mining | Rare | Any mining activity |
 | **Worldroot** (L05) | Logging | Rare | Any logging activity |
+| **Unicorn Hair** (G14) | Foraging | Epic | Any foraging activity |
 
 ### Shared Resources Between Actions
 
@@ -595,14 +596,6 @@ Four resources are identical regardless of source action:
 | **Raw Bone** (H02) | Wild fauna | Butchered livestock (all types) |
 | **Raw Fat** (H03) | Wild fauna | Butchered livestock (all types) |
 | **Feathers** (H06) | Bird hunting | Poultry herding |
-
-### Resources With No Firm Refinement Path
-
-These raw resources are valued for their raw properties and serve as ingredients rather than feedstock for named refined products:
-
-| Resource | Rarity | Use case |
-|---|---|---|
-| **Worldroot** (L05) | Rare | Cooking ingredient, future alchemy reagent |
 
 ---
 
@@ -630,7 +623,7 @@ These raw resources are valued for their raw properties and serve as ingredients
 
 11. **Wood resources as a unified family**: Wood, Ironwood, Hartwood, and Moonwood all follow the same pattern — named simply, usable directly as raw resources, refinable into planks for construction and crafting. The rarer woods rarely appear in recipes in raw form but can be used directly in principle.
 
-12. **Unicorn Hair / Goldenthread**: Unicorns are mythical creatures never seen by mortals. They shed golden hairs from their tails and manes, discovered as rare foraging finds in deep forests and special areas. Goldenthread spun from these hairs is unbreakable magical thread — used for high-tier clothing and bowstrings.
+12. **Unicorn Hair / Goldenthread**: Unicorns are mythical creatures never seen by mortals. They shed golden hairs from their tails and manes, discoverable as a low-chance drop from any foraging activity — the third universal discovery resource (alongside Rare Metals for mining and Worldroot for logging). Goldenthread spun from these hairs is unbreakable magical thread — used for high-tier clothing and bowstrings.
 
 13. **Livestock as followers**: Horses and Donkeys are unique herding products — the product IS the living animal, used as a follower. They can be butchered for horsemeat in desperation, but this destroys a high-value transport asset.
 

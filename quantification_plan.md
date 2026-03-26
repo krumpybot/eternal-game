@@ -111,33 +111,38 @@ Draft worked example: ~9 actions/in-game day, ~250 energy, ~920 ticks at heavy c
 
 ---
 
-## PHASE 3 — Resources ⏳ NEXT
+## PHASE 3 — Resources ✅ COMPLETE
 
 Every item, recipe, building cost, and biome affinity references resource IDs and properties. Resources are intrinsic definitions — what exists in the game world — independent of where they appear.
 
 Dependencies: Phase 1 (weight unit, attribute formulas for yield calculations). **No dependency on biomes** — resource properties (weight, rarity, nutrition) are defined before placement.
 
-### 3a. Resource Catalog
+### 3a. Resource Catalog ✅
 
-For every resource: name, category (food / raw material / refined material / special), weight per unit (kg), rarity tier, base nutrition value (food only), base trade value (relative index).
+153 defined resources + 60 effective beast part variants. 6-tier rarity system (Common → Mythic).
 
-Categories:
-- **Food**: raw food (wheat, fish, meat, berries, etc.) and processed intermediates (flour, butter, cheese)
-- **Raw materials**: ores (copper ore, cold iron ore, gold ore, etc.), stone, wood, hides, wool, herbs
-- **Refined materials**: planks, leather, cloth, bricks, nails, rope, voidsand, starmetal
-- **Core resources**: the 22 Eternum-heritage resources (immutable set)
-- **Beast parts**: generic drops from beast encounters, tiered by beast level
+| Layer | Count | Details |
+|---|---|---|
+| Raw resources | 87 | Mining (30), Logging (6), Farming (13), Foraging (14), Hunting (11), Fishing (1), Herding (12) |
+| Core resources | 22 | Eternum heritage, immutable. Mapped to 6 rarity tiers. |
+| Refined resources | 44 | Metals (1), Textiles (13), Wood/Plant (5), Building (7), Fuels/Chemicals (10), Processed Food (8) |
+| Beast parts | 12 types × 5 quality tiers | 60 effective variants |
 
-> Eternum carries 22 core resources (immutable). These are mapped to a 6-tier rarity system (Common–Mythic) and extended with raw and refined resources for the base module.
+Key design decisions locked:
+- Cold Iron is iron (Eternum heritage name for the everyday working metal)
+- Alloys are emergent crafting properties, not standalone resources (Phase 7)
+- 3 universal discovery resources: Rare Metals (mining), Worldroot (logging), Unicorn Hair (foraging)
+- Endgame chain: Voidsand (heat) + Starmetal (equipment) → unlocks Mythic metalwork
+- Resource ID registry: 4096 addressable IDs, core resources locked at 22
 
 → Output: **Appendix F: Resource Catalog**
 
-### 3b. Food & Nutrition
+### 3b. Food & Nutrition ⏳
 
 Nutrition values for each food type. Raw vs cooked multiplier (cooking recipes defined in Phase 7c). How nutrition maps to food-reserve deposit amounts (deposit X food → Y% bar). Energy buff values for cooked food tiers.
 → Output: Food mechanics table
 
-### 3c. Core Resource Tiers
+### 3c. Core Resource Tiers ⏳
 
 T1/T2/T3 yield rates relative to each other. Refinement ratios (e.g., 3 copper ore → 1 copper bar). Quality tier split (dirty/clean/pure — what % at each skill level).
 → Output: Refinement ratios table
