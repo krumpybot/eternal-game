@@ -457,9 +457,9 @@ Health damage ranges per beast tier. Injury trait acquisition thresholds. Severi
 
 ---
 
-## PHASE 13 — Autoregulator & Minting
+## PHASE 13 — Autoregulator, Minting & Game Masters
 
-The balancing layer. Needs everything else to set sensible initial values.
+The balancing layer. Needs everything else to set sensible initial values. Also defines the interface between the immutable physics (Phases 1–4) and the dynamic game layer managed by autonomous Game Masters.
 
 Dependencies: all previous phases (integration/balance pass).
 
@@ -482,6 +482,16 @@ Worked example: typical adventurer's first 24 real-hours. Energy budget, health 
 
 Revisit all 120 trait special effect percentages against the now-complete action costs, production yields, and encounter formulas. Validate that no single trait creates degenerate strategies. Revisit the Phase 2c action–trait cross-reference. Adjust percentages as needed.
 → Output: Trait balance audit
+
+### 13e. Game Master Authority Map
+
+Define the precise boundary between immutable physics and Game Master-modifiable parameters. For every system quantified in Phases 1–12, classify each parameter as:
+- **Immutable**: Cannot be changed after deployment (time constants, attribute formulas, resource definitions, biome seeds)
+- **Autoregulator-tuned**: Adjusted algorithmically within fixed bounds per epoch
+- **Game Master-modifiable**: Can be proposed, reviewed, and deployed by the Game Master consensus process
+
+Define the Game Master API surface: which hooks, tables, and parameters they can read/write. Define consensus rules (domain-specific vetoes, approval thresholds). Define the staging/deployment pipeline.
+→ Output: Game Master authority matrix + API specification
 
 ---
 

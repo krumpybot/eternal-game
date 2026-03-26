@@ -24,10 +24,11 @@
 16. [Social Systems & Governance](#16-social-systems--governance)
 17. [Agent & Autonomous Play](#17-agent--autonomous-play)
 18. [Autoregulation & Anti-Inflation](#18-autoregulation--anti-inflation)
-19. [Development Philosophy](#19-development-philosophy)
-20. [Phased Roadmap](#20-phased-roadmap)
-21. [Open Questions](#21-open-questions)
-22. [Open Design Details](#22-open-design-details)
+19. [The Game Masters](#19-the-game-masters)
+20. [Development Philosophy](#20-development-philosophy)
+21. [Phased Roadmap](#21-phased-roadmap)
+22. [Open Questions](#22-open-questions)
+23. [Open Design Details](#23-open-design-details)
 
 ---
 
@@ -60,6 +61,7 @@ Eternal Game fuses these into one coherent world.
 | **Territorial Sovereignty** | Discovery creates property rights. Ownership demands upkeep. Neglected territory decays and becomes claimable. There is no free land - only maintained land. |
 | **Headless & Client-Agnostic** | All state lives in smart contracts. Any front-end (3D, pixel, text, Discord bot, autonomous agent) can render and interact with the same world. |
 | **Modular Extensibility** | The base layer supports an arbitrary number of game modules (mining, crafting, combat, diplomacy, research, trade) layered on top over time. Each module integrates with the same energy/ownership/action framework. |
+| **Autonomous Game Mastery** | Content, balance, and economy are managed by a team of specialised AI agents (Game Masters) funded by game fees. They create, review, balance, and deploy content continuously — enabling a scope of gameplay impossible for human designers alone. |
 | **Ecosystem Integration** | Realms assets ($LORDS, Realm NFTs, Beasts, Loot, C&C) are first-class citizens - not cosmetic overlays, but functional components of the world's economy and lore. |
 
 ---
@@ -928,25 +930,137 @@ The world doesn't have artificial scarcity - it has **player-created scarcity**:
 
 ---
 
-## 19. Development Philosophy
+## 19. The Game Masters
 
-### 19.1 Eternal Development
+### 19.1 The Problem of Scale
+
+The immutable physics layer (time, space, matter, energy, biomes, traits, resources) defines what *can* happen in the Eternal World. But the content that runs on top of that physics — crafting recipes, encounters, events, NPC behaviours, balance parameters, economic tuning — is potentially infinite. Thousands of resource combinations, hundreds of discoverable recipes, encounters with branching outcomes, seasonal events, emergent gameplay opportunities.
+
+This scope is impossible for a human design team to create, balance, and maintain across the lifetime of a truly eternal game. Content creation at this scale requires tireless, continuous, data-driven iteration — exactly what AI agents excel at.
+
+### 19.2 The Solution: Autonomous Game Masters
+
+The Eternal Game is designed, balanced, and managed by a team of AI agents known as the **Game Masters**. They are the dungeon masters of the Eternal World — autonomous, specialised, and funded by the game's own economy.
+
+Game Masters operate on everything above the immutable foundation:
+- **Immutable (Phases 1–4)**: Time, attributes, traits, resources, biomes. Fixed at deployment. Game Masters cannot modify these.
+- **Dynamic (Phases 5+)**: Actions, production rates, crafting recipes, encounter tables, event triggers, autoregulator parameters, NPC behaviours, lore entries, balance tuning. Game Masters have full authority here.
+
+This creates a clean separation: the physics are trusted and permanent; the gameplay is living and evolving.
+
+### 19.3 The Game Master Roles
+
+Five specialised agents, each with a distinct remit:
+
+#### The Creator
+
+Charged with endless content generation. Proposes new crafting recipes, encounter scenarios, events, NPC archetypes, discoverable areas, and gameplay opportunities. The Creator's output is prolific but speculative — nothing it produces enters the game until reviewed and approved by the other Game Masters.
+
+- Generates candidate recipes from the resource catalog and crafting system rules
+- Designs encounter templates with branching outcomes
+- Proposes seasonal events, rare discoveries, and world happenings
+- Invents lore-consistent NPC personalities and dialogue
+- Explores edge cases in the physics to find emergent gameplay
+
+#### The Loremaster
+
+Guardian of narrative consistency. Ensures all content from the Game Masters aligns with the intended setting, history, and tone of the Lootverse and the Eternal World. Has deep knowledge of Realms lore, the history of the world, resource origins, beast mythology, and the cultures that emerge from play.
+
+- Reviews all Creator output for lore consistency
+- Writes flavour text, item descriptions, encounter narratives
+- Maintains the living lore document — a record of world history shaped by player actions
+- Vetoes content that contradicts established lore or tone
+- Bridges Lootverse canon with Eternal Game world-building
+
+#### The Statistician
+
+The data engine. Monitors every measurable aspect of the game and makes that data available to the other Game Masters. Responsible for the health of the autoregulator and the integrity of game metrics.
+
+- Tracks resource extraction, consumption, stockpiles, and flow through the supply chain
+- Monitors adventurer lifespan, causes of death, attribute distributions, trait frequency
+- Analyses settlement economics: population, food reserves, building utilisation, staffing
+- Reports on active adventurers, idle rates, engagement patterns
+- Feeds the autoregulator with clean aggregate data each epoch
+- Flags anomalies: exploits, degenerate strategies, dead-end builds
+
+#### The Balancer
+
+Takes features and data from the others and fine-tunes them for fair, engaging gameplay. Ensures no single strategy dominates, no resource is useless, and no encounter is trivially solvable or impossibly lethal.
+
+- Assigns numerical values to Creator-proposed recipes (costs, yields, difficulty)
+- Tunes encounter difficulty curves using Statistician data
+- Adjusts drop rates, yield multipliers, and cost tiers within autoregulator bounds
+- Identifies overpowered or underpowered strategies and proposes corrections
+- Validates that new content doesn't invalidate existing progression paths
+- Runs simulated playthroughs to stress-test proposals before deployment
+
+#### The Economist
+
+Ensures the economic sustainability of the Eternal World. The game must be self-funding — Game Master inference costs are paid from game fees, not external subsidies. The Economist ensures the game's economy supports this while remaining fair and engaging for players.
+
+- Models resource markets: supply, demand, price stability, trade volume
+- Ensures new content doesn't cause hyperinflation or deflationary spirals
+- Validates that game fees cover Game Master operational costs
+- Analyses the relationship between mint rates, death rates, and economic velocity
+- Proposes fee adjustments or economic interventions when metrics drift
+- Evaluates the long-term sustainability of every proposed change
+
+### 19.4 Consensus & Deployment
+
+No single Game Master can push changes to the live game. All content and balance changes require **consensus** before deployment:
+
+1. **Proposal**: Any Game Master (typically the Creator) proposes a change — a new recipe, encounter, balance adjustment, or event.
+2. **Review**: Each relevant Game Master evaluates the proposal within their domain (lore consistency, statistical impact, balance implications, economic sustainability).
+3. **Consensus**: All reviewing Game Masters must approve. Any Game Master can veto within their domain (the Loremaster can veto on lore grounds; the Economist can veto on sustainability grounds; etc.).
+4. **Staging**: Approved changes are deployed to a staging environment for simulation and testing.
+5. **Deployment**: Changes that pass staging are pushed to the live game autonomously.
+
+The core development team retains an **emergency override** — the ability to pause or revert Game Master deployments if a critical issue is detected. This is a safety valve, not a governance mechanism. Under normal operation, Game Masters are fully autonomous.
+
+### 19.5 Game Masters as Players
+
+Game Masters may operate their own adventurers under the same ruleset that governs all human and agent-managed adventurers. They receive no special privileges, hidden information, or mechanical advantages. Playing the game gives them first-hand insight into gameplay feel, balance friction, and emergent dynamics that data alone cannot capture.
+
+Their adventurers live and die by the same physics as everyone else.
+
+### 19.6 Funding Model
+
+Game Masters are funded by the game's economy — their inference costs are paid from game fees (adventurer minting, settlement taxes, marketplace fees, etc.). They are a cost of running the world, not an external service. This creates a natural alignment: if the game thrives, Game Master resources are abundant; if the game stagnates, their budget contracts, forcing efficient prioritisation.
+
+The Economist is specifically responsible for ensuring this feedback loop remains sustainable.
+
+### 19.7 Relationship to the Autoregulator
+
+The **autoregulator** (§18) is an on-chain PI controller that adjusts tunable parameters within fixed bounds — a mechanical thermostat. The Game Masters are the intelligence layer above it:
+
+| Layer | Scope | Speed | Authority |
+|---|---|---|---|
+| **Autoregulator** | Numerical parameters (regen rates, hazard multipliers, decay rates) | Per-epoch, automatic | Bounded, algorithmic, no discretion |
+| **Game Masters** | Content, recipes, encounters, events, balance, lore, economy | Continuous, deliberate | Consensus-gated, domain-specific vetoes |
+
+The Statistician feeds data to the autoregulator. The Balancer may propose changes to autoregulator bounds (subject to consensus). But the autoregulator itself operates independently — it doesn't wait for Game Master approval to make its per-epoch adjustments.
+
+---
+
+## 20. Development Philosophy
+
+### 20.1 Eternal Development
 
 This is not a game that ships in 6 months. The foundation ships. Then modules are developed, tested, and deployed over **years**. Each module adds depth without breaking the foundation.
 
-### 19.2 Foundation-First
+### 20.2 Foundation-First
 
 The most critical engineering work is the first phase: getting the immutable foundation absolutely right. If the coordinate system, energy model, biome generation, or ownership semantics need to change later, the game has failed at its core premise.
 
-### 19.3 Play Before You Build
+### 20.3 Play Before You Build
 
 Each phase should be **playable** before the next begins. Foundation + Survival should be a compelling idle game on its own. Each module adds richness, but the game is fun at every stage.
 
-### 19.4 Community-Driven Expansion
+### 20.4 Community-Driven Expansion
 
-Third-party modules and programmable hooks mean the game's content grows through its community, not just its developers. The development team's role shifts from content creation to platform maintenance over time.
+Third-party modules, programmable hooks, and autonomous Game Masters (§19) mean the game's content grows through its community and AI agents, not just its developers. The core team's role shifts from content creation to platform maintenance and Game Master oversight over time.
 
-### 19.5 Technology Stack
+### 20.5 Technology Stack
 
 | Layer | Technology |
 |---|---|
@@ -959,7 +1073,7 @@ Third-party modules and programmable hooks mean the game's content grows through
 
 ---
 
-## 20. Phased Roadmap
+## 21. Phased Roadmap
 
 ### Phase 0: Foundation (The Immutable Layer)
 
@@ -1040,12 +1154,14 @@ Third-party modules and programmable hooks mean the game's content grows through
 - AI agent integration + x402 micropayments
 - Agent discovery via ERC-8004
 - Full permission hook ecosystem for territory business logic
+- **Game Masters deployed**: The Creator, Loremaster, Statistician, Balancer, and Economist begin autonomous operation — generating content, balancing systems, and managing the economy
+- Game Master consensus pipeline for autonomous content deployment
 
-**Playable state**: A living world. Human and AI players coexist. The game runs even when everyone is asleep.
+**Playable state**: A living world. Human and AI players coexist. Game Masters create, balance, and evolve content continuously. The game runs — and improves — even when everyone is asleep.
 
 ---
 
-## 21. Open Questions
+## 22. Open Questions
 
 These are unresolved design decisions that need iteration:
 
@@ -1072,7 +1188,7 @@ These are unresolved design decisions that need iteration:
 
 ---
 
-## 22. Open Design Details
+## 23. Open Design Details
 
 These are **design-detail lists** that require deep authoring and will evolve rapidly:
 

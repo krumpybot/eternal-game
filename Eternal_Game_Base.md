@@ -32,10 +32,11 @@
 24. [Beasts & Hazards](#24-beasts--hazards)
 25. [Permadeath & Legacy](#25-permadeath--legacy)
 26. [Autoregulation](#26-autoregulation)
-27. [Extension Interfaces](#27-extension-interfaces)
-28. [Future Module Placeholders](#28-future-module-placeholders)
-29. [What Is Explicitly Deferred](#29-what-is-explicitly-deferred)
-30. [Playable State](#30-playable-state)
+27. [Game Masters Interface](#27-game-masters-interface)
+28. [Extension Interfaces](#28-extension-interfaces)
+29. [Future Module Placeholders](#29-future-module-placeholders)
+30. [What Is Explicitly Deferred](#30-what-is-explicitly-deferred)
+31. [Playable State](#31-playable-state)
 
 ---
 
@@ -347,7 +348,7 @@ Traits are organized into **5 types**:
 - Some trait special effects modify **attribute or trait gain chances** rather than direct mechanics (e.g., "Diligent: +10% chance of attribute gain from all actions" means a 1% base chance becomes 1.1%).
 - Skill traits define an adventurer's aptitude from their adventures. Positive skill traits are potential outcomes of **successful** actions; negative skill traits are potential outcomes of **failures and defeats**. Skill traits become harder to acquire as the adventurer accumulates more skills.
 - Personality traits can be gained/replaced through **major life events** (very rare — surviving near-death encounters, first settlement, etc.).
-- Trait list is a large enumeration defined at deployment (see §28 for extensibility).
+- Trait list is a large enumeration defined at deployment (see §29 for extensibility).
 
 ### Equipment slots
 
@@ -1124,7 +1125,81 @@ Prevent runaway inflation, stagnation, or exploitation without human interventio
 
 ---
 
-## 27. Extension Interfaces
+## 27. Game Masters Interface
+
+The base module defines the boundary between the **immutable physics** (Phases 1–4: time, attributes, traits, resources, biomes) and the **dynamic game layer** (Phases 5+) managed by autonomous AI agents known as the Game Masters (see §19 of the Design Scope).
+
+### What Game Masters can modify
+
+Everything above the immutable foundation is within Game Master authority, subject to their internal consensus process. In the base module, this includes:
+
+| Domain | Examples | Constraints |
+|---|---|---|
+| **Crafting recipes** | New recipes, ingredient combinations, yield values | Must use resources from the locked resource catalog (Appendix F). Cannot create new resource IDs. |
+| **Cooking recipes** | New meals, buff values, ingredient requirements | Must use food resources from the catalog. Buff values bounded by meal tier system. |
+| **Encounter tables** | New beast encounters, social encounters, special events | Must use defined encounter types (beast, combat, social, special). Outcomes bounded by attribute/trait system. |
+| **Drop rates & yields** | Resource node yield multipliers, beast drop tables | Within autoregulator bounds. Cannot exceed parameter ranges defined in §26. |
+| **Event triggers** | Seasonal events, rare world events, discovery triggers | Must fire through the event hook system (§28). Cannot modify core game loops. |
+| **Balance parameters** | Action costs, energy modifiers, time-lock durations | Within autoregulator bounds. Subject to Balancer + Economist consensus. |
+| **Lore & flavour** | Item descriptions, encounter narratives, world history entries | Subject to Loremaster approval. |
+| **NPC behaviours** | Encounter NPC dialogue, trading behaviours, quest-like interactions | Must operate within the action/encounter framework. |
+
+### What Game Masters cannot modify
+
+The immutable foundation is off-limits:
+
+- Tick length, in-game day duration, or any time constant (§4)
+- Attribute formulas, attribute count, or attribute budget (§7)
+- Trait definitions in the base trait catalog (Appendix C) — though Game Masters may propose new traits for future modules
+- Core resource definitions (the 22 Eternum-heritage resources) or the resource ID registry structure (Appendix F)
+- Biome definitions and world generation seed (§6)
+- Hex coordinate system and adjacency rules (§5)
+- Energy pool mechanics and base regen formula (§9)
+- Permadeath rules (§25)
+- The autoregulator's algorithm or parameter bounds (§26) — though the Balancer may propose bound changes to the core team
+
+### Base module hooks for Game Masters
+
+The base module exposes these interfaces for Game Master interaction:
+
+```
+// Recipe management
+register_recipe(recipe_id, inputs[], output, facility, min_skill, metadata)
+update_recipe_values(recipe_id, field, new_value)  // within bounds
+disable_recipe(recipe_id)  // soft-disable, not delete
+
+// Encounter management
+register_encounter(encounter_id, type, trigger_conditions, outcomes[], metadata)
+update_encounter(encounter_id, field, new_value)
+set_encounter_weight(biome, encounter_id, weight)  // per-biome frequency
+
+// Drop rate management
+set_drop_rate(source_type, resource_id, base_rate)  // within autoregulator bounds
+set_beast_drop_table(beast_type, drops[])
+
+// Event management
+register_event(event_id, trigger, duration, effects[], metadata)
+activate_event(event_id)
+deactivate_event(event_id)
+
+// Balance adjustment (within autoregulator bounds)
+adjust_action_cost(action_id, energy_cost, time_cost)  // bounded
+adjust_yield_modifier(resource_id, modifier)  // bounded
+```
+
+All Game Master actions are logged on-chain for transparency. Players can inspect the history of changes.
+
+### Game Master adventurers
+
+Game Masters may operate adventurers. These adventurers:
+- Are minted and managed identically to any other adventurer
+- Have no special access, information asymmetry, or mechanical advantage
+- Live and die by the same physics
+- Are publicly identified as Game Master-operated (no hidden identity)
+
+---
+
+## 28. Extension Interfaces
 
 The base module exposes these interfaces for future modules to hook into:
 
@@ -1193,7 +1268,7 @@ Read-only access to adventurer state for any module.
 
 ---
 
-## 28. Future Module Placeholders
+## 29. Future Module Placeholders
 
 The base module includes reserved **hooks, IDs, and world-generation slots** that exist solely to support future modules without requiring base module changes. These are "empty sockets" in the physics.
 
@@ -1235,11 +1310,11 @@ The trait system supports up to 10 slots per adventurer. The base module ships w
 
 ### Event hooks as placeholders
 
-All 16+ event hooks (§27) fire regardless of whether any module is listening. Future modules subscribe to the events they need. The base module doesn't need to know what modules exist — it just emits events.
+All 16+ event hooks (§28) fire regardless of whether any module is listening. Future modules subscribe to the events they need. The base module doesn't need to know what modules exist — it just emits events.
 
 ### Permission hook interface
 
-The `IPermissionHook` trait (§27) is deployed per-hex by territory controllers. The base module enforces the interface but doesn't care what logic is inside. This is the primary extensibility mechanism for future social/economic/governance modules.
+The `IPermissionHook` trait (§28) is deployed per-hex by territory controllers. The base module enforces the interface but doesn't care what logic is inside. This is the primary extensibility mechanism for future social/economic/governance modules.
 
 ### Biome-specific reserved data
 
@@ -1247,7 +1322,7 @@ Each biome's hazard table includes **weight slots for T4 and T5 beasts** even th
 
 ---
 
-## 29. What Is Explicitly Deferred
+## 30. What Is Explicitly Deferred
 
 To maintain clarity on the module boundary, here is what the base module **does not include** and why:
 
@@ -1273,7 +1348,7 @@ To maintain clarity on the module boundary, here is what the base module **does 
 
 ---
 
-## 30. Playable State
+## 31. Playable State
 
 When the base module ships, a player can:
 
