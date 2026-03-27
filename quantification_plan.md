@@ -495,6 +495,54 @@ Define the precise boundary between immutable physics and Game Master-modifiable
 Define the Game Master API surface: which hooks, tables, and parameters they can read/write. Define consensus rules (domain-specific vetoes, approval thresholds). Define the staging/deployment pipeline.
 → Output: Game Master authority matrix + API specification
 
+### 13f. Seed Security Specification ⚠️
+
+Document seed derivation for all randomised systems:
+- Adventurer mint (commit-reveal with reveal-block hash).
+- Area discovery (commit-reveal with reveal-block hash).
+- Crafting mutation (must include block entropy to prevent outcome prediction).
+- Action outcome rolls (encounters, yields, trait gains) — define per-action seed source.
+
+Ensure no randomised outcome is predictable at commit time. Validate against MEV-style manipulation.
+→ Output: Seed security specification (flag for contracts specialist)
+
+### 13g. Autoregulator Implementation Constraints ⚠️
+
+Define lazy aggregation pattern: running counters updated per-action (not entity iteration per epoch). Document overflow handling for lazy evaluation (saturating arithmetic for energy/health). Define "poke" mechanism or lazy death realisation policy.
+→ Output: Implementation constraints document (flag for contracts specialist)
+
+### 13h. Settlement Succession & Orphan Recovery
+
+Define what happens to settlements when the owner dies (permadeath). Options: new adventurer claims Keep hex → inherits settlement, or settlement decays naturally and hexes become claimable individually. Document intended player experience.
+→ Output: Succession rules
+
+---
+
+## Mid-Design Assessment (2026-03-27)
+
+Full review completed. See `mid-design_assessment.md` for details. Key findings:
+
+**🔴 Critical (7 items)**:
+- C1: Resource ID registry misalignment (Base §13 vs Appendix F)
+- C2: Attribute formula floor clamps needed (WIS/CHA)
+- C3: Understaffing division-by-zero at zero population
+- C4: Commit-reveal seed security (block-hash entropy in reveal)
+- C5: Mutation crafting prediction prevention
+- C6: Energy regen during time-lock (fundamental economic decision)
+- C7: Settlement deed orphaning on permadeath
+
+**🟡 Important (7 items)**:
+- I1: Population growth rate too slow (+1/day)
+- I2: No fishing production section in Base Module
+- I3: Ecosystem dynamics may be too punishing (no sustainable yield threshold)
+- I4: No direct player-to-player resource transfer action
+- I5: Biome-resource matrix storage (hardcode as constants)
+- I6: Autoregulator needs lazy aggregation pattern
+- I8: Campfire lifetime undefined
+
+**🔵 Advisory (8 items)**:
+- A1–A8: Biome consolidation check, trait diversity, permission hook gas limits, encounter variance, settlement benefits, season hooks, doc consolidation, resting action clarity
+
 ---
 
 ## Phase Dependency Graph
@@ -535,5 +583,5 @@ Phase 1 (Units/Attributes)
 
 ---
 
-*Quantification plan v0.6 — March 2026*
-*Phases 1–4 complete. Lock status system introduced. Phase 3b (Food & Nutrition) next.*
+*Quantification plan v0.7 — March 2026*
+*Phases 1–4 complete. Lock status system introduced. Mid-design assessment completed (7 critical, 7 important, 8 advisory findings). New tasks 13f–13h added. Phase 3b (Food & Nutrition) next.*

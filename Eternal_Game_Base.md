@@ -9,30 +9,30 @@
 1. [Design Intent](#1-design-intent)
 2. [What "Immutable" Means](#2-what-immutable-means)
 3. [Module Boundary](#3-module-boundary)
-4. [Time](#4-time)
-5. [Space](#5-space)
-6. [World Generation](#6-world-generation)
-7. [The Adventurer](#7-the-adventurer)
-8. [Followers](#8-followers)
-9. [Energy](#9-energy)
-10. [Movement & Exploration](#10-movement--exploration)
-11. [Surveying](#11-surveying)
-12. [Resource Definitions](#12-resource-definitions)
-13. [Production: Mining](#13-production-mining)
-14. [Production: Forestry](#14-production-forestry)
-15. [Production: Hunting](#15-production-hunting)
-16. [Production: Foraging & Harvesting](#16-production-foraging--harvesting)
-17. [Production: Livestock](#17-production-livestock)
-18. [Crafting & Refining](#18-crafting--refining)
-19. [Equipment & Items](#19-equipment--items)
-20. [Construction & Buildings](#20-construction--buildings)
-21. [Settlement](#21-settlement)
-22. [Population, Housing & Food](#22-population-housing--food)
-23. [Territorial Sovereignty](#23-territorial-sovereignty)
-24. [Beasts & Hazards](#24-beasts--hazards)
-25. [Permadeath & Legacy](#25-permadeath--legacy)
-26. [Autoregulation](#26-autoregulation)
-27. [Game Masters Interface](#27-game-masters-interface)
+4. [Game Masters Interface](#4-game-masters-interface)
+5. [Time](#5-time)
+6. [Space](#6-space)
+7. [World Generation](#7-world-generation)
+8. [The Adventurer](#8-the-adventurer)
+9. [Followers](#9-followers)
+10. [Energy](#10-energy)
+11. [Movement & Exploration](#11-movement--exploration)
+12. [Surveying](#12-surveying)
+13. [Resource Definitions](#13-resource-definitions)
+14. [Production: Mining](#14-production-mining)
+15. [Production: Forestry](#15-production-forestry)
+16. [Production: Hunting](#16-production-hunting)
+17. [Production: Foraging & Harvesting](#17-production-foraging--harvesting)
+18. [Production: Livestock](#18-production-livestock)
+19. [Crafting & Refining](#19-crafting--refining)
+20. [Equipment & Items](#20-equipment--items)
+21. [Construction & Buildings](#21-construction--buildings)
+22. [Settlement](#22-settlement)
+23. [Population, Housing & Food](#23-population-housing--food)
+24. [Territorial Sovereignty](#24-territorial-sovereignty)
+25. [Beasts & Hazards](#25-beasts--hazards)
+26. [Permadeath & Legacy](#26-permadeath--legacy)
+27. [Autoregulation](#27-autoregulation)
 28. [Extension Interfaces](#28-extension-interfaces)
 29. [Future Module Placeholders](#29-future-module-placeholders)
 30. [What Is Explicitly Deferred](#30-what-is-explicitly-deferred)
@@ -49,7 +49,7 @@ Throughout this document and all appendices, the following symbols indicate whet
 | 🔒 | **Locked** — immutable after deployment. Cannot be changed by Game Masters, the autoregulator, or any future module. Part of the permanent world physics. |
 | ⚠️ | **Flagged for review** — section contains implementation-critical logic requiring specialist validation before deployment. |
 
-All features and values **without** a lock symbol are assumed to be **starting values only** — modifiable by Game Masters via consensus (§19 of the Design Scope), the autoregulator within bounded ranges, or future modules.
+All features and values **without** a lock symbol are assumed to be **starting values only** — modifiable by Game Masters via consensus (§4 of the Design Scope), the autoregulator within bounded ranges, or future modules.
 
 ---
 
@@ -133,7 +133,94 @@ What *can* change:
 
 ---
 
-## 4. Time 🔒
+## 4. Game Masters Interface
+
+The base module defines the boundary between the **immutable physics** (Phases 1–4: time, attributes, traits, resources, biomes) and the **dynamic game layer** (Phases 5+) managed by autonomous AI agents known as the Game Masters (see §4 of the Design Scope).
+
+### What Game Masters can modify
+
+Everything above the immutable foundation is within Game Master authority, subject to their internal consensus process. In the base module, this includes:
+
+| Domain | Examples | Constraints |
+|---|---|---|
+| **Crafting recipes** | New recipes, ingredient combinations, yield values | Must use resources from the locked resource catalog (Appendix F). Cannot create new resource IDs. |
+| **Cooking recipes** | New meals, buff values, ingredient requirements | Must use food resources from the catalog. Buff values bounded by meal tier system. |
+| **Encounter tables** | New beast encounters, social encounters, special events | Must use defined encounter types (beast, combat, social, special). Outcomes bounded by attribute/trait system. |
+| **Drop rates & yields** | Resource node yield multipliers, beast drop tables | Within autoregulator bounds. Cannot exceed parameter ranges defined in §27. |
+| **Event triggers** | Seasonal events, rare world events, discovery triggers | Must fire through the event hook system (§28). Cannot modify core game loops. |
+| **Balance parameters** | Action costs, energy modifiers, time-lock durations | Within autoregulator bounds. Subject to Balancer + Economist consensus. |
+| **Lore & flavour** | Item descriptions, encounter narratives, world history entries | Subject to Loremaster approval. |
+| **NPC behaviours** | Encounter NPC dialogue, trading behaviours, quest-like interactions | Must operate within the action/encounter framework. |
+
+### What Game Masters cannot modify
+
+The immutable foundation is off-limits:
+
+- Tick length, in-game day duration, or any time constant (§5)
+- Attribute formulas, attribute count, or attribute budget (§8)
+- Trait definitions in the base trait catalog (Appendix C) — though Game Masters may propose new traits for future modules
+- Core resource definitions (the 22 Eternum-heritage resources) or the resource ID registry structure (Appendix F)
+- Biome definitions and world generation seed (§7)
+- Hex coordinate system and adjacency rules (§6)
+- Energy pool mechanics and base regen formula (§10)
+- Permadeath rules (§26)
+- The autoregulator's algorithm or parameter bounds (§27) — though the Balancer may propose bound changes to the core team
+
+### Base module hooks for Game Masters
+
+The base module exposes these interfaces for Game Master interaction:
+
+```
+// Recipe management
+register_recipe(recipe_id, inputs[], output, facility, min_skill, metadata)
+update_recipe_values(recipe_id, field, new_value)  // within bounds
+disable_recipe(recipe_id)  // soft-disable, not delete
+
+// Encounter management
+register_encounter(encounter_id, type, trigger_conditions, outcomes[], metadata)
+update_encounter(encounter_id, field, new_value)
+set_encounter_weight(biome, encounter_id, weight)  // per-biome frequency
+
+// Drop rate management
+set_drop_rate(source_type, resource_id, base_rate)  // within autoregulator bounds
+set_beast_drop_table(beast_type, drops[])
+
+// Event management
+register_event(event_id, trigger, duration, effects[], metadata)
+activate_event(event_id)
+deactivate_event(event_id)
+
+// Balance adjustment (within autoregulator bounds)
+adjust_action_cost(action_id, energy_cost, time_cost)  // bounded
+adjust_yield_modifier(resource_id, modifier)  // bounded
+```
+
+All Game Master actions are logged on-chain and published in a **player-visible changelog** for full transparency.
+
+### Consensus requirement
+
+All changes require **unanimous approval** from all five Game Masters before deployment. A single objection blocks the change. Every decision must fit within the historical context of the game — Game Masters cannot break continuity or contradict the onchain world state.
+
+### Decentralisation
+
+Each Game Master agent is individually managed by a member of the decentralised core team. They are not co-located or centrally controlled. The unanimous consensus requirement ensures no single operator can push changes unilaterally.
+
+### Anti-collusion constraints
+
+Game Master programming includes hard constraints against self-serving rule changes. They cannot propose, approve, or deploy changes that benefit their own adventurers or their operator's interests.
+
+### Game Master adventurers
+
+Game Masters may operate adventurers. These adventurers:
+- Are minted and managed identically to any other adventurer
+- Have no special access, information asymmetry, or mechanical advantage
+- Live and die by the same physics
+- Are **not identified** as Game Master-operated in the UI — they are indistinguishable from any other player
+- Cannot benefit from Game Master decisions (enforced by anti-collusion constraints)
+
+---
+
+## 5. Time 🔒
 
 ### Tick system
 
@@ -162,7 +249,7 @@ Lazy evaluation: time only advances when an entity is touched by a transaction.
 
 ---
 
-## 5. Space 🔒
+## 6. Space 🔒
 
 ### Coordinate system
 
@@ -207,7 +294,7 @@ Area types, slot counts, and resource profiles are **finalized on first survey**
 
 ---
 
-## 6. World Generation 🔒
+## 7. World Generation 🔒
 
 ### Biome determination
 
@@ -348,12 +435,12 @@ Within materials areas, resource nodes are seeded deterministically on first sur
 
 - Depleted nodes enter a cooldown period: `regrowth_ticks = base_cooldown × (1 / regrowth_rate)`.
 - Base cooldown: Fertile = 2,880 ticks (2 in-game days), Mining = 8,640 ticks (6 in-game days), Forestry = 5,760 ticks (4 in-game days).
-- Mining nodes may collapse instead of depleting (see §13: Production: Mining).
+- Mining nodes may collapse instead of depleting (see §14: Production: Mining).
 - Fertility-based nodes degrade gradually rather than binary depletion — each harvest reduces current fertility, which regenerates over time at the regrowth rate.
 
 ---
 
-## 7. The Adventurer 🔒
+## 8. The Adventurer 🔒
 
 ### Creation
 
@@ -479,7 +566,7 @@ Traits are organized into **5 types**:
 
 ---
 
-## 8. Followers
+## 9. Followers
 
 Followers are non-adventurer NPCs attached to an adventurer's party. They are the adventurer's personal logistics and support — laborers, donkeys/mounts, and (future module) bodyguards. The term is loosely analogous to medieval serfs: bound to their adventurer's service, providing labor in return for protection.
 
@@ -507,7 +594,7 @@ follower_types: Map<FollowerType, u8>  // laborers, donkeys, mounts
 ### Food consumption
 
 - Followers consume food as the adventurer does (shared food resource type).
-- Each follower adds to the adventurer's food requirement. Exact quantities per follower type are TBD (see §12).
+- Each follower adds to the adventurer's food requirement. Exact quantities per follower type are TBD (see §13).
 - If the adventurer cannot feed followers, they desert (follower count decreases). Desertion rate is autoregulator-tunable.
 
 ### What followers are NOT
@@ -518,7 +605,7 @@ follower_types: Map<FollowerType, u8>  // laborers, donkeys, mounts
 
 ---
 
-## 9. Energy 🔒
+## 10. Energy 🔒
 
 ### Pool
 
@@ -564,7 +651,7 @@ This is the core starvation mechanic. It is base-module because it ties energy (
 
 ---
 
-## 10. Movement & Exploration
+## 11. Movement & Exploration
 
 ### Explore (enter unknown hex)
 
@@ -589,7 +676,7 @@ This is the core starvation mechanic. It is base-module because it ties energy (
 
 ---
 
-## 11. Surveying
+## 12. Surveying
 
 ### Survey action
 
@@ -607,7 +694,7 @@ Exploration discovers the hex (biome, existence). Surveying reveals what's insid
 
 ---
 
-## 12. Resource Definitions 🔒
+## 13. Resource Definitions 🔒
 
 The base module must define **every resource type** at deployment because resource IDs are referenced by crafting recipes, building costs, and world generation tables. Adding new resource types later would require base module changes (which is forbidden).
 
@@ -626,11 +713,11 @@ Raw food items gathered from fertile areas, forestry, or (future) hunting:
 | Wild Berries | Forest, Jungle, Taiga | Common, low nutrition |
 | Roots | Plains, Grassland, Highlands | Common |
 | Mushrooms | Forest, Swamp, Mire | Uncommon, some poisonous |
-| Game Fowl | Plains, Savanna, Grassland | Hunting yield (§15) |
-| Venison | Forest, Taiga, Highlands | Hunting yield (§15) |
-| Boar | Forest, Swamp, Jungle | Hunting yield (§15) |
-| Milk | Plains, Grassland, Highlands | Livestock yield (§17) |
-| Eggs | Plains, Forest, any temperate | Livestock yield (§17) |
+| Game Fowl | Plains, Savanna, Grassland | Hunting yield (§16) |
+| Venison | Forest, Taiga, Highlands | Hunting yield (§16) |
+| Boar | Forest, Swamp, Jungle | Hunting yield (§16) |
+| Milk | Plains, Grassland, Highlands | Livestock yield (§18) |
+| Eggs | Plains, Forest, any temperate | Livestock yield (§18) |
 | Meat (generic) | Any with livestock or hunting | Butchered product |
 | Honey | Forest, Jungle | Rare fertile node |
 | Fish | Coast, Lake, Mangrove, Marsh | Requires adjacent water hex or fishing area |
@@ -700,7 +787,7 @@ This ensures future modules can add new resources without colliding with base ID
 
 ---
 
-## 13. Production: Mining
+## 14. Production: Mining
 
 ### Mining areas
 
@@ -730,7 +817,7 @@ This ensures future modules can add new resources without colliding with base ID
 
 ---
 
-## 14. Production: Forestry
+## 15. Production: Forestry
 
 ### Forestry areas
 
@@ -760,7 +847,7 @@ This is a core base-module mechanic because it creates player-driven scarcity:
 
 ---
 
-## 15. Production: Hunting
+## 16. Production: Hunting
 
 Hunting is an active action performed in **forestry areas**, targeting the area's native fauna.
 
@@ -788,7 +875,7 @@ Hunting is a **deliberate action** with chance-based yields. Beast **hazard enco
 
 ---
 
-## 16. Production: Foraging & Harvesting
+## 17. Production: Foraging & Harvesting
 
 ### Fertile areas
 
@@ -815,7 +902,7 @@ Hunting is a **deliberate action** with chance-based yields. Beast **hazard enco
 
 ---
 
-## 17. Production: Livestock
+## 18. Production: Livestock
 
 Livestock raising is an alternative land use for **fertile areas** where native species have been driven extinct (same precondition as sowing crops in §16).
 
@@ -857,7 +944,7 @@ Animal products (wool, leather, tallow, meat, milk, eggs) are **core crafting in
 
 ---
 
-## 18. Crafting & Refining
+## 19. Crafting & Refining
 
 ### Refining (raw → usable)
 
@@ -923,7 +1010,7 @@ The recipe registry includes **reserved ID ranges** for future modules (same pat
 
 ---
 
-## 19. Equipment & Items
+## 20. Equipment & Items
 
 ### Item model
 
@@ -959,7 +1046,7 @@ greatness: u8             // 1–20 rating scale (Loot-compatible)
 
 ---
 
-## 20. Construction & Buildings
+## 21. Construction & Buildings
 
 ### Building system
 
@@ -1012,7 +1099,7 @@ Same pattern as resources: permanent IDs at deployment with reserved ranges for 
 
 ---
 
-## 21. Settlement
+## 22. Settlement
 
 ### Formation (Deed system)
 
@@ -1049,7 +1136,7 @@ last_food_tick: felt252
 
 ---
 
-## 22. Population, Housing & Food
+## 23. Population, Housing & Food
 
 ### Population
 
@@ -1097,7 +1184,7 @@ Per in-game day boundary:
 
 ---
 
-## 23. Territorial Sovereignty
+## 24. Territorial Sovereignty
 
 ### Ownership
 
@@ -1138,7 +1225,7 @@ This creates organic territorial limits: you can only hold what you can maintain
 
 ---
 
-## 24. Beasts & Hazards
+## 25. Beasts & Hazards
 
 ### Why beasts are in the base module
 
@@ -1181,7 +1268,7 @@ The base module does not include turn-based or real-time combat. Encounters are 
 
 ---
 
-## 25. Permadeath & Legacy
+## 26. Permadeath & Legacy
 
 ### Death triggers
 
@@ -1207,7 +1294,7 @@ Player mints a new adventurer (paying $LORDS again). Starts fresh at The Nexus. 
 
 ---
 
-## 26. Autoregulation
+## 27. Autoregulation
 
 ### Purpose
 
@@ -1236,93 +1323,6 @@ Prevent runaway inflation, stagnation, or exploitation without human interventio
 - Applies PI corrections: if death rate is too low → increase hazard lethality; if resources are hyperinflating → increase decay rates; etc.
 - All adjustments are bounded — the autoregulator cannot exceed the defined parameter ranges.
 - No admin keys. No governance votes needed. Pure algorithmic response.
-
----
-
-## 27. Game Masters Interface
-
-The base module defines the boundary between the **immutable physics** (Phases 1–4: time, attributes, traits, resources, biomes) and the **dynamic game layer** (Phases 5+) managed by autonomous AI agents known as the Game Masters (see §19 of the Design Scope).
-
-### What Game Masters can modify
-
-Everything above the immutable foundation is within Game Master authority, subject to their internal consensus process. In the base module, this includes:
-
-| Domain | Examples | Constraints |
-|---|---|---|
-| **Crafting recipes** | New recipes, ingredient combinations, yield values | Must use resources from the locked resource catalog (Appendix F). Cannot create new resource IDs. |
-| **Cooking recipes** | New meals, buff values, ingredient requirements | Must use food resources from the catalog. Buff values bounded by meal tier system. |
-| **Encounter tables** | New beast encounters, social encounters, special events | Must use defined encounter types (beast, combat, social, special). Outcomes bounded by attribute/trait system. |
-| **Drop rates & yields** | Resource node yield multipliers, beast drop tables | Within autoregulator bounds. Cannot exceed parameter ranges defined in §26. |
-| **Event triggers** | Seasonal events, rare world events, discovery triggers | Must fire through the event hook system (§28). Cannot modify core game loops. |
-| **Balance parameters** | Action costs, energy modifiers, time-lock durations | Within autoregulator bounds. Subject to Balancer + Economist consensus. |
-| **Lore & flavour** | Item descriptions, encounter narratives, world history entries | Subject to Loremaster approval. |
-| **NPC behaviours** | Encounter NPC dialogue, trading behaviours, quest-like interactions | Must operate within the action/encounter framework. |
-
-### What Game Masters cannot modify
-
-The immutable foundation is off-limits:
-
-- Tick length, in-game day duration, or any time constant (§4)
-- Attribute formulas, attribute count, or attribute budget (§7)
-- Trait definitions in the base trait catalog (Appendix C) — though Game Masters may propose new traits for future modules
-- Core resource definitions (the 22 Eternum-heritage resources) or the resource ID registry structure (Appendix F)
-- Biome definitions and world generation seed (§6)
-- Hex coordinate system and adjacency rules (§5)
-- Energy pool mechanics and base regen formula (§9)
-- Permadeath rules (§25)
-- The autoregulator's algorithm or parameter bounds (§26) — though the Balancer may propose bound changes to the core team
-
-### Base module hooks for Game Masters
-
-The base module exposes these interfaces for Game Master interaction:
-
-```
-// Recipe management
-register_recipe(recipe_id, inputs[], output, facility, min_skill, metadata)
-update_recipe_values(recipe_id, field, new_value)  // within bounds
-disable_recipe(recipe_id)  // soft-disable, not delete
-
-// Encounter management
-register_encounter(encounter_id, type, trigger_conditions, outcomes[], metadata)
-update_encounter(encounter_id, field, new_value)
-set_encounter_weight(biome, encounter_id, weight)  // per-biome frequency
-
-// Drop rate management
-set_drop_rate(source_type, resource_id, base_rate)  // within autoregulator bounds
-set_beast_drop_table(beast_type, drops[])
-
-// Event management
-register_event(event_id, trigger, duration, effects[], metadata)
-activate_event(event_id)
-deactivate_event(event_id)
-
-// Balance adjustment (within autoregulator bounds)
-adjust_action_cost(action_id, energy_cost, time_cost)  // bounded
-adjust_yield_modifier(resource_id, modifier)  // bounded
-```
-
-All Game Master actions are logged on-chain and published in a **player-visible changelog** for full transparency.
-
-### Consensus requirement
-
-All changes require **unanimous approval** from all five Game Masters before deployment. A single objection blocks the change. Every decision must fit within the historical context of the game — Game Masters cannot break continuity or contradict the onchain world state.
-
-### Decentralisation
-
-Each Game Master agent is individually managed by a member of the decentralised core team. They are not co-located or centrally controlled. The unanimous consensus requirement ensures no single operator can push changes unilaterally.
-
-### Anti-collusion constraints
-
-Game Master programming includes hard constraints against self-serving rule changes. They cannot propose, approve, or deploy changes that benefit their own adventurers or their operator's interests.
-
-### Game Master adventurers
-
-Game Masters may operate adventurers. These adventurers:
-- Are minted and managed identically to any other adventurer
-- Have no special access, information asymmetry, or mechanical advantage
-- Live and die by the same physics
-- Are **not identified** as Game Master-operated in the UI — they are indistinguishable from any other player
-- Cannot benefit from Game Master decisions (enforced by anti-collusion constraints)
 
 ---
 
