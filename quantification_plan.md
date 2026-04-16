@@ -37,8 +37,9 @@ Dependencies: none — these are leaf primitives.
 | Dexterity (DEX) | Hazard avoidance | `avoid_bonus = DEX × 5%` |
 | Vitality (VIT) | Max health | `max_health = 100 + VIT × 10` |
 | Intelligence (INT) | Resource yield | `yield = base × (1 + INT × 0.025)` |
-| Wisdom (WIS) | Explore & survey energy efficiency | `cost = base × (1 − WIS × 0.04)` — floor at 0 |
-| Charisma (CHA) | Upkeep energy efficiency | `cost = base × (1 − CHA × 0.03)` — floor at 0; fee discount `CHA × 5%`; +days until follower desertion |
+| Wisdom (WIS) | Explore & survey energy efficiency | `cost = max(0.25, base × (1 − WIS × 0.025))` |
+| Charisma (CHA) | Upkeep energy efficiency | `cost = max(0.4, base × (1 − CHA × 0.02))`; fee discount `CHA × 5%`; +days until follower desertion |
+
 | Survival (SUR) | Hunting, foraging, beasts | `hunt += SUR × 5%`; `forage += SUR × 5%`; `beast += SUR × 2.5%` |
 | Craftsmanship (CRA) | Craft quality, repair, mutation | `quality += CRA × 5%`; repair `−4%/pt`; widens mutation range |
 | Leadership (LEA) | Follower count | `max_followers = 1 + floor(LEA / 2)` |
@@ -68,7 +69,7 @@ Tamer skill trait grants +1 max **animal** follower specifically.
 
 ## PHASE 2 — Core Actions & World Physics ✅ COMPLETE (draft values)
 
-**The action layer.** 23 player-initiated actions across 7 categories + 4 encounter types (potential outcomes of actions, not player-initiated).
+**The action layer.** 24 player-initiated actions across 7 categories + 4 encounter types (potential outcomes of actions, not player-initiated).
 
 Dependencies: Phase 1 (attribute formulas, energy/health budgets).
 
@@ -83,15 +84,15 @@ Full catalog: `Appendix_M_Action_Catalog.md`
 | Crafting & Refinement | Refining, Crafting, Cooking, Repairing, Salvaging | 5 |
 | Construction & Settlement | Building, Demolishing, Upkeep, Stocking | 4 |
 | Followers | Recruiting | 1 |
-| Social & Economic | Trading | 1 |
+| Social & Economic | Trading, Exchange | 2 |
 | Recovery | Resting | 1 |
-| **Total** | | **23** |
+| **Total** | | **24** |
 
 Encounter types (potential outcomes): Beast, Combat, Social, Special.
 
 ### 2b. Action Properties Template ✅
 
-All 23 actions have draft property cards in `Appendix_M_Action_Catalog.md`. Cost tiers:
+All 24 actions have draft property cards in `Appendix_M_Action_Catalog.md`. Cost tiers:
 
 | Tier | Energy | Time-lock (real) | Examples |
 |---|---|---|---|
@@ -157,12 +158,12 @@ Dependencies: Phase 1 (attribute formulas), Phase 2 (action catalog — biome mo
 
 ### 4a. Biome Properties ✅
 
-27 biomes fully quantified across 6 categories (Temperate 7, Arid 5, Wet 5, Cold 3, Extreme 3, Water 4). Each biome has: unique narrative profile, movement cost/time modifiers, survey cost/time modifiers, decay rate modifiers, base hazard chances (2%–20%), encounter type distributions (beast/combat/social/special), fauna tier caps (T2–T5), fertility ratings (None–Medium–High). Biome clustering algorithm defined (5-layer simplex noise: Temperature, Moisture, Elevation, Variation, Anomaly). Anomaly layer governs Extreme biome placement. Distribution targets and Nexus region override specified.
+24 biomes fully quantified across 6 categories (Temperate 6, Arid 4, Wet 4, Cold 3, Extreme 3, Water 4). Each biome has: unique narrative profile, movement cost/time modifiers, survey cost/time modifiers, decay rate modifiers, base hazard chances (2%–20%), encounter type distributions (beast/combat/social/special), fauna tier caps (T2–T5), fertility ratings (None–Medium–High). Biome clustering algorithm defined (5-layer simplex noise: Temperature, Moisture, Elevation, Variation, Anomaly). Anomaly layer governs Extreme biome placement. Distribution targets and Nexus region override specified.
 → Output: **Appendix D: Biome Table** (`Appendix_D_Biome_Table.md`)
 
 ### 4b. Biome–Resource Affinity ✅
 
-Full affinity matrix for all 87 raw resources × 27 biomes. Three-tier system: ✓ (standard, 1×), ◆ (primary, 2×), ★ (signature, 3×). Covers mining (30 resources), logging (6), farming (13), foraging (14), hunting (11), fishing (1), herding (12 products across 4 livestock types). Key signature assignments: Glassfields (gems, deep crystal), Blight (alchemical silver, spiritbloom, poisonous plants), Scorched (obsidian, sulfur, ignium, demonhide), Rainforest (moonwood, rare herbs), Scrubland (wild herbs, dye plants), Mangrove (seaweed, fishing). Universal discovery resources (Rare Metals, Worldroot, Unicorn Hair) confirmed biome-independent.
+Full affinity matrix for all 87 raw resources × 24 biomes. Three-tier system: ✓ (standard, 1×), ◆ (primary, 2×), ★ (signature, 3×). Covers mining (30 resources), logging (6), farming (13), foraging (14), hunting (11), fishing (1), herding (12 products across 4 livestock types). Key signature assignments: Glassfields (gems, deep crystal), Blight (alchemical silver, spiritbloom, poisonous plants), Scorched (obsidian, sulfur, ignium, demonhide), Rainforest (moonwood, rare herbs), Scrubland (wild herbs, dye plants), Mangrove (seaweed, fishing). Universal discovery resources (Rare Metals, Worldroot, Unicorn Hair) confirmed biome-independent.
 → Output: **Appendix E: Biome–Resource Affinity Matrix** (`Appendix_E_Biome_Resource_Affinity.md`)
 
 ### 4c. Area Generation ✅
@@ -175,7 +176,7 @@ Area count rarity distribution: 35% (3) → 25% (4) → 18% (5) → 10% (6) → 
 Node counts per materials sub-type: Fertile 2–4, Mining 1–3, Forestry 2–4 (with biome bonuses — +1 in Forest/Rainforest/Taiga/Jungle). Node properties: resource type (weighted from affinity matrix), yield multiplier (0.5×–2.0×), regrowth rate (0.3×–1.5×), depletion threshold (50–200 harvests), special flag (5% chance). Regrowth cooldowns: Fertile 2 in-game days, Mining 6, Forestry 4 (modified by regrowth rate). Universal discovery resources confirmed as action-layer rolls, not node-seeded.
 → Output: Integrated into **Eternal_Game_Base.md §6** (Resource node seeding tables)
 
-> **Phase 4 summary**: 27 biomes × 87 raw resources fully mapped. 2 appendices (D, E) rewritten at v0.2.0. Base module §6 updated with 27-biome materials sub-type weights and node seeding parameters. Biome list expanded from 25 to 27: added Woodland, Rainforest, Scrubland, Mangrove, Glassfields, Blight; renamed Wetlands→Marsh, Volcanic→Scorched; removed Beach, Oasis, Deep Ocean. All values are base-module defaults subject to autoregulator bounds and Game Master adjustment (§27).
+> **Phase 4 summary**: 24 biomes × 87 raw resources fully mapped. 2 appendices (D, E) rewritten at v0.2.0. Base module §6 updated with 24-biome materials sub-type weights and node seeding parameters. Biome list consolidated from 27 to 24: Plains→Grassland, Steppe→Scrubland, Marsh→Swamp. All values are base-module defaults subject to autoregulator bounds and Game Master adjustment (§27).
 
 ---
 
@@ -428,6 +429,8 @@ Per biome: probability weight for each beast type, encounter trigger chance per 
 ### 12c. Beast Encounter Resolution
 
 Single-resolution hazard check (not a combat system). Exact formula: inputs (lethality, health, energy, SUR, DEX, equipment defense, time-of-day) → outcome probabilities (avoid, injury, resource, trait, death). Health damage scales encounter severity.
+
+Beast encounter resolution may need to be broken into multiple computation steps due to Cairo gas limits. Design the formula to support staged resolution if needed. Ensure sufficient variance from the random beast draw — even "safe" biomes should have low-probability high-tier encounters.
 → Output: Beast encounter resolution formula
 
 ### 12d. Combat Encounter Resolution
@@ -483,6 +486,8 @@ Worked example: typical adventurer's first 24 real-hours. Energy budget, health 
 ### 13d. Trait Balance Review
 
 Revisit all 120 trait special effect percentages against the now-complete action costs, production yields, and encounter formulas. Validate that no single trait creates degenerate strategies. Revisit the Phase 2c action–trait cross-reference. Adjust percentages as needed.
+
+Expected meta-diversity: 171 personality trait combinations × 23 physical traits × wide attribute spread = ~3,933 unique mint trait sets before accounting for attribute variation. Chance-based trait assignment at mint prevents min-maxing — players work with what they get. Validate during balance review that no dominant strategy emerges from common trait combinations.
 → Output: Trait balance audit
 
 ### 13e. Game Master Authority Map
@@ -543,6 +548,32 @@ Full review completed. See `mid-design_assessment.md` for details. Key findings:
 **🔵 Advisory (8 items)**:
 - A1–A8: Biome consolidation check, trait diversity, permission hook gas limits, encounter variance, settlement benefits, season hooks, doc consolidation, resting action clarity
 
+### Mid-design assessment response status
+
+- C1: ✅ Resolved (registry aligned)
+- C2: ✅ Resolved (soft cap, new formulas, hard clamp at 30)
+- C3: ✅ Resolved (buildings require use, zero-pop = 3×)
+- C4: ✅ Resolved (block-hash documented)
+- C5: ✅ Resolved (same as C4)
+- C6: ✅ Resolved (energy constant, health via Rest)
+- C7: ✅ Resolved (wallet ownership)
+- I1: ✅ No change (intentional slow growth)
+- I2: ✅ Resolved (fishing section added)
+- I3: ✅ Resolved (sustainability thresholds)
+- I4: ✅ Resolved (Exchange action)
+- I5: ✅ Documented (flag for contracts)
+- I6: ✅ Documented (flag for contracts)
+- I8: ✅ Flagged for Phase 9b
+- A1: ✅ Resolved (24 biomes)
+- A2: ✅ Documented
+- A3: ✅ Documented (flag for contracts)
+- A4: ✅ Documented
+- A5: ✅ Resolved (settlement benefits added)
+- A6: ✅ Resolved (season hook added)
+- A7: ✅ Resolved (vision doc frozen)
+- A8: ✅ Resolved (regen reconciled)
+- T1-T4: ✅ All flagged for contracts specialist
+
 ---
 
 ## Phase Dependency Graph
@@ -570,16 +601,16 @@ Phase 1 (Units/Attributes)
 | Appendix | Phase | Status | Estimated rows |
 |---|---|---|---|
 | C: Trait Catalog 🔒 | 1c | ✅ v1.0 | 120 traits (38+23+36+13+10) |
-| D: Biome Table 🔒 | 4a | ✅ v0.2.1 | 27 biomes × 8 properties |
-| E: Biome–Resource Affinity ⚠️ | 4b | ✅ v0.2.0 — flagged for review | 87 resources × 27 biomes (sparse) |
+| D: Biome Table 🔒 | 4a | ✅ v0.2.1 | 24 biomes × 8 properties |
+| E: Biome–Resource Affinity ⚠️ | 4b | ✅ v0.2.0 — flagged for review | 87 resources × 24 biomes (sparse) |
 | F: Resource Catalog 🔒 | 3a | ✅ v1.0 | 153 resources + 60 beast parts |
 | G: Refining Recipes | 7a | ⏳ | ~20–30 rows |
 | H: Crafting Recipes | 7b | ⏳ | ~30–50 rows |
 | I: Item Catalog | 8a | ⏳ | ~25–40 rows |
 | J: Building Catalog | 9a | ⏳ | 12 rows (dense) |
 | K: Beast Catalog | 12a | ⏳ | 75 rows |
-| L: Biome Hazard Tables | 12b | ⏳ | 27 biomes × variable |
-| M: Action Catalog ⚠️ | 2 | ✅ draft — flagged for review | 23 actions + 4 encounter types |
+| L: Biome Hazard Tables | 12b | ⏳ | 24 biomes × variable |
+| M: Action Catalog ⚠️ | 2 | ✅ draft — flagged for review | 24 actions + 4 encounter types |
 
 ---
 

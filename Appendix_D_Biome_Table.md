@@ -8,17 +8,17 @@
 
 ## Biome Categories 🔒
 
-The Eternal World contains **27 biomes** grouped into 6 categories. Biomes are determined at world generation via `biome = noise_function(global_seed, x, y, z)` and are **permanent and immutable** — no biome ever changes after deployment.
+The Eternal World contains **24 biomes** grouped into 6 categories. Biomes are determined at world generation via `biome = noise_function(global_seed, x, y, z)` and are **permanent and immutable** — no biome ever changes after deployment.
 
 | Category | Biomes | Count |
 |---|---|---|
-| **Temperate** | Plains, Grassland, Forest, Woodland, Rainforest, Highlands, Scrubland | 7 |
-| **Arid** | Desert, Savanna, Steppe, Badlands, Canyon | 5 |
-| **Wet** | Swamp, Marsh, Mire, Jungle, Mangrove | 5 |
+| **Temperate** | Grassland, Forest, Woodland, Rainforest, Highlands, Scrubland | 6 |
+| **Arid** | Desert, Savanna, Badlands, Canyon | 4 |
+| **Wet** | Swamp, Mire, Jungle, Mangrove | 4 |
 | **Cold** | Tundra, Taiga, Glacier | 3 |
 | **Extreme** | Scorched, Glassfields, Blight | 3 |
 | **Water** | Coast, Coastal Waters, Lake, Ocean | 4 |
-| | **Total** | **27** |
+| | **Total** | **24** |
 
 > **Impassable biomes**: Ocean and Coastal Waters cannot be entered in the base module. Traversal requires a future Maritime module. Coast and Lake are land-accessible.
 
@@ -43,18 +43,6 @@ Each biome is described with its theme, gameplay identity, and quantified proper
 
 ### Temperate Biomes
 
-#### Plains
-
-> *Flat, open, endless horizon. The golden fields that feed nations. Wind ripples through wheat and wild grass as far as the eye can see. This is where civilisations are born — not because the land is exciting, but because it is reliable.*
-
-The most hospitable biome. Easiest movement, lowest decay, highest farming yield among common biomes. The breadbasket of the Eternal World and the natural site for early settlements. Low hazard, but also low resource diversity — Plains reward stability over adventure.
-
-**Gameplay identity**: Safe, fertile, settlement-friendly. The place you build your home.
-
-| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
-|---|---|---|---|---|---|---|---|
-| 0.8× | 0.8× | 0.9× | 0.9× | 0.8× | 2% | High (1.2×) | ✓ |
-
 #### Grassland
 
 > *Rolling hills of thick pasture, dotted with wildflowers and grazing herds. The wind carries the scent of clover and distant rain. Not as flat as the plains — the terrain undulates, creating natural paddocks and sheltered valleys.*
@@ -63,9 +51,11 @@ Similar to Plains but with a pastoral character. Slightly higher hazard from roa
 
 **Gameplay identity**: Herding heartland. Rolling pasture with better foraging than Plains.
 
+> **Note**: Grassland absorbs the former **Plains** role as the most settlement-friendly temperate biome.
+
 | Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 0.9× | 0.9× | 0.9× | 0.9× | 0.9× | 3% | High (1.2×) | ✓ |
+| 0.8× | 0.8× | 0.9× | 0.9× | 0.8× | 2% | High (1.2×) | ✓ |
 
 #### Forest
 
@@ -123,6 +113,8 @@ The Mediterranean biome. Low rainfall but not barren — the plants that survive
 
 **Gameplay identity**: Herb garden of the world. Aromatic foraging, moderate farming, fire hazard.
 
+> **Note**: Scrubland absorbs the former **Steppe** role (dry grassland / nomad country) in the 24-biome set.
+
 | Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
 | 1.1× | 1.0× | 1.0× | 1.0× | 1.0× | 4% | Low (0.6×) | ✓ |
@@ -154,18 +146,6 @@ The premier hunting biome. High fauna density, large and dangerous animals. Sign
 | Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
 | 1.0× | 1.0× | 1.0× | 1.0× | 1.0× | 6% | Medium (1.0×) | ✓ |
-
-#### Steppe
-
-> *Endless grass under a vast sky, whipped by relentless wind. No trees break the horizon. The land is flat, the soil is thin, and the winters are brutal. Nomadic riders thrive here — speed and mobility matter more than walls.*
-
-The continental interior grassland. Drier and harsher than Grassland, with brutal winters. Best traversal speed among arid biomes (the flat terrain and lack of obstacles make for fast movement). Good herding country (horses and sheep), but limited farming. Light mining. The open terrain means encounters tend toward roaming bands (higher combat encounter rate) and nomadic traders.
-
-**Gameplay identity**: Nomad country. Fast movement, horse-herding, harsh winters.
-
-| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
-|---|---|---|---|---|---|---|---|
-| 0.9× | 0.9× | 1.0× | 1.0× | 1.0× | 4% | Low (0.6×) | ✓ |
 
 #### Badlands
 
@@ -201,23 +181,13 @@ The richest mining biome in the game. Deep vertical cuts expose the widest varie
 
 A forested wetland — trees standing in water. Rich foraging (mushrooms, medicinal herbs) and decent fishing in the murky channels. Good hunting for those brave enough (crocodiles, bog serpents — T4 fauna). Some farming possible (unique rice cultivation, tubers). Very high decay rate — the damp rots structures aggressively. No herding (livestock would drown).
 
+> **Note**: Swamp absorbs the former **Marsh** role as the friendlier wetland option in the 24-biome set.
+
 **Gameplay identity**: Treacherous wetland. Rich foraging, dangerous hunting, punishing decay.
 
 | Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
 |---|---|---|---|---|---|---|---|
-| 1.5× | 1.5× | 1.3× | 1.4× | 1.6× | 13% | Low (0.6×) | ✓ |
-
-#### Marsh
-
-> *Open water threaded between reed beds and mudflats. Wading birds stalk the shallows. The horizon is flat and hazy. Firm ground is rare — paths must be learned, not assumed. But the water is rich: fish, reeds, wild rice, and waterfowl.*
-
-A freshwater emergent wetland — reeds and grasses, no trees. More productive for farming than Swamp (rice, tubers, vegetables thrive). Fishing in the channels. Good foraging (reeds, herbs, wild berries). Lower hazard than Swamp (fewer ambush predators in open water). Moderate decay. Marginal settlement potential — flood-prone but usable.
-
-**Gameplay identity**: Productive wetland. Reed-beds, rice paddies, wading birds. Swamp's friendlier cousin.
-
-| Move Cost | Move Time | Survey Cost | Survey Time | Decay Rate | Base Hazard | Fertility | Traversable |
-|---|---|---|---|---|---|---|---|
-| 1.3× | 1.3× | 1.2× | 1.2× | 1.4× | 7% | Medium (1.0×) | ✓ |
+| 1.4× | 1.4× | 1.2× | 1.3× | 1.5× | 11% | Low (0.6×) | ✓ |
 
 #### Mire
 
@@ -391,7 +361,6 @@ Each biome has a weighted distribution of encounter types when an encounter trig
 
 | Biome | Beast | Combat | Social | Special |
 |---|---|---|---|---|
-| **Plains** | 40% | 20% | 30% | 10% |
 | **Grassland** | 45% | 15% | 30% | 10% |
 | **Forest** | 55% | 15% | 15% | 15% |
 | **Woodland** | 45% | 15% | 25% | 15% |
@@ -400,11 +369,9 @@ Each biome has a weighted distribution of encounter types when an encounter trig
 | **Scrubland** | 35% | 20% | 30% | 15% |
 | **Desert** | 45% | 25% | 15% | 15% |
 | **Savanna** | 55% | 15% | 20% | 10% |
-| **Steppe** | 40% | 25% | 25% | 10% |
 | **Badlands** | 50% | 30% | 5% | 15% |
 | **Canyon** | 45% | 25% | 10% | 20% |
 | **Swamp** | 60% | 15% | 5% | 20% |
-| **Marsh** | 50% | 10% | 20% | 20% |
 | **Mire** | 65% | 15% | 0% | 20% |
 | **Jungle** | 60% | 10% | 10% | 20% |
 | **Mangrove** | 50% | 15% | 15% | 20% |
@@ -430,7 +397,7 @@ Each biome has a weighted distribution of encounter types when an encounter trig
 - **Coast** has the highest social encounter rate — natural meeting point, trade hub, travellers arriving by shore.
 - **Scrubland** has relatively high social encounters — Mediterranean crossroads, trade routes between regions.
 - **Rainforest** has high special rate (25%) — ancient forests hold secrets in their depths.
-- Higher hazard biomes skew toward beast encounters. Civilised biomes (Plains, Grassland, Coast) skew toward social.
+- Higher hazard biomes skew toward beast encounters. Civilised biomes (Grassland, Coast) skew toward social.
 
 ---
 
@@ -440,7 +407,6 @@ Defines the maximum beast tier that can appear in each biome. Beast tiers range 
 
 | Biome | Max Beast Tier | Typical Fauna | Notes |
 |---|---|---|---|
-| **Plains** | T2 | Wolves, boar, wild dogs | Open terrain, herding beasts |
 | **Grassland** | T2 | Prairie cats, bison, snakes | Open, mild threat |
 | **Forest** | T3 | Bears, wolves, great stags, spiders | Dense cover, ambush predators |
 | **Woodland** | T2 | Foxes, deer, boar, hawks | Open canopy reduces ambush danger |
@@ -449,11 +415,9 @@ Defines the maximum beast tier that can appear in each biome. Beast tiers range 
 | **Scrubland** | T2 | Vipers, wild cats, hawks, scorpions | Small but venomous |
 | **Desert** | T3 | Scorpions, sandworms, vipers | Dehydration compounds danger |
 | **Savanna** | T3 | Lions, hyenas, great cats, rhinos | Pack and apex predators |
-| **Steppe** | T2 | Wolves, wild horses, hawks | Open, less threatening |
 | **Badlands** | T3 | Basilisks, rock drakes, scorpions | Ambush terrain, venomous |
 | **Canyon** | T4 | Rocs, basilisks, cave trolls | Vertical danger, lair terrain |
 | **Swamp** | T4 | Hydras, bog serpents, crocodiles, leeches | Treacherous, poisonous |
-| **Marsh** | T3 | Crocodiles, snapping turtles, herons | Semi-aquatic threats |
 | **Mire** | T4 | Mire beasts, will-o-wisps, bog horrors | The worst wetland has to offer |
 | **Jungle** | T4 | Jungle cats, serpents, apes, spiders | Dense canopy, ambush + poison |
 | **Mangrove** | T3 | Crocodiles, sea snakes, giant crabs | Semi-aquatic ambush predators |
@@ -504,21 +468,21 @@ biome = biome_lookup(temperature, moisture, elevation, variation, anomaly)
 | Hot | Dry | Medium | Badlands | Canyon (high variation) |
 | Hot | Dry | High | Canyon | — |
 | Hot | Medium | Low | Savanna | — |
-| Hot | Medium | Medium | Scrubland | Steppe (low moisture edge) |
+| Hot | Medium | Medium | Scrubland | — |
 | Hot | Wet | Low | Jungle | Mangrove (coastal adjacency) |
 | Hot | Wet | Medium | Swamp | Mire (high variation) |
-| Temperate | Dry | Low | Plains | — |
-| Temperate | Dry | Medium | Grassland | Steppe (low moisture edge) |
+| Temperate | Dry | Low | Grassland | — |
+| Temperate | Dry | Medium | Grassland | — |
 | Temperate | Medium | Low | Woodland | — |
 | Temperate | Medium | Medium | Forest | Rainforest (high moisture) |
 | Temperate | Medium | High | Highlands | — |
-| Temperate | Wet | Low | Marsh | — |
+| Temperate | Wet | Low | Swamp | — |
 | Temperate | Wet | Medium | Rainforest | Forest (low moisture edge) |
 | Cold | Dry | Low | Tundra | — |
-| Cold | Dry | Medium | Steppe | Tundra (low variation) |
+| Cold | Dry | Medium | Scrubland | Tundra (low variation) |
 | Cold | Medium | Low | Taiga | — |
 | Cold | Medium | Medium | Taiga | — |
-| Cold | Wet | Low | Marsh | Mire (high variation) |
+| Cold | Wet | Low | Swamp | Mire (high variation) |
 | Cold | Any | High | Glacier | — |
 | Any | Any | Sea level | Coast / Lake | Determined by water body size |
 | Any | Any | Below sea level | Coastal Waters / Ocean | Depth determines sub-type |
@@ -564,7 +528,6 @@ Within categories, approximate internal distributions:
 
 | Biome | Approx % | Biome | Approx % |
 |---|---|---|---|
-| Plains | 8% | Tundra | 4% |
 | Grassland | 7% | Taiga | 3% |
 | Forest | 6% | Glacier | 2% |
 | Woodland | 5% | Scorched | 1.5% |
@@ -573,11 +536,9 @@ Within categories, approximate internal distributions:
 | Scrubland | 2% | Coast | 6% |
 | Desert | 6% | Coastal Waters | 4% |
 | Savanna | 4% | Lake | 3% |
-| Steppe | 3% | Ocean | 10% |
 | Badlands | 2% | | |
 | Canyon | 2% | | |
 | Swamp | 3% | | |
-| Marsh | 3% | | |
 | Mire | 2% | | |
 | Jungle | 3% | | |
 | Mangrove | 2% | | |
@@ -586,7 +547,7 @@ Within categories, approximate internal distributions:
 
 ### 4.5 Nexus Region
 
-The origin hex `(0,0,0)` — The Nexus — is forced to **Plains** biome regardless of noise output. The surrounding ring (6 adjacent hexes) is biased toward temperate biomes (Plains, Grassland, Woodland, Forest) to ensure new players have a hospitable starting region. Extreme biomes (Scorched, Glassfields, Blight) cannot generate within 3 hexes of the Nexus.
+The origin hex `(0,0,0)` — The Nexus — is forced to **Grassland** biome regardless of noise output. The surrounding ring (6 adjacent hexes) is biased toward temperate biomes (Grassland, Woodland, Forest) to ensure new players have a hospitable starting region. Extreme biomes (Scorched, Glassfields, Blight) cannot generate within 3 hexes of the Nexus.
 
 Beyond the first ring, the noise function operates normally with no overrides (except the Nexus exclusion zone for extreme biomes).
 
@@ -607,7 +568,6 @@ Fertility determines base farming and foraging yields. Each biome has a fertilit
 
 | Biome | Fertility | Farmable Crops | Foraging Quality |
 |---|---|---|---|
-| **Plains** | High (1.2×) | All grain, vegetables, flax, hemp | Moderate — wild herbs |
 | **Grassland** | High (1.2×) | All grain, vegetables, hemp | Good — wild herbs, berries, honey |
 | **Forest** | Medium (1.0×) | Limited (shade crops) | Excellent — mushrooms, herbs, nuts, berries, truffles, silkworms |
 | **Woodland** | Medium (1.0×) | Moderate (clearings allow most crops) | Good — herbs, berries, nuts, honey |
@@ -616,11 +576,9 @@ Fertility determines base farming and foraging yields. Each biome has a fertilit
 | **Scrubland** | Low (0.6×) | Drought-tolerant (barley, dye plants) | Good — aromatic herbs (signature), honey |
 | **Desert** | None (0.0×) | None | Minimal — desert lichen, rare cacti |
 | **Savanna** | Medium (1.0×) | Drought-tolerant (beans, sorghum) | Moderate — wild grains, roots |
-| **Steppe** | Low (0.6×) | Hardy grasses, barley | Sparse — roots, wild herbs |
 | **Badlands** | None (0.0×) | None | Minimal — hardy scrub only |
 | **Canyon** | None (0.0×) | None | Minimal — canyon ferns, lichen |
 | **Swamp** | Low (0.6×) | Rice (unique), tubers | Good — mushrooms, herbs, medicinal herbs |
-| **Marsh** | Medium (1.0×) | Rice, tubers, vegetables | Good — reeds, herbs, wild berries |
 | **Mire** | None (0.0×) | None | Poor — poisonous plants dominant |
 | **Jungle** | High (1.2×) | Tropical (sugar cane, spice plants, fruit) | Excellent — wild fruit, herbs, rare herbs, silkworms, spiritbloom |
 | **Mangrove** | None (0.0×) | None (saltwater soil) | Moderate — seaweed, medicinal herbs in root systems |
@@ -652,7 +610,6 @@ A quick-reference for each biome's overall suitability for different activities.
 
 | Biome | Mining | Logging | Farming | Foraging | Hunting | Fishing | Herding | Settlement |
 |---|---|---|---|---|---|---|---|---|
-| **Plains** | ★☆☆ | ☆☆☆ | ★★★ | ★★☆ | ★☆☆ | ☆☆☆ | ★★★ | ★★★ |
 | **Grassland** | ★☆☆ | ☆☆☆ | ★★★ | ★★☆ | ★☆☆ | ☆☆☆ | ★★★ | ★★★ |
 | **Forest** | ★☆☆ | ★★★ | ★☆☆ | ★★★ | ★★★ | ☆☆☆ | ☆☆☆ | ★★☆ |
 | **Woodland** | ★☆☆ | ★★☆ | ★★☆ | ★★☆ | ★★☆ | ☆☆☆ | ★☆☆ | ★★★ |
@@ -661,11 +618,9 @@ A quick-reference for each biome's overall suitability for different activities.
 | **Scrubland** | ★☆☆ | ★☆☆ | ★☆☆ | ★★★ | ★☆☆ | ☆☆☆ | ★☆☆ | ★★☆ |
 | **Desert** | ★★☆ | ☆☆☆ | ☆☆☆ | ☆☆☆ | ★☆☆ | ☆☆☆ | ☆☆☆ | ☆☆☆ |
 | **Savanna** | ★☆☆ | ★☆☆ | ★★☆ | ★★☆ | ★★★ | ☆☆☆ | ★★☆ | ★★☆ |
-| **Steppe** | ★☆☆ | ☆☆☆ | ★☆☆ | ★☆☆ | ★★☆ | ☆☆☆ | ★★☆ | ★☆☆ |
 | **Badlands** | ★★★ | ☆☆☆ | ☆☆☆ | ☆☆☆ | ★☆☆ | ☆☆☆ | ☆☆☆ | ☆☆☆ |
 | **Canyon** | ★★★ | ☆☆☆ | ☆☆☆ | ☆☆☆ | ★★☆ | ☆☆☆ | ☆☆☆ | ☆☆☆ |
 | **Swamp** | ★☆☆ | ★☆☆ | ★☆☆ | ★★★ | ★★☆ | ★★☆ | ☆☆☆ | ☆☆☆ |
-| **Marsh** | ★☆☆ | ☆☆☆ | ★★☆ | ★★☆ | ★★☆ | ★★☆ | ☆☆☆ | ★☆☆ |
 | **Mire** | ★☆☆ | ☆☆☆ | ☆☆☆ | ★☆☆ | ★★☆ | ☆☆☆ | ☆☆☆ | ☆☆☆ |
 | **Jungle** | ★☆☆ | ★★☆ | ★★☆ | ★★★ | ★★★ | ☆☆☆ | ☆☆☆ | ★☆☆ |
 | **Mangrove** | ☆☆☆ | ★☆☆ | ☆☆☆ | ★★☆ | ★★☆ | ★★★ | ☆☆☆ | ☆☆☆ |

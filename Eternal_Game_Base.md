@@ -24,19 +24,20 @@
 16. [Production: Hunting](#16-production-hunting)
 17. [Production: Foraging & Harvesting](#17-production-foraging--harvesting)
 18. [Production: Livestock](#18-production-livestock)
-19. [Crafting & Refining](#19-crafting--refining)
-20. [Equipment & Items](#20-equipment--items)
-21. [Construction & Buildings](#21-construction--buildings)
-22. [Settlement](#22-settlement)
-23. [Population, Housing & Food](#23-population-housing--food)
-24. [Territorial Sovereignty](#24-territorial-sovereignty)
-25. [Beasts & Hazards](#25-beasts--hazards)
-26. [Permadeath & Legacy](#26-permadeath--legacy)
-27. [Autoregulation](#27-autoregulation)
-28. [Extension Interfaces](#28-extension-interfaces)
-29. [Future Module Placeholders](#29-future-module-placeholders)
-30. [What Is Explicitly Deferred](#30-what-is-explicitly-deferred)
-31. [Playable State](#31-playable-state)
+19. [Production: Fishing](#19-production-fishing)
+20. [Crafting & Refining](#20-crafting--refining)
+21. [Equipment & Items](#21-equipment--items)
+22. [Construction & Buildings](#22-construction--buildings)
+23. [Settlement](#23-settlement)
+24. [Population, Housing & Food](#24-population-housing--food)
+25. [Territorial Sovereignty](#25-territorial-sovereignty)
+26. [Beasts & Hazards](#26-beasts--hazards)
+27. [Permadeath & Legacy](#27-permadeath--legacy)
+28. [Autoregulation](#28-autoregulation)
+29. [Extension Interfaces](#29-extension-interfaces)
+30. [Future Module Placeholders](#30-future-module-placeholders)
+31. [What Is Explicitly Deferred](#31-what-is-explicitly-deferred)
+32. [Playable State](#32-playable-state)
 
 ---
 
@@ -298,10 +299,10 @@ Area types, slot counts, and resource profiles are **finalized on first survey**
 
 ### Biome determination
 
-- `biome = noise_function(global_seed, x, y, z)` → one of 27 biome types.
+- `biome = noise_function(global_seed, x, y, z)` → one of 24 biome types.
 - Biomes are **deterministic and permanent**. No biome ever changes.
 - Noise uses five domain-separated layers: Temperature, Moisture, Elevation, Variation, and Anomaly (see Appendix D §4 for full generation algorithm).
-- The Nexus `(0,0,0)` is forced to Plains; first ring is biased temperate. Extreme biomes cannot generate within 3 hexes of the Nexus.
+- The Nexus `(0,0,0)` is forced to Grassland; first ring is biased temperate. Extreme biomes cannot generate within 3 hexes of the Nexus.
 
 ### Biome list (base module)
 
@@ -309,13 +310,13 @@ The full biome set must be defined at deployment because biome-specific logic (m
 
 | Category | Biomes | Count |
 |---|---|---|
-| **Temperate** | Plains, Grassland, Forest, Woodland, Rainforest, Highlands, Scrubland | 7 |
-| **Arid** | Desert, Savanna, Steppe, Badlands, Canyon | 5 |
-| **Wet** | Swamp, Marsh, Mire, Jungle, Mangrove | 5 |
+| **Temperate** | Grassland, Forest, Woodland, Rainforest, Highlands, Scrubland | 6 |
+| **Arid** | Desert, Savanna, Badlands, Canyon | 4 |
+| **Wet** | Swamp, Mire, Jungle, Mangrove | 4 |
 | **Cold** | Tundra, Taiga, Glacier | 3 |
 | **Extreme** | Scorched, Glassfields, Blight | 3 |
 | **Water** | Coast, Coastal Waters, Lake, Ocean | 4 |
-| | **Total** | **27** |
+| | **Total** | **24** |
 
 Each biome defines (quantified in Appendix D):
 - Movement energy cost modifier (0.8×–1.8×) 🔒
@@ -334,6 +335,10 @@ Each biome defines (quantified in Appendix D):
 On first survey of a hex:
 
 1. `discovery_seed = hash(global_seed, x, y, z, discoverer_salt)` (commit-reveal)
+
+⚠️ **Security requirement**: The reveal transaction MUST incorporate the **reveal-block hash** as additional entropy. The seed formula becomes:
+`discovery_seed = hash(global_seed, x, y, z, reveal_block_hash, discoverer_salt)`.
+This prevents users from brute-forcing salts to predict area outcomes. **Flag for contracts specialist.**
 2. `area_count` drawn from rarity-weighted distribution:
 
 | Area Count | Rarity | Probability | Cumulative |
@@ -361,8 +366,7 @@ On first survey of a hex:
 
 | Biome | Fertile Weight | Mining Weight | Forestry Weight |
 |---|---|---|---|
-| Plains | 60% | 15% | 25% |
-| Grassland | 55% | 15% | 30% |
+| Grassland | 60% | 15% | 25% |
 | Forest | 15% | 15% | 70% |
 | Woodland | 35% | 15% | 50% |
 | Rainforest | 10% | 10% | 80% |
@@ -370,11 +374,9 @@ On first survey of a hex:
 | Scrubland | 40% | 25% | 35% |
 | Desert | 5% | 80% | 15% |
 | Savanna | 40% | 15% | 45% |
-| Steppe | 35% | 25% | 40% |
 | Badlands | 0% | 90% | 10% |
 | Canyon | 0% | 85% | 15% |
 | Swamp | 45% | 15% | 40% |
-| Marsh | 55% | 10% | 35% |
 | Mire | 10% | 30% | 60% |
 | Jungle | 30% | 10% | 60% |
 | Mangrove | 0% | 0% | 100% |
@@ -431,6 +433,10 @@ Within materials areas, resource nodes are seeded deterministically on first sur
 
 > **Universal discovery resources** (Rare Metals from mining, Worldroot from logging, Unicorn Hair from foraging) are **not** tied to nodes. They are low-chance rolls on every action of their type, regardless of biome or node. This is handled at the action resolution layer, not during node seeding.
 
+⚠️ **Storage note (contracts specialist)**: Do not store the full biome–resource affinity matrix as a dynamic mapping. Hardcode as constants or pack into bitfields. The matrix is used only for node seeding and can be compiled into contract code.
+
+⚠️ **Implementation note (contracts specialist)**: Simplex noise onchain must use fixed-point arithmetic or a lookup-table approximation. Compute biome once on exploration and store it, do not recompute on every access.
+
 **Regrowth mechanics:**
 
 - Depleted nodes enter a cooldown period: `regrowth_ticks = base_cooldown × (1 / regrowth_rate)`.
@@ -448,6 +454,10 @@ Within materials areas, resource nodes are seeded deterministically on first sur
 - Spawns at The Nexus (origin hex). Secondary spawn nodes are a future module.
 - Mint uses commit-reveal: user commits `hash(salt)`, then reveals salt to finalize.
 - `adventurer_seed = hash(global_seed, token_id, mint_block, user_salt)`
+
+⚠️ **Security requirement**: The reveal transaction MUST incorporate the **reveal-block hash** as additional entropy. The seed formula becomes:
+`adventurer_seed = hash(global_seed, token_id, reveal_block_hash, user_salt)`.
+This prevents users from brute-forcing salts to predict outcomes, since the block hash is unknown at commit time. **Flag for contracts specialist.**
 
 ### Core state
 
@@ -486,9 +496,11 @@ seed: felt252
 Attributes improve through use — **learning by doing** — but via a **chance-based system** rather than XP accumulation. No experience points or historical data need to be tracked on-chain.
 
 - Every action has a **small base chance** to increase a relevant attribute (e.g., successfully mining has a ~1–2% chance to increase STR or INT).
-- The chance decreases **exponentially** with the current attribute level:
+- The chance decreases **exponentially** with the current **natural** attribute level:
   - `gain_chance = base_chance × (1 − (level / 20))²`
-  - Level 0 → 100% of base chance; Level 10 → 25%; Level 15 → 6.25%; Level 19 → 0.25%; Level 20 → **0%** (hard cap).
+  - Level 0 → 100% of base chance; Level 10 → 25%; Level 15 → 6.25%; Level 19 → 0.25%; Level 20 → **0%** (natural cap).
+  - **Natural** attribute level caps at 20, but **effective** attribute can exceed 20 via equipment/traits up to a hard clamp of **30**.
+  - Attribute gain chance is calculated using the **natural** attribute value only — equipment and trait bonuses do not affect gain probability.
   - Progressing from 19 → 20 is dramatically harder than 18 → 19.
 - **Attributes can never be lost.** They can only be **suppressed** by trait modifiers (e.g., a −1 STR trait reduces effective STR but does not remove the underlying point).
 - Multiple attributes may roll for a gain from a single action (e.g., travel may roll for both END and WIS).
@@ -503,8 +515,8 @@ Attributes improve through use — **learning by doing** — but via a **chance-
 | **Dexterity (DEX)** | Hazard avoidance | `avoid_bonus = DEX × 5%` |
 | **Vitality (VIT)** | Max health | `max_health = 100 + VIT × 10` |
 | **Intelligence (INT)** | Resource yield | `yield = base × (1 + INT × 0.025)` — applies to harvest, gather, mine, refine |
-| **Wisdom (WIS)** | Explore & survey energy efficiency | Energy cost = `base × (1 − WIS × 0.04)` (no minimum clamp) |
-| **Charisma (CHA)** | Upkeep energy efficiency | Energy cost = `base × (1 − CHA × 0.03)` (no minimum clamp); fee discount `CHA × 5%`; increases days until follower desertion |
+| **Wisdom (WIS)** | Explore & survey energy efficiency | Energy cost = `max(0.25, base × (1 − WIS × 0.025))` |
+| **Charisma (CHA)** | Upkeep energy efficiency | Energy cost = `max(0.4, base × (1 − CHA × 0.02))`; fee discount `CHA × 5%`; increases days until follower desertion |
 | **Survival (SUR)** | Hunting, foraging, beast encounters | `hunt_success += SUR × 5%`; `forage_success += SUR × 5%`; `beast_encounter_success += SUR × 2.5%` |
 | **Craftsmanship (CRA)** | Craft quality, repair cost, mutation | `craft_quality += CRA × 5%`; repair cost `−4%` per point; widens favorable mutation range |
 | **Leadership (LEA)** | Follower count | `max_followers = 1 + floor(LEA / 2)` |
@@ -514,9 +526,8 @@ Attributes improve through use — **learning by doing** — but via a **chance-
 Adventurers have a **health pool** separate from energy:
 
 - **Base max health**: 100 (modified by Vitality: `max_health = 100 + VIT × 10`).
-- **Base health regen**: 0.01 per tick (~3.6/hour, ~86.4/in-game day) — significantly slower than energy regen.
-- Health regen is **lazy** (computed on next interaction), same as energy.
-- Food and special items may increase health regen rate.
+- **Health regen**: Health does not regenerate passively. Recovery requires the **Rest** action (see Appendix M). Rest costs 0 energy, has a short time-lock (6–12 ticks / 1–2 min), and restores a meaningful amount of health (5–15 HP per rest, scaling with VIT). Rest can be repeated.
+- Food and special items may increase health recovery by **enhancing Rest effectiveness**, not by adding passive regen.
 - Health is lost through **encounter or activity outcomes** (e.g., a logging accident might cost 25 health, a beast attack might cost 50 health).
 - Players must weigh the risks of taking actions while health is low — there is always a **low probability of instant death** from any hazardous action when health is critically low.
 - **If health reaches 0: the adventurer dies** (permadeath).
@@ -612,7 +623,9 @@ follower_types: Map<FollowerType, u8>  // laborers, donkeys, mounts
 - **Base max energy**: 100 (modified by Endurance: `max_energy = 100 + END × 10`, plus gear bonuses). ~2.8 hours of storage at base regen — aligned with in-game day length.
 - **Base regen**: 0.1 energy per tick (~36/hour, ~864/in-game day). Endurance increases regen rate by **+2% per point**.
 - Regen is **lazy**: computed on next interaction as `min(max_energy, stored_energy + effective_regen_rate × tick_delta)`.
-- Regen occurs only when **not** in a time-locked action (idle = resting).
+- Energy regen is **constant** — it occurs continuously, including during time-locked actions. There is no idle requirement for energy recovery.
+
+⚠️ **Implementation note (contracts specialist)**: Use saturating arithmetic for lazy evaluation (underflow on negative regen, overflow on large tick deltas). Death from starvation (energy reaches 0 from negative regen) is realized lazily on next interaction.
 
 ### Reservation model
 
@@ -711,19 +724,19 @@ Raw food items gathered from fertile areas, forestry, or (future) hunting:
 | Resource | Source biomes | Notes |
 |---|---|---|
 | Wild Berries | Forest, Jungle, Taiga | Common, low nutrition |
-| Roots | Plains, Grassland, Highlands | Common |
+| Roots | Grassland, Highlands | Common |
 | Mushrooms | Forest, Swamp, Mire | Uncommon, some poisonous |
-| Game Fowl | Plains, Savanna, Grassland | Hunting yield (§16) |
+| Game Fowl | Savanna, Grassland | Hunting yield (§16) |
 | Venison | Forest, Taiga, Highlands | Hunting yield (§16) |
 | Boar | Forest, Swamp, Jungle | Hunting yield (§16) |
-| Milk | Plains, Grassland, Highlands | Livestock yield (§18) |
-| Eggs | Plains, Forest, any temperate | Livestock yield (§18) |
+| Milk | Grassland, Highlands | Livestock yield (§18) |
+| Eggs | Forest, any temperate | Livestock yield (§18) |
 | Meat (generic) | Any with livestock or hunting | Butchered product |
 | Honey | Forest, Jungle | Rare fertile node |
-| Fish | Coast, Lake, Mangrove, Marsh | Requires adjacent water hex or fishing area |
+| Fish | Coast, Lake, Mangrove, Swamp | Requires adjacent water hex or fishing area |
 | Herbs | Multiple biomes | Dual-use: food ingredient + alchemical |
-| Grain | Plains, Grassland, Steppe | Crop (sowable on fertile areas) |
-| Vegetables | Plains, Forest, Highlands | Crop |
+| Grain | Grassland, Scrubland | Crop (sowable on fertile areas) |
+| Vegetables | Forest, Highlands | Crop |
 | Fruit | Jungle, Woodland, Forest | Tree-based, seasonal yield |
 
 #### Core Resources (the canonical 22)
@@ -750,14 +763,14 @@ Non-core materials that extend the crafting supply chain:
 | Bone | Forestry (fauna) | Byproduct |
 | Tallow | Forestry (fauna) | Rendered fat; fuel, crafting |
 | Salt | Desert, Coast, Mining | Preservation, trade good |
-| Clay | Marsh, Coast, Lake | Pottery, construction |
+| Clay | Swamp, Coast, Lake | Pottery, construction |
 | Sand | Desert, Coast | Glass production |
 | Pitch | Forest, Taiga | Waterproofing, fuel |
 | Sulfur | Scorched, Mining | Alchemical, future module |
 | Saltpeter | Desert, Canyon | Alchemical, future module |
 | Dyes | Jungle, Swamp, Mire | Crafting modifier |
 | Silkworms | Forest (caves, deep forest) | Textile (Silk precursor) |
-| Flax | Plains, Grassland | Textile |
+| Flax | Grassland | Textile |
 | Wool | Grassland, Highlands | Textile; primary source is livestock (§17) |
 | Furs | Taiga, Tundra, Forest | Gear crafting (cold protection) |
 | Pearls | Coast, Ocean | Rare, jewelry |
@@ -773,17 +786,34 @@ Non-core materials that extend the crafting supply chain:
 
 ### Resource ID registry
 
-All resources above (food, core 22, special, essence) are assigned permanent `u16` IDs at deployment. The registry includes **reserved ID ranges** for future modules:
+All resources above are assigned permanent `u16` IDs at deployment.
+
+For the complete and authoritative resource ID registry, see **Appendix F: Resource Catalog**. The registry below is a summary; Appendix F takes precedence in case of any discrepancy.
 
 ```
-0x0000–0x00FF: Food
-0x0100–0x01FF: Core Resources (T1/T2/T3)
-0x0200–0x02FF: Special Resources
-0x0300–0x03FF: Essence & magical materials
-0x0400–0x0FFF: Reserved (future modules)
+BLOCK           RANGE             SLOTS   NOTES
+─────────────── ───────────────── ─────── ──────────────────────────────────────
+Food            0x0000 – 0x00FF     256   Raw food + processed intermediates
+Core Resources  0x0100 – 0x0115      22   Immutable — 22 assigned, fixed
+ └─ locked      0x0116 – 0x01FF     234   Will not expand (reserved, unused)
+Raw Materials   0x0200 – 0x03FF     512   All raw non-food resources
+ ├─ Mining      0x0200 – 0x02FF     256
+ ├─ Logging     0x0300 – 0x033F      64
+ ├─ Farm/Forage 0x0340 – 0x039F      96
+ └─ Animal      0x03A0 – 0x03FF      96   Hunting, Herding, Fishing
+Refined         0x0400 – 0x05FF     512   All refined & processed resources
+ ├─ Metals      0x0400 – 0x043F      64
+ ├─ Textiles    0x0440 – 0x04BF     128
+ ├─ Wood/Plant  0x04C0 – 0x04FF      64
+ ├─ Building    0x0500 – 0x053F      64
+ ├─ Fuels/Chem  0x0540 – 0x059F      96
+ └─ Proc. Food  0x05A0 – 0x05FF      96
+Beast Parts     0x0600 – 0x07FF     512
+Alchemy/Essence 0x0800 – 0x0BFF    1024   Future module
+Reserved        0x0C00 – 0x0FFF    1024   Future modules
+─────────────── ───────────────── ─────── ──────────────────────────────────────
+TOTAL           0x0000 – 0x0FFF    4096
 ```
-
-This ensures future modules can add new resources without colliding with base IDs, and without changing the base module.
 
 ---
 
@@ -832,6 +862,8 @@ This ensures future modules can add new resources without colliding with base ID
 
 ### Ecosystem dynamics
 
+**Ecosystem sustainability**: Each production ecosystem has a **sustainability threshold** — a maximum extraction rate below which the ecosystem maintains itself indefinitely. Exceeding this threshold triggers depletion effects. Any logging activity depletes local fauna to some degree (habitat disruption). Overhunting reduces future yield. Heavy harvesting reduces soil fertility (counteracted by fertilization actions). Sustainability thresholds are GM-adjustable parameters, allowing the Game Masters to tune the balance between extraction and conservation. Players must make meaningful choices about resource use intensity.
+
 This is a core base-module mechanic because it creates player-driven scarcity:
 
 - **Logging vs. ecosystem trade-off**: as logging increases, lumber yield rises slightly, but flora/fauna yield drops sharply.
@@ -869,6 +901,8 @@ Hunting is an active action performed in **forestry areas**, targeting the area'
 
 This creates a direct strategic tension: logging and hunting compete for the same ecosystem. Players (or settlements) must choose their balance.
 
+**Ecosystem sustainability**: Each production ecosystem has a **sustainability threshold** — a maximum extraction rate below which the ecosystem maintains itself indefinitely. Exceeding this threshold triggers depletion effects. Any logging activity depletes local fauna to some degree (habitat disruption). Overhunting reduces future yield. Heavy harvesting reduces soil fertility (counteracted by fertilization actions). Sustainability thresholds are GM-adjustable parameters, allowing the Game Masters to tune the balance between extraction and conservation. Players must make meaningful choices about resource use intensity.
+
 ### Hazard note
 
 Hunting is a **deliberate action** with chance-based yields. Beast **hazard encounters** (§24) are involuntary and can occur during any action — they are separate systems. A hunter might successfully bag a deer *and* get ambushed by a wolf on the same trip.
@@ -889,6 +923,8 @@ Hunting is a **deliberate action** with chance-based yields. Beast **hazard enco
 3. Each harvest **reduces fertility**. Lower fertility → lower future yields.
 
 ### Fertility management
+
+**Ecosystem sustainability**: Each production ecosystem has a **sustainability threshold** — a maximum extraction rate below which the ecosystem maintains itself indefinitely. Exceeding this threshold triggers depletion effects. Any logging activity depletes local fauna to some degree (habitat disruption). Overhunting reduces future yield. Heavy harvesting reduces soil fertility (counteracted by fertilization actions). Sustainability thresholds are GM-adjustable parameters, allowing the Game Masters to tune the balance between extraction and conservation. Players must make meaningful choices about resource use intensity.
 
 - **Natural regrowth**: fertility slowly recovers if the area is left unharvested.
 - **Fertilize action**: adventurer can spend resources (compost, bone meal, etc.) + energy to restore fertility faster.
@@ -926,10 +962,10 @@ area_fertility: i16          // grazing depletes fertility over time
 
 | Livestock type | Food yields | Special resource yields | Biome affinity |
 |---|---|---|---|
-| Cattle | Meat, milk | Leather, bone, tallow | Plains, Savanna, Grassland |
+| Cattle | Meat, milk | Leather, bone, tallow | Savanna, Grassland |
 | Sheep | Meat, milk | Wool, leather | Grassland, Highlands |
-| Goats | Meat, milk | Leather, bone | Highlands, Steppe, Canyon |
-| Poultry | Meat, eggs | Bone, feathers | Plains, Forest, any temperate |
+| Goats | Meat, milk | Leather, bone | Highlands, Scrubland, Canyon |
+| Poultry | Meat, eggs | Bone, feathers | Forest, any temperate |
 
 ### Upkeep
 
@@ -944,7 +980,36 @@ Animal products (wool, leather, tallow, meat, milk, eggs) are **core crafting in
 
 ---
 
-## 19. Crafting & Refining
+## 19. Production: Fishing
+
+Fishing harvests aquatic resources from water-adjacent and water biomes. It follows a similar pattern to Hunting — chance-based resolution in appropriate areas.
+
+### Where to fish
+
+- **Coast, Lake, Mangrove** biomes support fishing directly.
+- Hexes adjacent to water biomes may support limited fishing (river-fed).
+- Fishing requires no building — it is a standalone action using natural water access.
+
+### Fishing action
+
+- **Energy cost**: Medium (15–30).
+- **Time-lock**: Medium (36–108 ticks / 6–18 min).
+- **Resolution**: Chance-based, influenced by SUR, equipment (nets, rods), and aquatic fauna density.
+- **Yields**: Fish (primary food resource), plus chance of special catches (pearls, shells, rare aquatic materials — defined in Appendix F).
+- **Biome modifiers**: Coast and Mangrove yield saltwater species; Lake yields freshwater species.
+
+### Aquatic ecosystem dynamics
+
+- Aquatic fauna density tracks independently from terrestrial fauna.
+- **Overfishing** depletes aquatic fauna density, reducing yield and catch rate.
+- Density recovers naturally over time (regrowth rate is a GM-adjustable parameter).
+- **Sustainability threshold**: Below a defined extraction rate, aquatic ecosystems maintain themselves indefinitely. Exceeding the threshold triggers depletion. Threshold values are GM-adjustable.
+
+> ⚠️ Exact yield values, species tables, and density curves to be quantified in Phase 6f.
+
+---
+
+## 20. Crafting & Refining
 
 ### Refining (raw → usable)
 
@@ -971,6 +1036,8 @@ new_properties = f(input_properties, craft_seed)
 - A **mutation function** (XOR-seeded) introduces controlled randomness — crafted items are unique.
 - **Legendary rolls** occur when property products cross defined thresholds.
 - Higher **Craftsmanship** improves mutation outcomes (wider favorable distribution via `craft_quality += CRA × 5%` and expanded mutation range).
+
+⚠️ **Security requirement**: `craft_seed` MUST include **reveal-block hash** entropy to prevent players from predicting mutation outcomes. Without block entropy, the crafting system becomes a solved game. **Flag for contracts specialist.**
 
 ### Crafting facilities (base module)
 
@@ -1010,7 +1077,7 @@ The recipe registry includes **reserved ID ranges** for future modules (same pat
 
 ---
 
-## 20. Equipment & Items
+## 21. Equipment & Items
 
 ### Item model
 
@@ -1046,7 +1113,7 @@ greatness: u8             // 1–20 rating scale (Loot-compatible)
 
 ---
 
-## 21. Construction & Buildings
+## 22. Construction & Buildings
 
 ### Building system
 
@@ -1093,13 +1160,15 @@ active: bool              // false if condition < threshold or understaffed
 
 The Campfire is a **zero-slot building** — it can be placed without occupying a building slot but has limited recipes and no condition/upkeep (it's temporary).
 
+⚠️ **Flag (Phase 9b)**: Campfire lifetime is TBD. Define explicit lifetime/decay rules in Phase 9b.
+
 ### Building type registry
 
 Same pattern as resources: permanent IDs at deployment with reserved ranges for future modules.
 
 ---
 
-## 22. Settlement
+## 23. Settlement
 
 ### Formation (Deed system)
 
@@ -1107,6 +1176,10 @@ Same pattern as resources: permanent IDs at deployment with reserved ranges for 
 2. The control area of one hex must have a **Keep** building.
 3. The Keep allows minting a **Deed of Settlement** (energy cost).
 4. The Deed is **non-transferable** and **bound to the adventurer**. Destroyed on adventurer death.
+   - **Ownership note**: Ownership of settlements, hexes, and buildings is tied to the **wallet address**, not individual adventurers.
+   - Deeds of Settlement are items used to link hexes into a settlement, not ownership tickets.
+   - Destroying a deed removes the ability to link another hex, but does not end ownership.
+   - Ownership persists with the wallet even after adventurer death.
 5. Carry the Deed to an adjacent owned hex's Keep → **apply** the Deed:
    - No settlement exists → **create** one.
    - Settlement exists → **add** the hex to it.
@@ -1130,13 +1203,22 @@ last_food_tick: felt252
 
 ### Settlement benefits
 
-- **25% fewer donkeys** for transport between settlement hexes.
-- **Shared population** across settlement hexes (buildings in any hex draw from the same pool).
-- **Cheaper travel** between settlement hexes for the owner.
+Settlements provide strategic advantages beyond simple hex clustering:
+
+| Benefit | Description | Default Value | Adjustable |
+|---|---|---|---|
+| **Shared storage** | Resources deposited in any settlement hex are accessible from any other hex in the settlement | Full access | GM-adjustable (could restrict to adjacent hexes) |
+| **Building synergies** | Complementary buildings in the same settlement grant production bonuses (e.g., Smelter + Forge = +10% crafting quality) | +10% per synergy pair | GM-adjustable |
+| **Defensive bonus** | Reduced base hazard chance within settlement borders | −25% hazard chance | GM-adjustable |
+| **Transport efficiency** | 25% fewer donkeys needed for inter-hex transport within settlement | −25% | GM-adjustable |
+| **Travel discount** | Cheaper travel between settlement hexes for the owner | −20% travel cost | GM-adjustable |
+| **Trade hub** | Settlements can serve as trade hubs where market listings are more visible (future module hook — interface declared here) | Interface only | Future module |
+
+> Building synergy pairs to be defined in Phase 9. Trade hub interface to be specified in §29 (Extension Interfaces).
 
 ---
 
-## 23. Population, Housing & Food
+## 24. Population, Housing & Food
 
 ### Population
 
@@ -1177,14 +1259,16 @@ Per in-game day boundary:
 
 **Understaffing penalties:**
 - **Production efficiency** scales linearly with `staffing_ratio`.
-- **Upkeep multiplier** = `clamp(1 / staffing_ratio, 1, 3)`:
+- **Upkeep multiplier** = `if staffing_ratio == 0 then 3.0 else clamp(1 / staffing_ratio, 1, 3)`:
   - `staffing_ratio = 1.0` → `1×` upkeep (normal)
   - `staffing_ratio = 0.5` → `2×` upkeep (100% extra)
   - `staffing_ratio ≤ 0.25` → `3×` upkeep (200% extra, hard cap)
 
+**Note**: All buildings require adventurer interaction to produce — nothing is generated automatically. At zero population, buildings cannot be used and incur maximum (3×) upkeep penalty.
+
 ---
 
-## 24. Territorial Sovereignty
+## 25. Territorial Sovereignty
 
 ### Ownership
 
@@ -1225,7 +1309,7 @@ This creates organic territorial limits: you can only hold what you can maintain
 
 ---
 
-## 25. Beasts & Hazards
+## 26. Beasts & Hazards
 
 ### Why beasts are in the base module
 
@@ -1268,7 +1352,7 @@ The base module does not include turn-based or real-time combat. Encounters are 
 
 ---
 
-## 26. Permadeath & Legacy
+## 27. Permadeath & Legacy
 
 ### Death triggers
 
@@ -1285,6 +1369,7 @@ An adventurer dies when:
 3. All **energy reservations/escrows** settled and released.
 4. Settlement **Deeds** bound to this adventurer are destroyed (settlement persists but new deeds can't be issued by this adventurer).
 5. Hex ownership **persists** but begins decaying without active upkeep from another adventurer.
+   - **Ownership note**: Ownership of settlements, hexes, and buildings is tied to the **wallet address**, not individual adventurers. Ownership persists with the wallet even after adventurer death.
 6. Followers are released (disappear).
 7. **Legacy record** written: discoverer tags on hexes persist forever, buildings persist, settlement structures persist.
 
@@ -1294,7 +1379,7 @@ Player mints a new adventurer (paying $LORDS again). Starts fresh at The Nexus. 
 
 ---
 
-## 27. Autoregulation
+## 28. Autoregulation
 
 ### Purpose
 
@@ -1316,6 +1401,8 @@ Prevent runaway inflation, stagnation, or exploitation without human interventio
 | Injury→disability conversion rate | [0.5, 2.0] | Permanent scar frequency |
 | Follower desertion rate | [0.5, 2.0] | Party maintenance pressure |
 
+⚠️ **Implementation note (contracts specialist)**: Autoregulator metrics must use lazy aggregation with running counters (O(1) reads per epoch), not iteration over all adventurers/hexes.
+
 ### Mechanism
 
 - Evaluates once per **epoch** (e.g., every 100 in-game days).
@@ -1326,7 +1413,7 @@ Prevent runaway inflation, stagnation, or exploitation without human interventio
 
 ---
 
-## 28. Extension Interfaces
+## 29. Extension Interfaces
 
 The base module exposes these interfaces for future modules to hook into:
 
@@ -1352,6 +1439,8 @@ on_encounter_resolved(adventurer_id, beast_type, outcome)
 Future modules subscribe to these events and react accordingly (e.g., a combat module listens to `on_encounter_resolved` to add tactical combat before resolution; a trade module listens to `on_item_crafted` to add marketplace listings).
 
 ### Permission hooks
+
+⚠️ **Implementation note (contracts specialist)**: Permission hook calls MUST be gas-bounded. If the hook exceeds the gas limit, the base module should default to **allow** (fail-open) to prevent griefing via intentionally expensive hooks.
 
 Territory controllers can deploy custom smart contracts that implement:
 
@@ -1395,7 +1484,7 @@ Read-only access to adventurer state for any module.
 
 ---
 
-## 29. Future Module Placeholders
+## 30. Future Module Placeholders
 
 The base module includes reserved **hooks, IDs, and world-generation slots** that exist solely to support future modules without requiring base module changes. These are "empty sockets" in the physics.
 
@@ -1439,6 +1528,8 @@ The trait system supports up to 10 slots per adventurer. The base module ships w
 
 All 16+ event hooks (§28) fire regardless of whether any module is listening. Future modules subscribe to the events they need. The base module doesn't need to know what modules exist — it just emits events.
 
+**Seasons & Weather**: The base module includes a **season counter** — 4 seasons per in-game year (1 season = ~90 in-game days). The counter is purely cosmetic in the base module and has no mechanical effect. Future modules may use the season counter to modify production yields, encounter frequencies, movement costs, and other seasonal effects. Weather systems (precipitation, temperature variation, storms) are fully deferred.
+
 ### Permission hook interface
 
 The `IPermissionHook` trait (§28) is deployed per-hex by territory controllers. The base module enforces the interface but doesn't care what logic is inside. This is the primary extensibility mechanism for future social/economic/governance modules.
@@ -1449,7 +1540,7 @@ Each biome's hazard table includes **weight slots for T4 and T5 beasts** even th
 
 ---
 
-## 30. What Is Explicitly Deferred
+## 31. What Is Explicitly Deferred
 
 To maintain clarity on the module boundary, here is what the base module **does not include** and why:
 
@@ -1475,7 +1566,7 @@ To maintain clarity on the module boundary, here is what the base module **does 
 
 ---
 
-## 31. Playable State
+## 32. Playable State
 
 When the base module ships, a player can:
 

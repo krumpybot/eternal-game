@@ -1,3 +1,6 @@
+> ⚠️ **FROZEN DOCUMENT** — This document is preserved as the original vision reference. It is no longer maintained or updated. For all quantified values, implementation details, and current design decisions, refer to **Eternal_Game_Base.md** and its appendices.
+> Frozen: 2026-04-16
+
 # Eternal Game - Design Scope v0.1.5
 
 > **Working title.** This document synthesizes the Fractales framework (Cartridge/Dojo), the Realms: Adventures idle-RPG concept, and the Realms/Loot ecosystem into a unified thesis for an eternal, fully onchain MMORPG. It is a living document - intended to be challenged, refined, and expanded over many iterations.

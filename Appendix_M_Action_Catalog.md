@@ -376,6 +376,23 @@ Actions fall into rough cost tiers. These establish the economy of effort — ho
 | **Tool/building requirements** | Market building (for reliable trading) or social encounter (for opportunistic trading). |
 | **Encounter exposure** | None at a market. Social encounter context if trading during exploration. |
 
+### Exchange
+
+| Property | Value |
+|---|---|
+| **Category** | Social & Economic |
+| **Energy cost** | 0 (free action) |
+| **Time-lock** | 0 (instant) |
+| **Requirements** | Two adventurers on the same hex, or adventurer interacting with a market listing |
+| **Success formula** | Automatic for direct transfers. Market transactions resolve instantly when both parties agree. |
+| **Description** | The single baseline action for all trade and transfer in the base module. Supports: (1) **Direct transfer** — move goods/currency between adventurers on the same hex, (2) **Market listing** — set prices on inventory items, making them visible to other adventurers, (3) **Market purchase** — accept another adventurer's listed items at the listed price. |
+| **CHA interaction** | CHA provides fee discounts on market transactions. Relevant traits (Merchant, Shrewd, Silver Tongue) grant additional trade benefits (better prices, reduced fees, wider visibility for listings). |
+| **Attribute gain chances** | CHA (~0.5%) per market transaction |
+| **Skill trait trigger** | Merchant / Swindled (trade domain) |
+| **Encounter exposure** | None |
+
+> ⚠️ **Implementation concerns**: Market listings require on-chain state (item ID, price, seller address, listing timestamp). Storage cost per listing must be evaluated. Listing expiry/cleanup mechanism needed. Price discovery is emergent — no central price oracle. Flag for contracts specialist and Phase 5/6 quantification follow-up.
+
 ---
 
 ## 7. Recovery
@@ -385,15 +402,17 @@ Actions fall into rough cost tiers. These establish the economy of effort — ho
 | Property | Value |
 |---|---|
 | **Category** | Recovery |
-| **Energy cost** | 0 (resting costs time, not energy) |
-| **Time-lock** | Variable — adventurer chooses rest duration. Regen bonus applies for the duration. |
-| **Success formula** | `effective_health_regen = base_regen × rest_multiplier × biome_modifier × shelter_modifier`. Rest multiplier TBD (~2–3×). |
-| **Failure outcomes** | None. Resting is always "successful" — the trade-off is pure opportunity cost (time not spent on productive actions). |
+| **Energy cost** | 0 (free) |
+| **Time-lock** | 6–12 ticks (1–2 min real) |
+| **Success formula** | Restores health (5–15 HP base, modified by VIT and food buffs). |
+| **Failure outcomes** | None. |
 | **Attribute gain chances** | None (resting doesn't develop skills or attributes). |
 | **Skill trait trigger** | None. |
-| **Biome modifiers** | Harsh biomes may reduce resting efficiency. Shelter (building, camp) improves it. |
-| **Tool/building requirements** | None required. Building (any habitable structure) improves regen multiplier. |
-| **Encounter exposure** | Low but not zero. Resting in the wild leaves the adventurer vulnerable. Resting in a settlement building: none. |
+| **Biome modifiers** | Food buffs may improve Rest effectiveness. |
+| **Tool/building requirements** | None. |
+| **Encounter exposure** | Low encounter chance. |
+
+> Note: Can be repeated. This is the ONLY way to recover health in the base module (besides food/item buffs that enhance rest).
 
 ---
 
