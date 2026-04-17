@@ -46,7 +46,7 @@ Dependencies: none — these are leaf primitives.
 
 ### 1c. Trait List ✅ (Final review applied 2026-03-23)
 
-5 trait types: **personality**, **physical**, **skill**, **injury**, **disability**. 120 total base traits.
+5 trait types: **personality**, **physical**, **skill**, **injury**, **disability**. 122 total base traits.
 
 Full catalog: `Appendix_C_Trait_Catalog.md`
 
@@ -487,7 +487,7 @@ Worked example: typical adventurer's first 24 real-hours. Energy budget, health 
 
 ### 13d. Trait Balance Review
 
-Revisit all 120 trait special effect percentages against the now-complete action costs, production yields, and encounter formulas. Validate that no single trait creates degenerate strategies. Revisit the Phase 2c action–trait cross-reference. Adjust percentages as needed.
+Revisit all 122 trait special effect percentages against the now-complete action costs, production yields, and encounter formulas. Validate that no single trait creates degenerate strategies. Revisit the Phase 2c action–trait cross-reference. Adjust percentages as needed.
 
 Expected meta-diversity: 171 personality trait combinations × 23 physical traits × wide attribute spread = ~3,933 unique mint trait sets before accounting for attribute variation. Chance-based trait assignment at mint prevents min-maxing — players work with what they get. Validate during balance review that no dominant strategy emerges from common trait combinations.
 → Output: Trait balance audit
@@ -606,7 +606,7 @@ Phase 1 (Units/Attributes)
 
 | Appendix | Phase | Status | Estimated rows |
 |---|---|---|---|
-| C: Trait Catalog 🔒 | 1c | ✅ v1.0 | 120 traits (38+23+36+13+10) |
+| C: Trait Catalog 🔒 | 1c | ✅ v1.1 | 122 traits (38+23+38+13+10) |
 | D: Biome Table 🔒 | 4a | ✅ v0.2.1 | 24 biomes × 8 properties |
 | E: Biome–Resource Affinity ⚠️ | 4b | ✅ v0.2.0 — flagged for review | 87 resources × 24 biomes (sparse) |
 | F: Resource Catalog 🔒 | 3a | ✅ v1.0 | 153 resources + 60 beast parts |

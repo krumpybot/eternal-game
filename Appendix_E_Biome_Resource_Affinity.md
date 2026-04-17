@@ -148,11 +148,11 @@ Hunting targets wild fauna. Fauna type and density vary by biome. Beast parts yi
 
 ## 6. Fishing by Biome
 
-Fishing requires a water biome or water-adjacent hex. Only Coast, Lake, Mangrove, and Swamp support fishing in the base module.
+Fishing must be conducted on the biome itself (no adjacency-based fishing). Coast, Lake, Mangrove, and Swamp support fishing in the base module. Coastal Waters and Ocean have fishing affinity but are **impassable** without a future Maritime module.
 
-| Resource | Rarity | Coast | Lake | Mangrove | Swamp |
-|---|---|---|---|---|---|
-| **Fish** | C | ★ | ★ | ★ | ✓ |
+| Resource | Rarity | Coast | Lake | Mangrove | Swamp | Cstl Wtrs | Ocean |
+|---|---|---|---|---|---|---|---|
+| **Fish** | C | ★ | ★ | ★ | ✓ | ★ | ★ |
 
 ---
 

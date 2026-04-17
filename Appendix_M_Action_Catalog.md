@@ -172,12 +172,12 @@ Actions fall into rough cost tiers. These establish the economy of effort — ho
 | **Category** | Resource Gathering |
 | **Energy cost** | 10–20 |
 | **Time-lock** | 36–108 ticks (6–18 min real) |
-| **Success formula** | `yield = base × (1 + SUR × 0.04) × water_biome_modifier × fauna_density`. |
+| **Success formula** | `yield = base × (1 + SUR × 0.04) × biome_modifier × fauna_density × dock_bonus`. |
 | **Failure outcomes** | Failed catch: energy and time consumed, no yield. Minimal injury risk. |
 | **Attribute gain chances** | SUR (~1%), DEX (~0.5%) |
-| **Skill trait trigger** | No dedicated fishing skill trait pair in base module (candidate for future module). |
-| **Biome modifiers** | Requires water-adjacent hex. Coast, lake, river biomes have different fish types and density. |
-| **Tool/building requirements** | Fishing rod/net recommended (yield bonus). Dock building may improve efficiency. |
+| **Skill trait trigger** | Angler / Unlucky Catch (fishing domain) — ⚠️ placeholder, flagged for Phase 13d trait balance review. |
+| **Biome modifiers** | Must be on a fishing biome (Coast, Lake, Mangrove, Swamp). Coastal Waters and Ocean have affinity but are impassable without future Maritime module. |
+| **Tool/building requirements** | Fishing rod/net recommended (yield bonus). Dock building on Coast hex increases yield. |
 | **Encounter exposure** | Very low. Fishing is one of the safest actions. |
 
 ### Herding
@@ -564,7 +564,7 @@ The following actions have no exclusive skill trait pair in the base module. The
 
 | Action | Notes |
 |---|---|
-| Fishing | Obvious candidate for a fishing skill pair (e.g., Angler / Unlucky Catch) |
+| Fishing | **Angler / Unlucky Catch** — placeholder pair added, flagged for Phase 13d review |
 | Salvaging | Could pair with crafting domain or get its own (e.g., Scrapper / Wastrel) |
 | Demolishing | Low-priority — demolition is infrequent |
 | Upkeep | Could pair with a stewardship domain (e.g., Steward / Negligent) |
@@ -596,7 +596,7 @@ The following actions have no exclusive skill trait pair in the base module. The
 | Midday | Travel back (35), Refine ore (35), Cook meal (10) | ~80 | ~320 |
 | Afternoon | Farm (harvest phase) (35), Forage (15) | ~50 | ~190 |
 | Evening | Upkeep (20), Stock settlement (10), Repair gear (20) | ~50 | ~120 |
-| Night | Rest (0 energy, accelerated regen) | 0 | Variable |
+| Night | Rest (0 energy, restores 2–3 HP per 12-tick rest) | 0 | Variable |
 | **Daily total** | **~9 actions** | **~250 energy** | **~920 ticks** |
 
 **Analysis**:

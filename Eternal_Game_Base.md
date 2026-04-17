@@ -982,21 +982,21 @@ Animal products (wool, leather, tallow, meat, milk, eggs) are **core crafting in
 
 ## 19. Production: Fishing
 
-Fishing harvests aquatic resources from water-adjacent and water biomes. It follows a similar pattern to Hunting — chance-based resolution in appropriate areas.
+Fishing harvests aquatic resources from water biomes. It follows a similar pattern to Hunting — chance-based resolution in appropriate areas.
 
 ### Where to fish
 
-- **Coast, Lake, Mangrove** biomes support fishing directly.
-- Hexes adjacent to water biomes may support limited fishing (river-fed).
-- Fishing requires no building — it is a standalone action using natural water access.
+- **Coast, Lake, Mangrove, Swamp** biomes support fishing in the base module.
+- **Coastal Waters, Ocean** biomes have fishing affinity but are **impassable** in the base module — a future Maritime module enabling boat travel would unlock fishing in these biomes.
+- Fishing must be conducted **on the biome itself** — no adjacency-based fishing.
+- Fishing requires no building — it is a standalone action using natural water access. A **Dock** building on a Coast hex increases fishing yield (see §22).
 
 ### Fishing action
 
-- **Energy cost**: Medium (15–30).
-- **Time-lock**: Medium (36–108 ticks / 6–18 min).
+- **Energy cost**: 10–20 (see Appendix M for draft values).
+- **Time-lock**: 36–108 ticks (6–18 min).
 - **Resolution**: Chance-based, influenced by SUR, equipment (nets, rods), and aquatic fauna density.
-- **Yields**: Fish (primary food resource), plus chance of special catches (pearls, shells, rare aquatic materials — defined in Appendix F).
-- **Biome modifiers**: Coast and Mangrove yield saltwater species; Lake yields freshwater species.
+- **Yields**: Fish (FI01) — the single fishing resource in the base module. Additional aquatic resources (shellfish, pearls, coral) are candidates for a future Maritime module.
 
 ### Aquatic ecosystem dynamics
 
@@ -1005,7 +1005,7 @@ Fishing harvests aquatic resources from water-adjacent and water biomes. It foll
 - Density recovers naturally over time (regrowth rate is a GM-adjustable parameter).
 - **Sustainability threshold**: Below a defined extraction rate, aquatic ecosystems maintain themselves indefinitely. Exceeding the threshold triggers depletion. Threshold values are GM-adjustable.
 
-> ⚠️ Exact yield values, species tables, and density curves to be quantified in Phase 6f.
+> ⚠️ Exact yield values and density curves to be quantified in Phase 6f.
 
 ---
 

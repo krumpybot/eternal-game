@@ -216,17 +216,20 @@ All skill traits are organized in exclusive pairs grouped by activity domain. Ea
 | S28 | **Scorched Palate** | Chef | cooking | −1 VIT | −25% food buff effectiveness | Cooking failures |
 | S29 | **Tamer** | Unruly | follower recruitment | +1 LEA | +1 max animal follower | Recruiting/maintaining many followers |
 | S30 | **Unruly** | Tamer | follower recruitment | −1 LEA | +50% follower desertion rate | Follower desertions |
-| S31 | **Survivor** | Shaken | endurance | +1 VIT | +25% health regen rate | Surviving at <20% health |
-| S32 | **Shaken** | Survivor | endurance | −1 VIT | −10% health regen rate; −25% success chance when health <50% | Accumulated near-death experiences |
+| S31 | **Survivor** | Shaken | endurance | +1 VIT | +25% Rest health recovery | Surviving at <20% health |
+| S32 | **Shaken** | Survivor | endurance | −1 VIT | −10% Rest health recovery; −25% success chance when health <50% | Accumulated near-death experiences |
 | S33 | **Quarrier** | Cave-in Survivor | mining (safety) | +1 STR | −25% mine collapse chance | Mining without collapses |
 | S34 | **Cave-in Survivor** | Quarrier | mining (safety) | −1 STR | +10% mine collapse chance; +10% mining energy cost | Severe mine collapses |
 | S35 | **Herbalist** | Rash Forager | foraging | +1 SUR | +25% foraging yield; +50% foraged food regen bonus | Successful foraging |
 | S36 | **Rash Forager** | Herbalist | foraging | −1 SUR | −25% foraging yield; +25% foraged food poisoning chance | Foraging poisonings |
+| S37 | **Angler** | Unlucky Catch | fishing | +1 SUR | +25% fishing yield | Successful fishing |
+| S38 | **Unlucky Catch** | Angler | fishing | −1 SUR | −25% fishing yield; +10% failed catch chance | Fishing failures |
 
 > **Notes:**
 > - S05/S06 Prospector/Jinxed Miner, S09/S10 Trailblazer/Lost, and S25/S26 Cartographer/Disoriented have **no attribute modifier** — their special effects are sufficient value.
 > - Quarrier and Prospector are separate pairs (Quarrier ↔ Cave-in Survivor; Prospector ↔ Jinxed Miner) — mining discovery and mining safety are distinct skill domains.
 > - S29 Tamer grants +1 max **animal** follower (not general follower).
+> - S37/S38 Angler/Unlucky Catch are **placeholders** — flagged for Phase 13d trait balance review. Values may be adjusted once fishing mechanics are fully quantified (Phase 6f).
 > - Additional skill traits can be introduced by future modules.
 
 ---
@@ -388,11 +391,11 @@ The following tables show the distribution of attribute modifiers across all per
 |---|---|---|---|---|
 | Personality | 38 (19 pairs) | 19 groups | 2 at mint | Base module only |
 | Physical | 23 (11 pairs + 1 solo) | 11 groups | 1 at mint | Base module only |
-| Skill (positive) | 18 | 18 pairs (exclusive) | 0 at mint | Future modules can add more |
-| Skill (negative) | 18 | 18 pairs (exclusive) | 0 at mint | Future modules can add more |
+| Skill (positive) | 19 | 19 pairs (exclusive) | 0 at mint | Future modules can add more |
+| Skill (negative) | 19 | 19 pairs (exclusive) | 0 at mint | Future modules can add more |
 | Injury | 13 | None | 0 at mint | Future modules can add more |
 | Disability | 10 | None | 0 at mint | Future modules can add more |
-| **Total (base)** | **120** | **48 groups** | **3 at mint** | — |
+| **Total (base)** | **122** | **49 groups** | **3 at mint** | — |
 
 **Modifier shape distribution:**
 

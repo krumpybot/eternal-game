@@ -217,7 +217,7 @@ Products from hunting wild animals. Some products are shared with herding (marke
 
 > **Fishing rarity summary**: 1 Common = **1 fishing raw resource**.
 >
-> Fishing currently produces only Fish. Additional aquatic resources (shellfish, pearls, coral) are candidates for a future Maritime module.
+> Fishing produces only Fish in the base module. Additional aquatic resources (shellfish, pearls, coral) are candidates for a future Maritime module.
 
 ### 1g. Herding — Livestock Products
 
