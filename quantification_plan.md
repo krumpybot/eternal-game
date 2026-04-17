@@ -18,7 +18,7 @@ Dependencies: none — these are leaf primitives.
 | In-game days per real day | 6 | Locked |
 | Base energy regen | 0.1 / tick | ~36/hour, ~864/in-game day |
 | Base max energy | 100 | ~2.8 hours of storage at base regen |
-| Base health regen | 0.01 / tick | ~3.6/hour, ~86.4/in-game day |
+| Base health regen | Via Rest action only | 2–3 HP per rest (12-tick time-lock). No passive regen. |
 | Base max health | 100 | Much slower recovery than energy |
 | Weight unit | kg | Consistent with Eternum and Blitz |
 | Base carry capacity | 50 kg | Before STR/gear bonuses |
@@ -109,6 +109,8 @@ Complete matrix in `Appendix_M_Action_Catalog.md`. To be validated during the fi
 ### 2d. Time Budget Analysis ✅ (to be revisited in Phase 13c)
 
 Draft worked example: ~9 actions/in-game day, ~250 energy, ~920 ticks at heavy cost tiers. To be validated when exact action costs are locked.
+
+> **Note**: Action energy costs and time-locks are expected to remain **unlocked** (GM-adjustable) parameters. Constant energy regen during time-locks increases overall throughput relative to earlier design assumptions — all action costs and time-locks should be reviewed during Phase 13c for rebalancing. The formula structures are locked; the numeric values are starting defaults.
 
 ---
 
@@ -475,7 +477,7 @@ Initial $LORDS cost. Autoregulator bounds [min, max].
 
 ### 13b. Autoregulator Parameters
 
-Initial values for all tunable params (11 total including health regen, trait gain, injury→disability conversion). Epoch length (in-game days). PI coefficients (Kp, Ki). Metric definitions + target ranges.
+Initial values for all tunable params (11 total including rest health recovery, trait gain, injury→disability conversion). Epoch length (in-game days). PI coefficients (Kp, Ki). Metric definitions + target ranges.
 → Output: Autoregulator config
 
 ### 13c. Economic Sanity Check
@@ -516,10 +518,14 @@ Ensure no randomised outcome is predictable at commit time. Validate against MEV
 Define lazy aggregation pattern: running counters updated per-action (not entity iteration per epoch). Document overflow handling for lazy evaluation (saturating arithmetic for energy/health). Define "poke" mechanism or lazy death realisation policy.
 → Output: Implementation constraints document (flag for contracts specialist)
 
-### 13h. Settlement Succession & Orphan Recovery
+### 13h. Settlement Succession & Orphan Recovery ✅ RESOLVED
 
-Define what happens to settlements when the owner dies (permadeath). Options: new adventurer claims Keep hex → inherits settlement, or settlement decays naturally and hexes become claimable individually. Document intended player experience.
-→ Output: Succession rules
+Ownership is wallet-based. No complex succession mechanics needed:
+- Any adventurer (any wallet) can perform upkeep on any hex/settlement.
+- Owning wallet sets activity rules via permission hooks.
+- If last adventurer dies: mint a new one, rely on allies for upkeep, or let territory decay to claimable.
+- The existing decay/claim system handles abandoned territory organically.
+→ Output: Documented in Base Module §23 (Ownership model & succession) and §27 (Permadeath & Legacy).
 
 ---
 

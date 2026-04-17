@@ -526,7 +526,7 @@ Attributes improve through use — **learning by doing** — but via a **chance-
 Adventurers have a **health pool** separate from energy:
 
 - **Base max health**: 100 (modified by Vitality: `max_health = 100 + VIT × 10`).
-- **Health regen**: Health does not regenerate passively. Recovery requires the **Rest** action (see Appendix M). Rest costs 0 energy, has a short time-lock (6–12 ticks / 1–2 min), and restores a meaningful amount of health (5–15 HP per rest, scaling with VIT). Rest can be repeated.
+- **Health regen**: Health does not regenerate passively. Recovery requires the **Rest** action (see Appendix M). Rest costs 0 energy, has a short time-lock (12 ticks / 2 min), and restores a small amount of health (2–3 HP per rest, scaling with VIT). Rest can be repeated indefinitely. After heavy damage, an adventurer may need to rest continuously for an hour or more to fully recover — this is by design, making health recovery a meaningful time investment.
 - Food and special items may increase health recovery by **enhancing Rest effectiveness**, not by adding passive regen.
 - Health is lost through **encounter or activity outcomes** (e.g., a logging accident might cost 25 health, a beast attack might cost 50 health).
 - Players must weigh the risks of taking actions while health is low — there is always a **low probability of instant death** from any hazardous action when health is critically low.
@@ -1180,6 +1180,15 @@ Same pattern as resources: permanent IDs at deployment with reserved ranges for 
    - Deeds of Settlement are items used to link hexes into a settlement, not ownership tickets.
    - Destroying a deed removes the ability to link another hex, but does not end ownership.
    - Ownership persists with the wallet even after adventurer death.
+
+### Ownership model & succession
+
+All ownership is **wallet-based**:
+- Settlements, hexes, and buildings belong to a **wallet address**, not to any individual adventurer.
+- **Any adventurer** (regardless of owner wallet) can perform upkeep on any hex/settlement — there are no restrictions on who can upkeep an existing owner's stake. This allows allies to maintain territory on behalf of absent owners.
+- The **owning wallet** sets the rules for activities conducted on their hexes/settlements via programmable permission hooks.
+- If the owning wallet's last adventurer dies, the wallet can: (a) mint a new adventurer to continue managing the territory, (b) rely on other players/allies to upkeep the territory, or (c) allow the territory to decay naturally until claimable by another wallet.
+- No complex handover or succession mechanics are needed — the existing decay/claim system handles abandoned territory organically.
 5. Carry the Deed to an adjacent owned hex's Keep → **apply** the Deed:
    - No settlement exists → **create** one.
    - Settlement exists → **add** the hex to it.
@@ -1188,7 +1197,7 @@ Same pattern as resources: permanent IDs at deployment with reserved ranges for 
 
 ```
 settlement_id: felt252
-owner: ContractAddress        // the adventurer
+owner: ContractAddress        // wallet address (not individual adventurer)
 hex_ids: [felt252]            // member hexes
 population: u32
 food_reserves: u16            // 0–10000 (basis points, i.e., 0–100.00%)
@@ -1368,8 +1377,7 @@ An adventurer dies when:
 2. All **inventory and equipment destroyed** (base module — no drops).
 3. All **energy reservations/escrows** settled and released.
 4. Settlement **Deeds** bound to this adventurer are destroyed (settlement persists but new deeds can't be issued by this adventurer).
-5. Hex ownership **persists** but begins decaying without active upkeep from another adventurer.
-   - **Ownership note**: Ownership of settlements, hexes, and buildings is tied to the **wallet address**, not individual adventurers. Ownership persists with the wallet even after adventurer death.
+5. Hex/settlement **ownership persists** with the wallet address. The owning wallet can mint a new adventurer to continue managing territory, rely on allies to upkeep, or let it decay and be claimed by others. Any adventurer can perform upkeep on any hex regardless of owner — there are no restrictions on maintaining another wallet's territory.
 6. Followers are released (disappear).
 7. **Legacy record** written: discoverer tags on hexes persist forever, buildings persist, settlement structures persist.
 
@@ -1391,7 +1399,7 @@ Prevent runaway inflation, stagnation, or exploitation without human interventio
 |---|---|---|
 | Adventurer mint cost ($LORDS) | [min, max] | Spawn rate |
 | Energy regen rate | [0.05, 0.2] per tick | Economic velocity |
-| Health regen rate | [0.005, 0.02] per tick | Recovery speed |
+| Rest health recovery | [1, 5] HP per rest | Recovery speed (base HP restored per Rest action) |
 | Hazard lethality multiplier | [0.5, 2.0] | Death rate / health damage severity |
 | Collapse chance multiplier | [0.5, 2.0] | Mining coordination pressure |
 | Decay rate multiplier | [0.5, 2.0] | Territorial holding cost |

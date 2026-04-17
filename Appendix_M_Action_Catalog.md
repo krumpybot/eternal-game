@@ -403,8 +403,8 @@ Actions fall into rough cost tiers. These establish the economy of effort — ho
 |---|---|
 | **Category** | Recovery |
 | **Energy cost** | 0 (free) |
-| **Time-lock** | 6–12 ticks (1–2 min real) |
-| **Success formula** | Restores health (5–15 HP base, modified by VIT and food buffs). |
+| **Time-lock** | 12 ticks (2 min real) |
+| **Success formula** | Restores health (2–3 HP base, modified by VIT and food buffs). |
 | **Failure outcomes** | None. |
 | **Attribute gain chances** | None (resting doesn't develop skills or attributes). |
 | **Skill trait trigger** | None. |
@@ -412,7 +412,7 @@ Actions fall into rough cost tiers. These establish the economy of effort — ho
 | **Tool/building requirements** | None. |
 | **Encounter exposure** | Low encounter chance. |
 
-> Note: Can be repeated. This is the ONLY way to recover health in the base module (besides food/item buffs that enhance rest).
+> Note: Can be repeated indefinitely. This is the ONLY way to recover health in the base module (besides food/item buffs that enhance rest). After heavy damage, an adventurer may need to rest continuously for an hour or more to fully recover — this is intentional. Health recovery is a meaningful time investment, creating a genuine choice between productive work and healing.
 
 ---
 

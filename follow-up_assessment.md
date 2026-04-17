@@ -1,6 +1,7 @@
 # Follow-up Assessment (post mid-design response)
 
 Date: 2026-04-16
+Updated: 2026-04-17
 
 ## 1) Summary of changes made
 
@@ -26,14 +27,17 @@ Date: 2026-04-16
 - **Energy/Health reconciliation (C6 + A8)**
   - Energy regen is now **constant** (includes during time-lock actions).
   - Health no longer passively regenerates, recovery is via **Rest** action only.
-  - Updated Appendix M Resting: energy 0, time-lock 6–12 ticks, restores 5–15 HP (VIT + food buffs), repeatable, low encounter chance.
+  - Updated Appendix M Resting: energy 0, time-lock **12 ticks (2 min)**, restores **2–3 HP** (VIT + food buffs), repeatable indefinitely, low encounter chance.
+  - Deliberate slow recovery: after heavy damage, adventurers may need to rest continuously for an hour or more. This is intentional — health recovery is a meaningful time investment.
 
-- **Wallet-based ownership clarity (C7)**
-  - Added clarification in Settlement + Permadeath: ownership of settlements/hexes/buildings is tied to **wallet address**, not adventurer.
-  - Deeds are linking items, not ownership tickets. Destroying deed prevents future linking but does not end ownership.
+- **Wallet-based ownership & succession (C7, resolved)**
+  - Ownership of settlements, hexes, and buildings tied to **wallet address**, not adventurer.
+  - Deeds are linking items, not ownership tickets.
+  - **Succession model**: Any adventurer (any wallet) can upkeep any hex/settlement. Owning wallet sets activity rules via permission hooks. If last adventurer dies: mint a new one, rely on allies, or let decay/claim cycle handle it. No complex handover mechanics needed.
+  - Phase 13h marked resolved.
 
 - **Fishing section added (I2)**
-  - Added Base §19 “Production: Fishing” and renumbered subsequent sections + updated TOC.
+  - Added Base §19 "Production: Fishing" and renumbered subsequent sections + updated TOC.
 
 - **Sustainability thresholds (I3)**
   - Added sustainability-threshold paragraphs to Forestry, Hunting, Foraging.
@@ -49,7 +53,7 @@ Date: 2026-04-16
   - Added cosmetic season counter note in Future Module Placeholders section.
 
 - **Registry alignment (C1)**
-  - Base §13 registry replaced with Appendix F-aligned block registry summary + “Appendix F is authoritative” note.
+  - Base §13 registry replaced with Appendix F-aligned block registry summary + "Appendix F is authoritative" note.
 
 - **Commit-reveal / randomness security (C4+C5 + T2)**
   - Documented reveal-block hash entropy requirement for adventurer seed + discovery seed.
@@ -65,32 +69,33 @@ Date: 2026-04-16
 - **Document reorg (A7)**
   - `ETERNAL_GAME.md` moved to `archive/Eternal_Game_Vision.md` and marked frozen (2026-04-16).
 
-- **Quantification plan updates**
-  - Updated biome counts/references (24).
-  - Added Phase 12c gas-limit/staged computation note.
-  - Added Phase 13d meta-diversity note.
-  - Added mid-design response status checklist (C/I/A/T items).
+## 2) Balance concerns — resolution status
 
-## 2) New balance concerns introduced
+| Concern | Status | Resolution |
+|---|---|---|
+| Health recovery loop / Rest spam | ✅ Resolved | By design. Rest yields 2–3 HP per 2 min. Extended recovery after heavy damage is intentional gameplay. |
+| Constant energy regen throughput | ✅ Flagged | Action costs and time-locks flagged for Phase 13c review. These remain unlocked/GM-adjustable. |
+| WIS/CHA soft cap feel | ✅ Not a concern | Designer confirms no issue. |
+| Biome merge terrain variety | ✅ Not a concern | Designer confirms no issue. |
 
-- **Health recovery loop**: With Rest as the only recovery, encounter damage pacing becomes extremely sensitive to Rest yield (5–15 HP) and time-lock (6–12 ticks). If hazards can spike damage frequently, players may enter Rest spam loops.
-- **Energy constant regen**: Constant regen during time-lock reduces the effective cost of long actions relative to the earlier “idle only” model. This likely increases overall throughput and may require later re-tuning of action costs/time-locks.
-- **WIS/CHA soft caps**: New floors (0.25/0.4) are strong clamps. High attributes may feel less rewarding after mid levels, depending on base costs. Hard clamp at 30 must be consistently applied across all systems.
-- **Biome merges**: Removing Plains/Steppe/Marsh reduces “low hazard, high fertility” granularity and may compress early-settlement terrain variety. Grassland and Swamp now carry extra thematic and mechanical weight.
+## 3) Design holes — resolution status
 
-## 3) Design holes or missing systems
-
-- **Settlement succession mechanics**: Ownership clarified as wallet-based, but the concrete mechanism for multi-adventurer wallets, handoff, or “who can act” if the original adventurer dies still needs explicit rules in Phase 13h.
-- **Market implementation**: Exchange action defines market listing needs, but an actual minimal onchain listing model, expiry, and storage strategy must be designed (flagged).
-- **Action randomness source**: Commit-reveal is documented for mint/discovery/crafting, but per-action resolution randomness (encounters/yields/trait gain) still needs a precise seed spec (Phase 13f/13g).
+| Hole | Status | Resolution |
+|---|---|---|
+| Settlement succession | ✅ Resolved | Wallet-based ownership + permissionless upkeep + decay/claim cycle. Documented in Base §23 & §27. Phase 13h resolved. |
+| Market implementation | ⏳ Deferred | Flagged for future quantification. Storage/expiry/fee model to be designed when Exchange action is quantified. |
+| Action randomness source | ⏳ Deferred | Flagged for contracts specialist (Phase 13f/13g). |
+| Campfire lifetime | ⏳ Deferred | To be resolved when buildings are quantified (Phase 9b). |
 
 ## 4) Is the game firm for continuing quantification?
 
-Yes. The critical contradictions called out in the mid-design assessment are now documented and reconciled in the spec. The design is coherent enough to proceed into Phases 5–13, with remaining risks mostly in implementation constraints and balance tuning rather than missing primitives.
+**Yes.** All critical and important items from the mid-design assessment are resolved or appropriately deferred. The design is coherent, internally consistent, and ready to proceed into Phases 5–13.
 
-## 5) Remaining items needing resolution
+## 5) Remaining items (appropriately deferred)
 
-- Campfire lifetime (Phase 9b).
-- Settlement succession and orphan recovery rules (Phase 13h).
-- Action-outcome randomness seed specification + manipulation assumptions (Phase 13f/13g).
-- Market listing storage, expiry, and fee model (Exchange action follow-up).
+| Item | Phase | Notes |
+|---|---|---|
+| Campfire lifetime | 9b | Resolve when buildings are quantified |
+| Market listing model | Exchange follow-up | Storage, expiry, fees — quantify with trade system |
+| Action randomness seeds | 13f/13g | Contracts specialist input needed |
+| Action cost/time-lock rebalance | 13c | Review all costs accounting for constant energy regen |
