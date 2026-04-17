@@ -170,7 +170,7 @@ Full affinity matrix for all 87 raw resources × 24 biomes. Three-tier system: �
 
 ### 4c. Area Generation ✅
 
-Area count rarity distribution: 35% (3) → 25% (4) → 18% (5) → 10% (6) → 6% (7) → 4% (8) → 2% (9). Area type weights: 45% Materials, 40% Bare, 10% Underworld, 5% Special (capped at 1 each per hex). Materials sub-type weights defined for all 25 traversable biomes (fertile/mining/forestry). Key sub-type extremes: Glassfields 100% mining, Mangrove 100% forestry, Rainforest 80% forestry. Building slot counts quantified per area type and hex rarity (Control 2–6, Materials 2–3, Bare 2–5, Underworld/Special always 1).
+Area count rarity distribution: 35% (3) → 25% (4) → 18% (5) → 10% (6) → 6% (7) → 4% (8) → 2% (9). Area type weights: 45% Materials, 40% Bare, 10% Underworld, 5% Special (capped at 1 each per hex). Materials sub-type weights defined for all 22 traversable biomes (fertile/mining/forestry). Key sub-type extremes: Glassfields 100% mining, Mangrove 100% forestry, Rainforest 80% forestry. Building slot counts quantified per area type and hex rarity (Control 2–6, Materials 2–3, Bare 2–5, Underworld/Special always 1).
 → Output: Integrated into **Eternal_Game_Base.md §6** (Area generation tables)
 
 ### 4d. Resource Node Seeding ✅
